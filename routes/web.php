@@ -14,12 +14,3 @@
 Route::get('/','UsuarioController@login');
 Route::get('/inicio','UsuarioController@inicio');
 Route::get('/configuracion','UsuarioController@configuracion');
-
-Route::get('/test',function(){
-    try{
-        return "hola";
-    } catch(Exception $e){
-        report($e);
-        return "error";
-    }
-});
