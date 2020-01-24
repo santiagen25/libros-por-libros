@@ -130,6 +130,12 @@ a.link2:hover {
 }
 
 
+/*Material icons*/
+
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+
+.material-icons.md-48 { font-size: 48px; }
+
 /*Media Querys*/
 
 @media (max-width: 1205px) {

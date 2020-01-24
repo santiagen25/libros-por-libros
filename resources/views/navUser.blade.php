@@ -35,10 +35,9 @@
 <nav class="navbar navbar-expand-lg navegacion">
     <a class="navbar-brand" href="#">Libros por Libros [pic]</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon resumenNavBar"></span>
-        <div class="container" onclick="myFunction(this)">
-            <!--div class="bar1"></div-->
-            <i class=""></i>
+        <!--<span class="navbar-toggler-icon resumenNavBar"></span>-->
+        <div class="container" >
+            <i class="material-icons md-light md-48">menu</i>
         </div>
     </button>
 
