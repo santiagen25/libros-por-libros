@@ -13,3 +13,4 @@
 
 Route::get('/','UsuarioController@login');
 Route::get('/inicio','UsuarioController@inicio');
+Route::get('/configuracion','UsuarioController@configuracion');

@@ -13,4 +13,8 @@ class UsuarioController extends Controller
     function inicio(){
         return view('inicio');
     }
+
+    function configuracion(){
+        return view('configuracion');
+    }
 }
