@@ -6,6 +6,7 @@
 }
 
 .enmarcarCuadrado {
+    cursor: auto;
     border: 1px solid grey;
     border-radius: 5px;
     background-color: #dad2be;
@@ -22,6 +23,7 @@
 }
 
 .enmarcarNoticia {
+    cursor: auto;
     border: 1px solid grey;
     border-radius: 5px;
     background-color: #312a1c;
@@ -74,7 +76,6 @@ footer {
 
 .container {
     display: inline-block;
-    cursor: pointer;
 }
 
 .bar1, .bar2, .bar3 {
