@@ -1,0 +1,138 @@
+.enmarcarBorde {
+    border: 1px solid grey;
+    border-radius: 10px;
+    background-color: #dad2be;
+    /*opacity: 0.5; Esto afecta a los hijos tambien (inputs) asi que lo vamos a dejar por el momento*/
+}
+
+.enmarcarCuadrado {
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: #dad2be;
+    /*opacity: 0.5; Esto afecta a los hijos tambien (inputs) asi que lo vamos a dejar por el momento*/
+}
+
+.navegacion {
+    background-color: #211c12;
+    border-radius: 20px;
+    color:white;
+    position: sticky;
+    margin: 20px;
+    margin-bottom: 50px;
+}
+
+.enmarcarNoticia {
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: #312a1c;
+    color:white;
+    margin:15px;
+    /*opacity: 0.5; Esto afecta a los hijos tambien (inputs) asi que lo vamos a dejar por el momento*/
+}
+
+.inputEstandar {
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+}
+
+.inputNav {
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+}
+
+.botonEstandar {
+    background-color: #51472f;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
+.checkboxEstandar {
+    cursor:pointer;
+}
+
+footer {
+    background-color:#211c12;
+    color: white;
+
+    position: absolute;
+    /*left: 0;*/
+    /*bottom: 0;*/
+    min-height: 60px;
+    height: 140px;
+    margin-top: 60px;
+    width: 100%;
+    text-align: center;
+}
+
+.resumenNavBar {
+    
+}
+
+/*Codigo para hacer que el boton de menu cambie*/
+
+.container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/*fin codigo menu cambio*/
+
+.contenido{
+    margin-top:20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body{
+    /*main color: #a28e5d*/
+    background-color: #b6a57c;
+    font-family: Lucida;
+}
+
+a {
+    color: #d0c6ae;
+}
+
+a:hover {
+    color: #ffecb3;
+}
+
+a.link2 {
+    color: #51472f;
+}
+
+a.link2:hover {
+    color: #201c13;
+}
+
+
+/*Media Querys*/
+
+@media (max-width: 1205px) {
+    .inputNav{
+        /*Boton se va abajo*/
+    }
+}
