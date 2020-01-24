@@ -10,7 +10,7 @@
     </header>
     <body>
         @yield('header')
-        <div class="contenido d-flex justify-content-center">
+        <div class="contenido">
             @yield('content')
         </div>
 
