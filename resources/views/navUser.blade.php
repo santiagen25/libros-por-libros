@@ -55,6 +55,9 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar libro..." aria-label="Search">
             <button class="botonEstandar my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <div class="">
+            <img src="images\takumi.jpg" alt="fotoPerfil" class="avatar">
+        </div>
     </div>
 </nav>
 @endsection
