@@ -37,6 +37,12 @@
     border-radius: 5px;
 }
 
+.inputEditar {
+    border: 1px solid #ffecb3;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
 .inputNav {
     border: 1px solid #b3b3b3;
     border-radius: 5px;
@@ -76,9 +82,17 @@ footer {
 }
 
 .fotoEditar{
-    width: 250px;
-    height: 250px;
-    display: block;
+    position: absolute;
+    margin: auto; 
+    min-height: 100%;
+    min-width: 100%;
+
+    /* For the following settings we set 100%, but it can be higher if needed 
+    See the answer's update */
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
 }
 
 /*Codigo para hacer que el boton de menu cambie*/

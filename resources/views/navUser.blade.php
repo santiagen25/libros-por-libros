@@ -45,7 +45,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="inicio">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Mis Libros</a>
@@ -55,9 +55,16 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar libro..." aria-label="Search">
             <button class="botonEstandar my-2 my-sm-0" type="submit">Search</button>
         </form>
-        <div class="">
-            <img src="images\takumi.jpg" alt="fotoPerfil" class="avatar">
+
+        <div class="dropdown">
+            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="images\takumi.jpg" alt="fotoPerfil" class="avatar"></button>
+            
+            <ul class="dropdown-menu">
+                <li><a href="configuracion">Configuración</a></li>
+                <li><a href="/">Cerrar sesión</a></li>
+            </ul>
         </div>
+
     </div>
 </nav>
 @endsection

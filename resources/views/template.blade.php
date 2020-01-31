@@ -17,8 +17,11 @@
         <footer>
             <div class="row m-4">
                 <div class="col-md-2">
-                    <div>
+                    <div class="mb-2">
                         <a href="">Contactanos</a>
+                    </div>
+                    <div class="">
+                        <a href="">FAQ</a>
                     </div>
                 </div>
                 <div class="offset-md-7 col-md-3">

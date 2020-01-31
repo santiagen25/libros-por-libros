@@ -14,8 +14,7 @@
         <div class="enmarcarCuadrado container">
             <div class="row m-4">
                 <div class="mr-4 col-md-3">
-                    <div style="background: url(images/takumi.jpg) 50% 50% no-repeat;" class="fotoEditar">
-                    </div>
+                    <img src="images/takumi.jpg" class="rounded img-fluid fotoEditar" alt="Foto de Perfil">
                 </div>
 
                 <div class="col-md-8">
@@ -30,6 +29,9 @@
                                 Santiago Torrabadella Ferrer
                             </p>
                         </div>
+                        <div class="col-md-2">
+                            <input class="inputEditar" type="button" value="Editar">
+                        </div>
                     </div>
 
                     <div class="row mb-4">
@@ -42,6 +44,9 @@
                             <p>
                                 santiago.torrabadella@hotmail.com
                             </p>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="inputEditar" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -56,6 +61,9 @@
                                 2/6/1997
                             </p>
                         </div>
+                        <div class="col-md-2">
+                            <input class="inputEditar" type="button" value="Editar">
+                        </div>
                     </div>
 
                     <div class="row">
@@ -68,6 +76,9 @@
                             <p>
                                 ********
                             </p>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="inputEditar" type="button" value="Editar">
                         </div>
                     </div>
                 </div>
