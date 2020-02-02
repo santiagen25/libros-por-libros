@@ -17,4 +17,8 @@ class UsuarioController extends Controller
     function configuracion(){
         return view('configuracion');
     }
+
+    function biblioteca(){
+        return view('biblioteca');
+    }
 }
