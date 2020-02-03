@@ -15,3 +15,4 @@ Route::get('/','UsuarioController@login');
 Route::get('/inicio','UsuarioController@inicio');
 Route::get('/configuracion','UsuarioController@configuracion');
 Route::get('/biblioteca','UsuarioController@biblioteca');
+Route::get('/resultados/{numeroDeLibros}','UsuarioController@resultados');

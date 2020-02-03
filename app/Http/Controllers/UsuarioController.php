@@ -21,4 +21,8 @@ class UsuarioController extends Controller
     function biblioteca(){
         return view('biblioteca');
     }
+
+    function resultados($numeroDeLibros){
+        return view('resultados',['numeroDeLibros'=>$numeroDeLibros]);
+    }
 }
