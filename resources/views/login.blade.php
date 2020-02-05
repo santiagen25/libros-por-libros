@@ -9,8 +9,8 @@
 @endsection
 
 @section('content')
-    <div>
-        <form class="d-flex justify-content-center">
+    <form action="/inicio">
+        <div class="d-flex justify-content-center">
             <div class="enmarcarBorde col-md-3">
                 <div class="m-5">
                     <div class="d-flex justify-content-center mb-2">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar py-1 m-2 col-md-9" type="submit" value="Entrar">
+                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" type="submit" value="Entrar">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
@@ -52,6 +52,6 @@
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 @endsection
