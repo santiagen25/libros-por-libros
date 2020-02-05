@@ -25,4 +25,8 @@ class UsuarioController extends Controller
     function resultados($numeroDeLibros){
         return view('resultados',['numeroDeLibros'=>$numeroDeLibros]);
     }
+
+    function entrada($isbn){
+        return view('entrada',['isbn'=>$isbn]);
+    }
 }

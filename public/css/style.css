@@ -81,11 +81,25 @@ footer {
     border-radius: 50%;
 }
 
-.fotoEditar{
+.fotoEditar {
     position: absolute;
     margin: auto; 
     min-height: 100%;
     min-width: 100%;
+
+    /* For the following settings we set 100%, but it can be higher if needed 
+    See the answer's update */
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+}
+
+.fotoMiniLista {
+    position: absolute;
+    margin: auto; 
+    min-height: 50%;
+    min-width: 50%;
 
     /* For the following settings we set 100%, but it can be higher if needed 
     See the answer's update */

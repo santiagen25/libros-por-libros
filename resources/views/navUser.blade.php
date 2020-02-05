@@ -25,7 +25,7 @@
         </form>
 
         <div class="dropdown">
-            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="images\takumi.jpg" alt="fotoPerfil" class="avatar"></button>
+            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\takumi.jpg')}}" alt="fotoPerfil" class="avatar"></button>
             
             <ul class="dropdown-menu">
                 <li><a class="link2" href="configuracion">Configuración</a></li>

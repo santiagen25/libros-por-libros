@@ -14,7 +14,7 @@
         <div class="enmarcarCuadrado container">
             <div class="row m-4">
                 <div class="mr-4 col-md-3">
-                    <img src="images/takumi.jpg" class="rounded img-fluid fotoEditar" alt="Foto de Perfil">
+                    <img src="{{asset('images\takumi.jpg')}}" class="rounded img-fluid fotoEditar" alt="Foto de Perfil">
                 </div>
 
                 <div class="col-md-8">
