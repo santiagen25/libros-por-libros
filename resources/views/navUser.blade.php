@@ -24,13 +24,12 @@
             <button class="botonEstandar my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-        <div class="dropdown">
+        <div class="btn-group">
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\takumi.jpg')}}" alt="fotoPerfil" class="avatar"></button>
-            
-            <ul class="dropdown-menu">
-                <li><a class="link2" href="configuracion">Configuración</a></li>
-                <li><a class="link2" href="/">Cerrar sesión</a></li>
-            </ul>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="link2 dropdown-item" href="configuracion">Configuración</a>
+                <a class="link2 dropdown-item" href="/">Cerrar sesión</a>
+            </div>
         </div>
 
     </div>
