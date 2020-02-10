@@ -21,14 +21,14 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar libro..." aria-label="Search">
-            <button class="botonEstandar my-2 my-sm-0" type="submit">Search</button>
+            <button class="form-control my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         <div class="btn-group">
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\takumi.jpg')}}" alt="fotoPerfil" class="avatar"></button>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="link2 dropdown-item" href="configuracion">Configuración</a>
-                <a class="link2 dropdown-item" href="/">Cerrar sesión</a>
+                <a class="dropdown-item" href="configuracion" type="button">Configuración</a>
+                <a class="dropdown-item" type="button">Cerrar sesión</a>
             </div>
         </div>
 
