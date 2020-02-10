@@ -21,6 +21,7 @@ class Usuario extends Migration
             $table->dateTime('Nacimiento');
             $table->boolean('Bloqueado');
             $table->string('Passwd',50);
+            $table->timestamps();
         });
     }
 

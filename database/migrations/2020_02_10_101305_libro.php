@@ -20,6 +20,7 @@ class Libro extends Migration
             $table->string('Nombre',100);
             $table->string('Genero',20);
             $table->integer('ISBN');
+            $table->timestamps();
         });
     }
 

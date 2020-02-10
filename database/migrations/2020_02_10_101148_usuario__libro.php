@@ -14,8 +14,9 @@ class UsuarioLibro extends Migration
     public function up()
     {
         Schema::create('Usuario_Libro',function (Blueprint $table) {
-            $table->bigIncrements('IDLibro');
+            $table->integer('IDLibro');
             $table->integer('IDUsuario');
+            $table->timestamps();
         });
     }
 

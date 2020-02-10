@@ -20,6 +20,7 @@ class Valoracion extends Migration
             $table->integer('Puntuacion');
             $table->integer('IDLibro');
             $table->integer('IDUsuario');
+            $table->timestamps();
         });
     }
 
