@@ -46,6 +46,7 @@ class LoginController extends Controller
             'password' => 'required|string'
         ]);
 
+        //el problema está aqui, con el auth::attempt (si supiera siquiera donde va...)
         if(Auth::attempt($credentials)){
             return 'Login bien';
         }
