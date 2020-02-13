@@ -15,10 +15,9 @@ class Usuario extends Migration
     {
         Schema::create('Usuario',function (Blueprint $table) {
             $table->bigIncrements('IDUsuario');
-            //$table->primary('IDUsuario');
             $table->boolean('esAdmin');
             $table->string('Nombre',50);
-            $table->string('email',100);
+            $table->string('Email',100)->unique();
             $table->dateTime('Nacimiento');
             $table->boolean('Bloqueado');
             $table->string('Passwd',50);
