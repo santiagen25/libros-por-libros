@@ -15,6 +15,7 @@ class Usuario extends Migration
     {
         Schema::create('Usuario',function (Blueprint $table) {
             $table->bigIncrements('IDUsuario');
+            //$table->primary('IDUsuario');
             $table->boolean('esAdmin');
             $table->string('Nombre',50);
             $table->string('Direccion',50);

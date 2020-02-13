@@ -14,8 +14,10 @@ class UsuarioLibro extends Migration
     public function up()
     {
         Schema::create('Usuario_Libro',function (Blueprint $table) {
-            $table->integer('IDLibro');
-            $table->integer('IDUsuario');
+            $table->bigInteger('IDLibroFK2');
+            $table->foreign('IDLibroFK2')->references('IDLibro')->on('Libro');
+            $table->bigInteger('IDUsuarioFK3');
+            $table->foreign('IDUsuarioFK3')->references('IDUsuario')->on('Usuario');
             $table->timestamps();
         });
     }

@@ -14,7 +14,8 @@ class Likes extends Migration
     public function up()
     {
         Schema::create('Likes',function (Blueprint $table) {
-            $table->integer('IDUsuario');
+            $table->bigInteger('IDUsuarioFK');
+            $table->foreign('IDUsuarioFK2')->references('IDUsuario')->on('Usuario');
             $table->timestamps();
         });
     }

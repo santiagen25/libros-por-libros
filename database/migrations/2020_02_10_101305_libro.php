@@ -15,6 +15,7 @@ class Libro extends Migration
     {
         Schema::create('Libro',function (Blueprint $table) {
             $table->bigIncrements('IDLibro');
+            //$table->primary('IDLibro');
             $table->string('Autor',50);
             $table->string('Descripcion',5000);
             $table->string('Nombre',100);

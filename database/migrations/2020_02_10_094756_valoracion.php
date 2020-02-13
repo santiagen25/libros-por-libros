@@ -14,12 +14,14 @@ class Valoracion extends Migration
     public function up()
     {
         Schema::create('Valoracion',function (Blueprint $table) {
-            $table->bigIncrements('IDValoracion');
+            $table->bigIncrements('IDValoracion')->primary();
             $table->string('Titulo',50);
             $table->string('Comentario',500);
             $table->integer('Puntuacion');
-            $table->integer('IDLibro');
-            $table->integer('IDUsuario');
+            $table->bigInteger('IDLibroFK')->unsigned();
+            $table->foreign('IDLibroFK')->references('IDLibro')->on('Libro');
+            $table->bigInteger('IDUsuarioFK')->unsigned();
+            $table->foreign('IDUsuarioFK')->references('IDUsuario')->on('Usuario');
             $table->timestamps();
         });
     }
