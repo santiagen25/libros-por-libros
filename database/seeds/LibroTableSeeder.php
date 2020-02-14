@@ -35,7 +35,7 @@ class LibroTableSeeder extends Seeder
         ];
             
         foreach ($libros as $libro) {
-            DB::table('libros')->insert([
+            DB::table('libro')->insert([
                 'IDLibro' => $libro['IDLibro'],
                 'Autor' => $libro['Autor'],
                 'Descripcion' => $libro['Descripcion'],

@@ -18,9 +18,9 @@ class Usuario extends Migration
             $table->boolean('esAdmin');
             $table->string('Nombre',50);
             $table->string('Email',100)->unique();
-            $table->dateTime('Nacimiento');
+            $table->dateTime('Nacimiento')->nullable();
             $table->boolean('Bloqueado');
-            $table->string('Passwd',50);
+            $table->string('Password',50);
             $table->timestamps();
         });
     }

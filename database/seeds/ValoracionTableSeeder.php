@@ -35,13 +35,13 @@ class ValoracionTableSeeder extends Seeder
         ];
             
         foreach ($valoraciones as $valoracion) {
-            DB::table('Valoraciones')->insert([
-                'IDValoracion' => $valoraciones['IDValoracion'],
-                'Titulo' => $valoraciones['Titulo'],
-                'Comentario' => $valoraciones['Comentario'],
-                'Puntuacion' => $valoraciones['Puntuacion'],
-                'IDLibroFK' => $valoraciones['IDLibroFK'],
-                'IDUsuarioFK' => $valoraciones['IDUsuarioFK']
+            DB::table('valoracion')->insert([
+                'IDValoracion' => $valoracion['IDValoracion'],
+                'Titulo' => $valoracion['Titulo'],
+                'Comentario' => $valoracion['Comentario'],
+                'Puntuacion' => $valoracion['Puntuacion'],
+                'IDLibroFK' => $valoracion['IDLibroFK'],
+                'IDUsuarioFK' => $valoracion['IDUsuarioFK']
             ]);
         }
     }
