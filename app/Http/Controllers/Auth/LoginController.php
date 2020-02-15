@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -41,18 +42,19 @@ class LoginController extends Controller
     }
 
     public function login(){
-        $credentials = $this->validate(request(),[
-            'email' => 'email|required|string',
-            'password' => 'required|string'
-        ]);
-
-        //el problema está aqui, con el auth::attempt (si supiera siquiera donde va...)
-        if(Auth::attempt($credentials)){
-            return 'Login bien';
-        }
-
-        return back()
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $contraseña = DB::table('usuario')->select('password')->where('Email','=',$email)->first();
+    
+        if($contraseña->password==$password){
+            $usuario = DB::table('usuario')->where('Email','=',$email)->first();
+            session_start();
+            $_SESSION["email"] = $email;
+            return view('/inicio',['usuario'=>$usuario]);
+        }else{
+            return back()
             ->withErrors(['email' => trans('auth.failed')])
             ->withInput(request(['email']));
+        }
     }
 }

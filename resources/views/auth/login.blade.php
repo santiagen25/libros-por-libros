@@ -23,7 +23,9 @@
                                 <p>Email</p>
                             </div>
                             <div class="d-flex justify-content-center" {{ $errors->has('email') ? 'has-error' : ''}}>
-                            <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
+                            </div>
+                            <div>
                                 {!! $errors->first('email','<span class"help-block">:message</span>') !!}
                             </div>
                         </div>

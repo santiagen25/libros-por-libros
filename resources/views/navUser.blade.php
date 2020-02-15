@@ -25,7 +25,7 @@
         </form>
 
         <div class="btn-group">
-            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\takumi.jpg')}}" alt="fotoPerfil" class="avatar"></button>
+            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="configuracion" type="button">Configuración</a>
                 <a class="dropdown-item" type="button">Cerrar sesión</a>

@@ -1,3 +1,14 @@
+<?php
+    if(isset($_SESSION["email"])){
+        //bien 
+        echo "bien";
+    }else {
+        //no has logeado, fuera
+        echo "mal";
+    }
+?>
+
+
 @extends('template')
 @include('navUser')
 

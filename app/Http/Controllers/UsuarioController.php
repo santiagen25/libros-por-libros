@@ -8,7 +8,9 @@ use App\Usuario;
 class UsuarioController extends Controller
 {
     function login(){
-        Usuario::find(1);
+        if(isset($_SESSION["email"])){
+            return view('inicio');
+        }
         return view('login');
     }
 
