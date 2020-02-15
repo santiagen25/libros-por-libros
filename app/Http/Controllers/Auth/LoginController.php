@@ -49,6 +49,7 @@ class LoginController extends Controller
         if($contraseña->password==$password){
             $usuario = DB::table('usuario')->where('Email','=',$email)->first();
             session_start();
+            if(isset($_SESSION["email"])) return "está seteada en el controller";
             $_SESSION["email"] = $email;
             return view('/inicio',['usuario'=>$usuario]);
         }else{

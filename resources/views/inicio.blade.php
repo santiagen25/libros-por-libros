@@ -1,10 +1,13 @@
 <?php
+    if(session_status() == PHP_SESSION_NONE){
+        //no existe, setea
+        session_start();
+    }
     if(isset($_SESSION["email"])){
         //bien 
         echo "bien";
     }else {
-        //no has logeado, fuera
-        echo "mal";
+        return view('/login');
     }
 ?>
 
