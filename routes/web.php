@@ -11,6 +11,7 @@
 |
 */
 
+Route::resource('/','LoginController');
 Route::post('/login','LoginController@login')->name('login');
 Route::get('/inicio','UsuarioController@inicio');
 Route::get('/configuracion','UsuarioController@configuracion');

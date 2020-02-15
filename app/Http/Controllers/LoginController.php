@@ -41,6 +41,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function index(){
+        login();
+    }
+
     public function login(){
         $email = $_POST["email"];
         $password = $_POST["password"];
