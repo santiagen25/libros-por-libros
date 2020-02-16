@@ -1,7 +1,8 @@
 <?php
     if(session_status() == PHP_SESSION_NONE) session_start();
     if(isset($_SESSION["email"])){
-        return view('/inicio');
+        echo "te vas";
+        //return view('/inicio');
     }else {
         echo "te quedas";
     }
@@ -58,7 +59,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" type="submit" value="Entrar">
+                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="entrar" type="submit" value="Entrar">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

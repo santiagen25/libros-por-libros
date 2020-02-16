@@ -11,14 +11,10 @@
 |
 */
 
-Route::resource('/','UnidentifiedController');
-Route::post('/login','UnidentifiedController@login')->name('login');
+Route::get('/','UnidentifiedController@login');
+Route::get('/login','UnidentifiedController@login');
 Route::get('/inicio','UsuarioController@inicio');
 Route::get('/configuracion','UsuarioController@configuracion');
 Route::get('/biblioteca','UsuarioController@biblioteca');
 Route::get('/resultados/{numeroDeLibros}','UsuarioController@resultados');
 Route::get('/entrada/{isbn}','UsuarioController@entrada');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
