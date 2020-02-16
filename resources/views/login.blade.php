@@ -1,14 +1,17 @@
 <?php
-    if(session_status() == PHP_SESSION_NONE) session_start();
+    /*if(session_status() == PHP_SESSION_NONE) session_start();
+    if(isset($_POST["cerrarSesion"])){
+        echo "antes";
+        session_unset();
+        echo "desp";
+    }
+    echo "enmedio";
     if(isset($_SESSION["email"])){
-        echo "te vas";
-        //return view('/inicio');
-    }else if(isset($_POST["cerrarSesion"])){
-        echo "sesion cerrada";
+        echo "antes2";
+        echo redirect()->action('UsuarioController@inicio',['log'=>true]);
+        echo "despues2";
     }
-    else {
-        echo "te quedas";
-    }
+    echo "acabado";*/
 ?>
 
 @extends('template')

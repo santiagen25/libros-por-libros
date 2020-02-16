@@ -11,7 +11,7 @@ use App\Usuario;
 class UnidentifiedController extends Controller
 {
     public function login(){
-        return view('login');
+        session_start();
         if(isset($_POST["entrar"])){
             $email = $_POST["email"];
             $password = $_POST["password"];
@@ -19,8 +19,7 @@ class UnidentifiedController extends Controller
         
             if($contraseña->password==$password){
                 $usuario = DB::table('usuario')->where('Email','=',$email)->first();
-                session_start();
-                if(isset($_SESSION["email"])) return "está seteada en el controller";
+                if(session_status() == PHP_SESSION_NONE) session_start();
                 $_SESSION["email"] = $email;
                 return view('/inicio',['usuario'=>$usuario]);
             }else{
@@ -28,6 +27,13 @@ class UnidentifiedController extends Controller
                 ->withErrors(['email' => trans('auth.failed')])
                 ->withInput(request(['email']));
             }
-        } return view('login');
+        }
+        if(isset($_POST["cerrarSesion"])){
+            session_unset();
+        }
+        if(isset($_SESSION["email"])){
+            return view('inicio');
+        }
+        return view('login');
     }
 }
