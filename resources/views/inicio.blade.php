@@ -7,6 +7,7 @@
         //bien 
         echo "bien";
     }else {
+        return "hola";
         return view('/login');
     }
 ?>

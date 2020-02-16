@@ -11,8 +11,8 @@
 |
 */
 
-Route::resource('/','LoginController');
-Route::post('/login','LoginController@login')->name('login');
+Route::resource('/','UnidentifiedController');
+Route::post('/login','UnidentifiedController@login')->name('login');
 Route::get('/inicio','UsuarioController@inicio');
 Route::get('/configuracion','UsuarioController@configuracion');
 Route::get('/biblioteca','UsuarioController@biblioteca');
