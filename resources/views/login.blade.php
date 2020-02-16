@@ -3,7 +3,10 @@
     if(isset($_SESSION["email"])){
         echo "te vas";
         //return view('/inicio');
-    }else {
+    }else if(isset($_POST["cerrarSesion"])){
+        echo "sesion cerrada";
+    }
+    else {
         echo "te quedas";
     }
 ?>

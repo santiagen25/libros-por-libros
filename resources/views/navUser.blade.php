@@ -28,10 +28,14 @@
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="configuracion" type="button">Configuración</a>
-                <a class="dropdown-item" type="button">Cerrar sesión</a>
+                <form method="POST" action="login">
+                    @csrf
+                    <button class="dropdown-item" name="cerrarSesion" type="submit">Cerrar sesión</button>
+                </form>
             </div>
         </div>
 
     </div>
 </nav>
+
 @endsection
