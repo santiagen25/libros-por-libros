@@ -1,5 +1,5 @@
 <?php
-    if(session_status() == PHP_SESSION_NONE){
+    /*if(session_status() == PHP_SESSION_NONE){
         //no existe, setea
         session_start();
     }
@@ -9,7 +9,7 @@
     }else {
         return "hola";
         return view('/login');
-    }
+    }*/
 ?>
 
 

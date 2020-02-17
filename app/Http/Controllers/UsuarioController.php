@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 
 class UsuarioController extends Controller
 {
@@ -19,7 +22,10 @@ class UsuarioController extends Controller
     function inicio(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
-            $usuario = DB::table('usuario')->where('Email','=',$email)->first();
+            if(isset($_POST["biblioteca"])){
+                return redirect('biblioteca');
+            }
+            $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
             return view('/inicio',['usuario'=>$usuario]);
         }else{
             return view('login');
@@ -27,7 +33,13 @@ class UsuarioController extends Controller
     }
 
     function configuracion(){
-        return view('configuracion');
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"])){
+            $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+            return view('/configuracion',['usuario'=>$usuario]);
+        } else {
+            return view('login');
+        }
     }
 
     function biblioteca(){

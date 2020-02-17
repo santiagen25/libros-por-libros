@@ -2,7 +2,7 @@
 <script src="{{ asset('js/navUser.js') }}"></script>
 
 <nav class="navbar navbar-expand-lg navegacion">
-    <a class="navbar-brand" href="#">Libros por Libros [pic]</a>
+    <a class="navbar-brand" href="inicio">Libros por Libros <img src="images\icons\WebTab.png" alt="mainIcon"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <!--<span class="navbar-toggler-icon resumenNavBar"></span>-->
         <div class="container" >
@@ -19,7 +19,7 @@
                 <a class="nav-link" href="biblioteca">Mis Libros</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form action="buscador" class="form-inline my-2 my-lg-0" method="POST">
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar libro..." aria-label="Search">
             <button class="form-control my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -27,7 +27,10 @@
         <div class="btn-group">
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="configuracion" type="button">Configuración</a>
+                <form action="configuracion" method="POST">
+                    @csrf
+                    <button class="dropdown-item" name="configuracion" type="submit">Configuración</button>
+                </form>
                 <form method="POST" action="login">
                     @csrf
                     <button class="dropdown-item" name="cerrarSesion" type="submit">Cerrar sesión</button>

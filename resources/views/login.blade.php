@@ -26,7 +26,7 @@
 
 @section('content')
 <form action="{{ route('login') }}" method="POST">
-        {{ csrf_field() }}
+    @csrf
         <div class="d-flex justify-content-center">
             <div class="enmarcarBorde col-md-3">
                 <div class="m-5">

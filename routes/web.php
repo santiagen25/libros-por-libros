@@ -17,4 +17,4 @@ Route::any('/inicio','UsuarioController@inicio');
 Route::any('/configuracion','UsuarioController@configuracion');
 Route::any('/biblioteca','UsuarioController@biblioteca');
 Route::any('/resultados/{numeroDeLibros}','UsuarioController@resultados');
-Route::any('/entrada/{isbn}','UsuarioController@entrada');
+Route::any('/libro/{isbn}','UsuarioController@entrada');
