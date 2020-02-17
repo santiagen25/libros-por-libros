@@ -36,4 +36,12 @@ class UnidentifiedController extends Controller
         }
         return view('login');
     }
+
+    public function registro(){
+        return "solucionar esto, si estas logeado y pones registro se va al registro, no ha de ir";
+        if(isset($_SESSION["email"])){
+            return view('inicio');
+        }
+        return view('registro');
+    }
 }

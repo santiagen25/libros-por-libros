@@ -46,8 +46,14 @@ class UsuarioController extends Controller
         return view('biblioteca');
     }
 
-    function resultados($numeroDeLibros){
-        return view('resultados',['numeroDeLibros'=>$numeroDeLibros]);
+    function resultados(){
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"])){
+            $resultados = DB::table('libro')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
+            return view('resultados',['resultados'=>$resultados]);
+        } else {
+            return view('login');
+        }
     }
 
     function entrada($isbn){

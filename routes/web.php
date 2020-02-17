@@ -13,8 +13,9 @@
 
 Route::any('/','UnidentifiedController@login')->name('login');
 Route::any('/login','UnidentifiedController@login')->name('login');
-Route::any('/inicio','UsuarioController@inicio');
+Route::any('/inicio','UsuarioController@inicio')->name('inicio');
 Route::any('/configuracion','UsuarioController@configuracion');
 Route::any('/biblioteca','UsuarioController@biblioteca');
-Route::any('/resultados/{numeroDeLibros}','UsuarioController@resultados');
+Route::any('/resultados','UsuarioController@resultados');
 Route::any('/libro/{isbn}','UsuarioController@entrada');
+Route::any('/registro','UnidentifiedController@registro')->name('registro');

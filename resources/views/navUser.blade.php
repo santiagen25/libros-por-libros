@@ -2,7 +2,7 @@
 <script src="{{ asset('js/navUser.js') }}"></script>
 
 <nav class="navbar navbar-expand-lg navegacion">
-    <a class="navbar-brand" href="inicio">Libros por Libros <img src="images\icons\WebTab.png" alt="mainIcon"></a>
+    <a class="navbar-brand" href="{{asset('inicio')}}">Libros por Libros <img src="{{asset('images\icons\WebTabW.png')}}" alt="mainIcon"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <!--<span class="navbar-toggler-icon resumenNavBar"></span>-->
         <div class="container" >
@@ -13,25 +13,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="inicio">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{asset('inicio')}}">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="biblioteca">Mis Libros</a>
+                <a class="nav-link" href="{{asset('biblioteca')}}">Mis Libros</a>
             </li>
         </ul>
-        <form action="buscador" class="form-inline my-2 my-lg-0" method="POST">
-            <input class="form-control mr-sm-2" type="search" placeholder="Buscar libro..." aria-label="Search">
+        <form action="{{asset('resultados/')}}" class="form-inline my-2 my-lg-0" method="GET">
+            <input class="form-control mr-sm-2" name="buscador" type="search" placeholder="Buscar libro..." aria-label="Search">
             <button class="form-control my-2 my-sm-0" type="submit">Search</button>
         </form>
 
         <div class="btn-group">
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
             <div class="dropdown-menu dropdown-menu-right">
-                <form action="configuracion" method="POST">
+                <form action="{{asset('configuracion')}}" method="POST">
                     @csrf
                     <button class="dropdown-item" name="configuracion" type="submit">Configuración</button>
                 </form>
-                <form method="POST" action="login">
+                <form method="POST" action="{{asset('login')}}">
                     @csrf
                     <button class="dropdown-item" name="cerrarSesion" type="submit">Cerrar sesión</button>
                 </form>

@@ -1,19 +1,3 @@
-<?php
-    /*if(session_status() == PHP_SESSION_NONE) session_start();
-    if(isset($_POST["cerrarSesion"])){
-        echo "antes";
-        session_unset();
-        echo "desp";
-    }
-    echo "enmedio";
-    if(isset($_SESSION["email"])){
-        echo "antes2";
-        echo redirect()->action('UsuarioController@inicio',['log'=>true]);
-        echo "despues2";
-    }
-    echo "acabado";*/
-?>
-
 @extends('template')
 
 @section('title')
@@ -25,13 +9,13 @@
 @endsection
 
 @section('content')
-<form action="{{ route('login') }}" method="POST">
+<form action="{{ route('registro') }}" method="POST">
     @csrf
         <div class="d-flex justify-content-center">
             <div class="enmarcarBorde col-md-3">
                 <div class="m-5">
                     <div class="d-flex justify-content-center mb-2">
-                        <h3>Login</h3>
+                        <h3>Registro</h3>
                     </div>
                     <div class="mb-4">
                         <div class="mb-2">
@@ -45,6 +29,19 @@
                                 {!! $errors->first('email','<div class"invalid-feedback">:message</div>') !!}
                             </div>
                         </div>
+
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-center">
+                                <p>Nombre Completo</p>
+                            </div>
+                            <div class="d-flex justify-content-center" {{ $errors->has('nombre') ? 'has-error' : ''}}>
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Nombre Completo..." name="nombre" value="{{ old('nombre') }}">
+                            </div>
+                            <div>
+                                {!! $errors->first('nombre','<div class"invalid-feedback">:message</div>') !!}
+                            </div>
+                        </div>
+
                         <div>
                             <div class="d-flex justify-content-center">
                                 <p>Contraseña</p>
@@ -54,22 +51,26 @@
                                 {!! $errors->first('password','<span class"help-block">:message</span>') !!}
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <input class="checkboxEstandar form-control mx-2" id="recordarUsuario" type="checkbox">
+
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-center">
+                                <p>Fecha de nacimiento</p>
                             </div>
-                            <div class="m-2 ml-3">
-                                <label style="cursor:pointer;" for="recordarUsuario">Recordarme</label>
+                            <div class="d-flex justify-content-center" {{ $errors->has('nacimiento') ? 'has-error' : ''}}>
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
+                            </div>
+                            <div>
+                                {!! $errors->first('nacimiento','<div class"invalid-feedback">:message</div>') !!}
                             </div>
                         </div>
+                    </div>
+                    <div>
                         <div class="d-flex justify-content-center">
                             <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="entrar" type="submit" value="Entrar">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a class="link2" href="{{asset('registro')}}">¿No tienes cuenta?</a>
+                        <a class="link2" href="{{asset('login')}}">¿Ya tienes cuenta?</a>
                     </div>
                 </div>
             </div>

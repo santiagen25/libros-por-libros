@@ -26,7 +26,7 @@
                         </div>
                         <div class="pt-1 col-md-5">
                             <p>
-                                Santiago Torrabadella Ferrer
+                                {{$usuario->Nombre}}
                             </p>
                         </div>
                         <div class="col-md-2">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="pt-1 col-md-5">
                             <p>
-                                santiago.torrabadella@hotmail.com
+                                {{$usuario->Email}}
                             </p>
                         </div>
                         <div class="col-md-2">
@@ -58,7 +58,11 @@
                         </div>
                         <div class="pt-1 col-md-5">
                             <p>
-                                2/6/1997
+                                @if($usuario->Nacimiento==null)
+                                    N/A
+                                @else
+                                    {{$usuario->Nacimiento}}
+                                @endif
                             </p>
                         </div>
                         <div class="col-md-2">
