@@ -37,13 +37,17 @@ class UsuarioController extends Controller
         if(isset($_SESSION["email"])){
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
             return view('/configuracion',['usuario'=>$usuario]);
-        } else {
-            return view('login');
         }
+        return view('login');
     }
 
     function biblioteca(){
-        return view('biblioteca');
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"])){
+            $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+            return view('/biblioteca',['usuario'=>$usuario]);
+        }
+        return view('login');
     }
 
     function resultados(){

@@ -11,7 +11,10 @@ use App\Usuario;
 class UnidentifiedController extends Controller
 {
     public function login(){
-        session_start();
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"])){
+            return view('inicio');
+        }
         if(isset($_POST["entrar"])){
             $email = $_POST["email"];
             $password = $_POST["password"];
@@ -31,14 +34,11 @@ class UnidentifiedController extends Controller
         if(isset($_POST["cerrarSesion"])){
             session_unset();
         }
-        if(isset($_SESSION["email"])){
-            return view('inicio');
-        }
         return view('login');
     }
 
     public function registro(){
-        return "solucionar esto, si estas logeado y pones registro se va al registro, no ha de ir";
+        if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             return view('inicio');
         }
