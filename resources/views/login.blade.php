@@ -1,19 +1,3 @@
-<?php
-    /*if(session_status() == PHP_SESSION_NONE) session_start();
-    if(isset($_POST["cerrarSesion"])){
-        echo "antes";
-        session_unset();
-        echo "desp";
-    }
-    echo "enmedio";
-    if(isset($_SESSION["email"])){
-        echo "antes2";
-        echo redirect()->action('UsuarioController@inicio',['log'=>true]);
-        echo "despues2";
-    }
-    echo "acabado";*/
-?>
-
 @extends('template')
 
 @section('title')
