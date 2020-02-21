@@ -21,12 +21,12 @@
         </ul>
         <form action="{{asset('resultados/')}}" class="form-inline my-2 my-lg-0" method="GET">
             <input class="form-control mr-sm-2" name="buscador" type="search" placeholder="Buscar libro..." aria-label="Search">
-            <button class="form-control my-2 my-sm-0" type="submit">Search</button>
+            <button class="botonEstandar form-control my-2 my-sm-0" type="submit">Buscar</button>
         </form>
 
         <div class="btn-group">
             <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" id="desplegableNabBar">
                 <form action="{{asset('configuracion')}}" method="POST">
                     @csrf
                     <button class="dropdown-item" name="configuracion" type="submit">Configuración</button>

@@ -15,7 +15,7 @@
         </div>
 
         <footer style="margin-top:300px;">
-            <div class="row m-4">
+            <div class="row mx-4">
                 <div class="col-md-2">
                     <div class="mb-2">
                         <a href="">Contactanos</a>

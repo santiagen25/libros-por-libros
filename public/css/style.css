@@ -57,6 +57,22 @@
     margin: 0px 10px;
 }
 
+.botonEstandar:hover {
+    background-color: #175c68;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
+.botonEstandar:focus {
+    background-color: #0e373f;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
 .checkboxEstandar {
     cursor:pointer;
 }
@@ -161,3 +177,10 @@ a.link2:hover {
 .material-icons.md-48 { font-size: 48px; }
 
 /*Media Querys*/
+
+@media screen and (max-width: 991px){
+    #desplegableNabBar{
+        right:auto;
+        left:0;
+    }
+}

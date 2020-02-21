@@ -57,7 +57,7 @@
                                 <p>Fecha de nacimiento</p>
                             </div>
                             <div class="d-flex justify-content-center" {{ $errors->has('nacimiento') ? 'has-error' : ''}}>
-                                <input class="inputEstandar col-md-12" type="text" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
+                                <input class="inputEstandar col-md-12" type="date" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
                             </div>
                             <div>
                                 {!! $errors->first('nacimiento','<div class"invalid-feedback">:message</div>') !!}
