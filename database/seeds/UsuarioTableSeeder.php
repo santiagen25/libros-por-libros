@@ -37,7 +37,15 @@ class UsuarioTableSeeder extends Seeder
             'Email' => 'prueba3@gmail.com',
             'Nacimiento' => null,
             'Bloqueado' => true,
-            'Password' => 'prueba3']
+            'Password' => 'prueba3'],
+
+            ['IDUsuario' => null,
+            'esAdmin' => true,
+            'Nombre' => 'Santiago Torrabadella Ferrer',
+            'Email' => 'santi_torri97@hotmail.com',
+            'Nacimiento' => null,
+            'Bloqueado' => false,
+            'Password' => 'passSanti']
         ];
             
         foreach ($usuarios as $usuario) {
