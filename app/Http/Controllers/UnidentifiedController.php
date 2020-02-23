@@ -10,7 +10,7 @@ use App\Usuario;
 
 class UnidentifiedController extends Controller
 {
-    public function login(){
+    public function login(Request $request){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_POST["cerrarSesion"])){
             session_unset();
@@ -31,6 +31,8 @@ class UnidentifiedController extends Controller
                 }
             } else if($_POST["email"]=="" || $_POST["password"]=="") return back()->withErrors(['email' => 'Te falta rellenar el campo del email o de la contraseña']);
             return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
+            /*if($_POST["password"]!="") return view('/inicio');
+            return view('/inicio');*/
         }
         return view('login');
     }
@@ -39,6 +41,24 @@ class UnidentifiedController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             return redirect()->route('inicio');
+        }
+        if(isset($_POST["registrarse"])){
+            //vamos a registrarnos
+            $errores = [];
+            if($_POST["email"]=="") $errores["email"] = "Falta introducir el email";
+            if($_POST["nombre"]=="") $errores["nombre"] = "Falta introducir el nombre";
+            if($_POST["password"]=="") $errores["password"] = "Falta introducir la contraseña";
+            if($_POST["repetirPassword"]=="") $errores["repetirPassword"] = "Falta introducir la contraseña repetida";
+            if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
+            if($errores!=[]) return back()->withErrors($errores);
+            else {
+                //todos los campos llenos, hacer comprobaciones
+                $maserrores = [];
+                if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+                    $maserrores["email"] = "El email no tiene un formato válido";
+                }
+                //if()
+            }
         }
         return view('registro');
     }

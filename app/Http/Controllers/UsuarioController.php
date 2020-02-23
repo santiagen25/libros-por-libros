@@ -25,7 +25,7 @@ class UsuarioController extends Controller
                 return redirect('biblioteca');
             }
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-            return view('/inicio',['usuario'=>$usuario]);
+        return view('/inicio',['usuario'=>$usuario]);
         }
         return redirect()->route('login');
     }

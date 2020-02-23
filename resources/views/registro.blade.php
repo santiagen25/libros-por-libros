@@ -35,7 +35,7 @@
                             <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="text" placeholder="Nombre Completo..." name="nombre" value="{{ old('nombre') }}">
                             </div>
-                            {!! $errors->first('nombre','<div class"invalid-feedback">:message</div>') !!}
+                            {!! $errors->first('nombre','<div class="text-danger">:message</div>') !!}
                         </div>
 
                         <div>
@@ -65,7 +65,7 @@
                             <div class="d-flex justify-content-center" {{ $errors->has('nacimiento') ? 'has-error' : ''}}>
                                 <input class="inputEstandar col-md-12" type="date" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
                             </div>
-                            {!! $errors->first('nacimiento','<div class"invalid-feedback">:message</div>') !!}
+                            {!! $errors->first('nacimiento','<div class="text-danger">:message</div>') !!}
                         </div>
                     </div>
                     <div>

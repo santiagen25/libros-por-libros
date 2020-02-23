@@ -33,6 +33,7 @@
                             </div>
                             <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="password" placeholder="Contraseña..." name="password">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                             </div>
                         </div>
                     </div>
