@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('title')
-    Login
+    Registro
 @endsection
 
 @section('header')
@@ -22,34 +22,40 @@
                             <div class="d-flex justify-content-center">
                                 <p>Email</p>
                             </div>
-                            <div class="d-flex justify-content-center" {{ $errors->has('email') ? 'has-error' : ''}}>
+                            <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
                             </div>
-                            <div>
-                                {!! $errors->first('email','<div class"invalid-feedback">:message</div>') !!}
-                            </div>
+                            {!! $errors->first('email','<div class="text-danger">:message</div>') !!}
                         </div>
 
                         <div class="mb-2">
                             <div class="d-flex justify-content-center">
                                 <p>Nombre Completo</p>
                             </div>
-                            <div class="d-flex justify-content-center" {{ $errors->has('nombre') ? 'has-error' : ''}}>
+                            <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="text" placeholder="Nombre Completo..." name="nombre" value="{{ old('nombre') }}">
                             </div>
-                            <div>
-                                {!! $errors->first('nombre','<div class"invalid-feedback">:message</div>') !!}
-                            </div>
+                            {!! $errors->first('nombre','<div class"invalid-feedback">:message</div>') !!}
                         </div>
 
                         <div>
                             <div class="d-flex justify-content-center">
                                 <p>Contraseña</p>
                             </div>
-                            <div class="d-flex justify-content-center" {{ $errors->has('password') ? 'has-error' : ''}}>
+                            <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="password" placeholder="Contraseña..." name="password">
-                                {!! $errors->first('password','<span class"help-block">:message</span>') !!}
                             </div>
+                            {!! $errors->first('password','<div class="text-danger">:message</div>') !!}
+                        </div>
+
+                        <div>
+                            <div class="d-flex justify-content-center">
+                                <p>Repetir Contraseña</p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input class="inputEstandar col-md-12" type="password" placeholder="Repite la contraseña..." name="repetirPassword">
+                            </div>
+                            {!! $errors->first('repetirPassword','<div class="text-danger">:message</div>') !!}
                         </div>
 
                         <div class="mb-2">
@@ -59,14 +65,12 @@
                             <div class="d-flex justify-content-center" {{ $errors->has('nacimiento') ? 'has-error' : ''}}>
                                 <input class="inputEstandar col-md-12" type="date" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
                             </div>
-                            <div>
-                                {!! $errors->first('nacimiento','<div class"invalid-feedback">:message</div>') !!}
-                            </div>
+                            {!! $errors->first('nacimiento','<div class"invalid-feedback">:message</div>') !!}
                         </div>
                     </div>
                     <div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="entrar" type="submit" value="Entrar">
+                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="registrarse" type="submit" value="Registrarse">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

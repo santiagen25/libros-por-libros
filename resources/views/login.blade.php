@@ -22,20 +22,17 @@
                             <div class="d-flex justify-content-center">
                                 <p>Email</p>
                             </div>
-                            <div class="d-flex justify-content-center" {{ $errors->has('email') ? 'has-error' : ''}}>
+                            <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
                             </div>
-                            <div>
-                                {!! $errors->first('email','<div class"invalid-feedback">:message</div>') !!}
-                            </div>
+                            {!! $errors->first('email','<div class="text-danger">:message</div>') !!}
                         </div>
                         <div>
                             <div class="d-flex justify-content-center">
                                 <p>Contraseña</p>
                             </div>
-                            <div class="d-flex justify-content-center" {{ $errors->has('password') ? 'has-error' : ''}}>
+                            <div class="d-flex justify-content-center">
                                 <input class="inputEstandar col-md-12" type="password" placeholder="Contraseña..." name="password">
-                                {!! $errors->first('password','<span class"help-block">:message</span>') !!}
                             </div>
                         </div>
                     </div>

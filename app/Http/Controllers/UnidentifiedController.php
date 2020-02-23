@@ -12,27 +12,25 @@ class UnidentifiedController extends Controller
 {
     public function login(){
         if(session_status() == PHP_SESSION_NONE) session_start();
-        if(isset($_SESSION["email"])){
-            return view('inicio');
-        }
-        if(isset($_POST["entrar"])){
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-            $contraseña = DB::table('usuario')->select('password')->where('Email','=',$email)->first();
-        
-            if($contraseña->password==$password){
-                $usuario = DB::table('usuario')->where('Email','=',$email)->first();
-                if(session_status() == PHP_SESSION_NONE) session_start();
-                $_SESSION["email"] = $email;
-                return view('/inicio',['usuario'=>$usuario]);
-            }else{
-                return back()
-                ->withErrors(['email' => trans('auth.failed')])
-                ->withInput(request(['email']));
-            }
-        }
         if(isset($_POST["cerrarSesion"])){
             session_unset();
+        }
+        if(isset($_SESSION["email"])){
+            return redirect()->route('inicio');
+        }
+        if(isset($_POST["entrar"])){
+            //vamos a logearnos
+            if(isset($_POST["email"]) && $_POST["email"]!="" && isset($_POST["password"]) && $_POST["password"]!=""){
+                $contraseña = DB::table('usuario')->select('password')->where('Email','=',$_POST["email"])->first();
+                if($contraseña->password==$_POST["password"]){
+                    //todo bien, todo correcto
+                    $usuario = DB::table('usuario')->where('Email','=',$_POST["email"])->first();
+                    if(session_status() == PHP_SESSION_NONE) session_start();
+                    $_SESSION["email"] = $_POST["email"];
+                    return redirect()->route('inicio');
+                }
+            } else if($_POST["email"]=="" || $_POST["password"]=="") return back()->withErrors(['email' => 'Te falta rellenar el campo del email o de la contraseña']);
+            return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
         }
         return view('login');
     }
@@ -40,8 +38,17 @@ class UnidentifiedController extends Controller
     public function registro(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
-            return view('inicio');
+            return redirect()->route('inicio');
         }
         return view('registro');
+    }
+
+    public function gestion(){
+        return "asldkfj";
+        if(isset($_GET["registro"])){
+            return "funcionaaaaaaa";
+        }else {
+            return "dlfñjasdñlkfj";
+        }
     }
 }

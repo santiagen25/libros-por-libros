@@ -73,6 +73,30 @@
     margin: 0px 10px;
 }
 
+.botonSec {
+    background-color:  #004d00;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
+.botonSec:hover {
+    background-color: #b3b300;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
+.botonSec:focus {
+    background-color: #808000;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    margin: 0px 10px;
+}
+
 .checkboxEstandar {
     cursor:pointer;
 }

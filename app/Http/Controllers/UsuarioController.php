@@ -14,9 +14,8 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             return view('inicio');
-        }else {
-            return view('login');
         }
+        return redirect()->route('login');
     }
 
     function inicio(){
@@ -27,9 +26,8 @@ class UsuarioController extends Controller
             }
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
             return view('/inicio',['usuario'=>$usuario]);
-        }else{
-            return view('login');
         }
+        return redirect()->route('login');
     }
 
     function configuracion(){
@@ -38,7 +36,7 @@ class UsuarioController extends Controller
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
             return view('/configuracion',['usuario'=>$usuario]);
         }
-        return view('login');
+        return redirect()->route('login');
     }
 
     function biblioteca(){
@@ -47,7 +45,7 @@ class UsuarioController extends Controller
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
             return view('/biblioteca',['usuario'=>$usuario]);
         }
-        return view('login');
+        return redirect()->route('login');
     }
 
     function resultados(){
@@ -55,9 +53,8 @@ class UsuarioController extends Controller
         if(isset($_SESSION["email"])){
             $resultados = DB::table('libro')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
             return view('resultados',['resultados'=>$resultados]);
-        } else {
-            return view('login');
         }
+        return redirect()->route('login');
     }
 
     function entrada($isbn){
