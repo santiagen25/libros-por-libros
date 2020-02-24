@@ -30,7 +30,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
+                            <input class="botonEditar" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
+                            <input class="botonEditar" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -56,8 +56,8 @@
                                 Fecha de nacimiento:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
-                            <p>
+                        <div class="pt-1 col-md-5" id="nacimientoPadre">
+                            <p id="nacimiento">
                                 @if($usuario->Nacimiento==null)
                                     N/A
                                 @else
@@ -65,8 +65,8 @@
                                 @endif
                             </p>
                         </div>
-                        <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar" onclick="prueba()">
+                        <div class="col-md-2" id="botonEditarPadre">
+                            <input class="botonEditar" id="botonEditar" onclick="modificarNacimiento()" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
+                            <input class="botonEditar" type="button" value="Editar">
                         </div>
                     </div>
                 </div>

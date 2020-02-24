@@ -38,8 +38,23 @@
     border-radius: 5px;
 }
 
-.inputEditar {
+.botonEditar {
     border: 1px solid #ffecb3;
+    background-color:#ffecb3;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
+.botonEditar:hover{
+    border: 1px solid #cc9900;
+    background-color:#cc9900;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
+.botonEditar:focus{
+    border: 1px solid #664d00;
+    background-color:#664d00;
     border-radius: 10px;
     border-color: #312a1c;
 }
