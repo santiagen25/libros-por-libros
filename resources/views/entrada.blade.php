@@ -177,7 +177,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar form-control col-md-4" type="submit" value="Editar valoracion">
+                            <input class="botonEstandar col-md-4" type="submit" value="Editar valoracion">
                         </div>
                     </div>
                 @endif
@@ -227,13 +227,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div>
                                 Comentario: 
                             </div>
                             <div>
                                 {{ $valoracion->Comentario }}
                             </div>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-3">
+                            <input class="botonSec col-md-2" value="¡Me gusta!" type="button">
                         </div>
                     </div>
                 @endforeach

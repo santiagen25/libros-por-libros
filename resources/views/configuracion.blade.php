@@ -66,7 +66,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
+                            <input class="inputEditar" type="button" value="Editar" onclick="prueba()">
                         </div>
                     </div>
 
