@@ -2,7 +2,7 @@
 @include('navUser')
 
 @section('title')
-    Resultados
+    Resultados: {{ $busqueda }}
 @endsection
 
 @section('header')
@@ -12,7 +12,6 @@
 @section('content')
     <div class="d-flex justify-content-center">
         <div class="enmarcarCuadrado container">
-            <!--Cada div de estos es un libro-->
             @if($resultados->isEmpty())
                 <h3 class="d-flex justify-content-center">No hay resultados para esta busqueda que has hecho</h3>
             @endif
@@ -22,7 +21,7 @@
                     <div class="row m-4">
                         <div class="mr-4 col-md-3">
                             <a href="{{ asset('/libro/'.$resultado->IDLibro) }}">
-                                <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid fotoMiniLista" alt="Portada del libro">
+                                <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid" alt="Portada del libro">
                             </a>
                         </div>
         

@@ -2,7 +2,7 @@
 @include('navUser')
 
 @section('title')
-    Inicio
+    Mis Libros
 @endsection
 
 @section('header')

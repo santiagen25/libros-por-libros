@@ -15,21 +15,21 @@ class ValoracionTableSeeder extends Seeder
             ['IDValoracion' => null,
             'Titulo' => 'Me ha gustado el libro prueba1',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
-            'Puntuacion' => 0,
+            'Puntuacion' => 8,
             'IDLibroFK' => 1,
             'IDUsuarioFK' => 1],
 
             ['IDValoracion' => null,
-            'Titulo' => 'Me ha gustado el libro prueba2',
+            'Titulo' => 'Me ha gustado este libro',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
-            'Puntuacion' => 0,
+            'Puntuacion' => 10,
             'IDLibroFK' => 1,
             'IDUsuarioFK' => 2],
 
             ['IDValoracion' => null,
-            'Titulo' => 'Me ha gustado el libro prueba3',
+            'Titulo' => 'Me ha gustado el libro Las Pruebas',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
-            'Puntuacion' => 0,
+            'Puntuacion' => 6,
             'IDLibroFK' => 2,
             'IDUsuarioFK' => 1]
         ];

@@ -14,7 +14,7 @@
             @yield('content')
         </div>
 
-        <footer style="margin-top:300px;">
+        <footer id="footer">
             <div class="row mx-4">
                 <div class="col-md-2">
                     <div class="mb-2">

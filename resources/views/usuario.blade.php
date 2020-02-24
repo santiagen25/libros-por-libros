@@ -2,7 +2,7 @@
 @include('navUser')
 
 @section('title')
-    Configuración
+    {{ $usuario->Nombre }}
 @endsection
 
 @section('header')
@@ -19,44 +19,38 @@
 
                 <div class="col-md-8">
                     <div class="row mb-4 mt-2">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <label class="h4">
                                 Nombre de usuario:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
+                        <div class="pt-1 col-md-6">
                             <p>
                                 {{$usuario->Nombre}}
                             </p>
                         </div>
-                        <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
-                        </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <label class="h4">
                                 Email:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
+                        <div class="pt-1 col-md-6">
                             <p>
                                 {{$usuario->Email}}
                             </p>
                         </div>
-                        <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
-                        </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <label class="h4">
                                 Fecha de nacimiento:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
+                        <div class="pt-1 col-md-6">
                             <p>
                                 @if($usuario->Nacimiento==null)
                                     N/A
@@ -64,25 +58,6 @@
                                     {{$usuario->Nacimiento}}
                                 @endif
                             </p>
-                        </div>
-                        <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label class="h4">
-                                Contraseña
-                            </label>
-                        </div>
-                        <div class="pt-1 col-md-5">
-                            <p>
-                                ********
-                            </p>
-                        </div>
-                        <div class="col-md-2">
-                            <input class="inputEditar" type="button" value="Editar">
                         </div>
                     </div>
                 </div>

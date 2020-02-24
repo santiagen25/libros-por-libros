@@ -52,12 +52,23 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             $resultados = DB::table('libro')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
-            return view('resultados',['resultados'=>$resultados]);
+            return view('resultados',['resultados'=>$resultados,'busqueda'=>$_GET["buscador"]]);
         }
         return redirect()->route('login');
     }
 
-    function entrada($isbn){
-        return view('entrada',['isbn'=>$isbn]);
+    function entrada($id){
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(!isset($_SESSION["email"])) return redirect()->route('login');
+        $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
+        $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->get();
+        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones]);
+    }
+
+    function usuario($id){
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(!isset($_SESSION["email"])) return redirect()->route('login');
+        $usuario = DB::table('usuario')->where('IDUsuario','=',$id)->first();
+        return view('usuario',['usuario' => $usuario]);
     }
 }

@@ -4,7 +4,6 @@
 <nav class="navbar navbar-expand-lg navegacion">
     <a class="navbar-brand" href="{{asset('inicio')}}">Libros por Libros <img src="{{asset('images\icons\WebTabW.png')}}" alt="mainIcon"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <!--<span class="navbar-toggler-icon resumenNavBar"></span>-->
         <div class="container" >
             <i class="material-icons md-light md-48">menu</i>
         </div>
