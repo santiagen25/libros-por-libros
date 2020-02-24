@@ -1,18 +1,3 @@
-<?php
-    /*if(session_status() == PHP_SESSION_NONE){
-        //no existe, setea
-        session_start();
-    }
-    if(isset($_SESSION["email"])){
-        //bien 
-        echo "bien";
-    }else {
-        return "hola";
-        return view('/login');
-    }*/
-?>
-
-
 @extends('template')
 @include('navUser')
 
@@ -26,7 +11,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="enmarcarCuadrado container">
+        <!--div class="enmarcarCuadrado container">
             <div class="enmarcarNoticia row">
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-auto">
                     <h4>Has leido Libro 1</h4>
@@ -40,58 +25,6 @@
                     </div>
                 </div>
             </div>
-            <!--div class="enmarcarNoticia row">
-                <div class="col-md-9 my-auto">
-                    <h4>Has leido Libro 2</h4>
-                </div>
-                <div class="col-md-3">
-                    <div class="row my-auto">
-                        <p>fecha</p>
-                    </div>
-                    <div class="row my-auto">
-                        <p>likes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="enmarcarNoticia row">
-                <div class="col-md-9 my-auto">
-                    <h4>Has leido Libro 3</h4>
-                </div>
-                <div class="col-md-3">
-                    <div class="row my-auto">
-                        <p>fecha</p>
-                    </div>
-                    <div class="row my-auto">
-                        <p>likes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="enmarcarNoticia row">
-                <div class="col-md-9 my-auto">
-                    <h4>Has leido Libro 4</h4>
-                </div>
-                <div class="col-md-3">
-                    <div class="row my-auto">
-                        <p>fecha</p>
-                    </div>
-                    <div class="row my-auto">
-                        <p>likes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="enmarcarNoticia row">
-                <div class="col-md-9 my-auto">
-                    <h4>Has leido Libro 5</h4>
-                </div>
-                <div class="col-md-3">
-                    <div class="row my-auto">
-                        <p>fecha</p>
-                    </div>
-                    <div class="row my-auto">
-                        <p>likes</p>
-                    </div>
-                </div>
-            </div-->
-        </div>
+        </div-->
     </div>
 @endsection

@@ -77,6 +77,7 @@
                         <a class="link2" href="{{asset('login')}}">¿Ya tienes cuenta?</a>
                     </div>
                 </div>
+                {!! $errors->first('registroBien','<div class="text-success d-flex justify-content-center h3">:message</div>') !!}
             </div>
         </div>
     </form>

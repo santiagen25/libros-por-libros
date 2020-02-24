@@ -157,7 +157,14 @@ class LibroTableSeeder extends Seeder
             'Descripcion' => 'En el año 1984 Londres es una ciudad lúgubre en la que la Policía del Pensamiento controla de forma asfixiante la vida de los ciudadanos. Winston Smith es un peón de este engranaje perverso, su cometido es reescribir la historia para adaptarla a lo que el Partido considera la versión oficial de los hechos... hasta que decide replantearse la verdad del sistema que los gobierna y somete.',
             'Nombre' => '1984',
             'Genero' => 'Clasicos',
-            'ISBN' => 9781471331435]
+            'ISBN' => 9781471331435],
+
+            ['IDLibro' => null,
+            'Autor' => 'Emily Brontë',
+            'Descripcion' => 'La poderosa y hosca figura del atormentado Heathcliff domina Cumbres Borrascosas, novela apasionada y tempestuosa cuya sensibilidad se adelantó a su tiempo. Los brumosos y sombríos páramos de Yorkshire son el singular escenario donde se desarrolla con fuerza arrebatadora esta historia de venganza y odio, de pasiones desatadas y amores desesperados que van más allá de la muerte y que hacen de ella una de las obras más singulares y atractivas de todos los tiempos.',
+            'Nombre' => 'Cumbres Borrascosas',
+            'Genero' => 'Clasicos',
+            'ISBN' => 9788633300056]
         ];
             
         foreach ($libros as $libro) {

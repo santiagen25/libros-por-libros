@@ -54,6 +54,7 @@
                         <a class="link2" href="{{asset('registro')}}">¿No tienes cuenta?</a>
                     </div>
                 </div>
+                {!! $errors->first('block','<div class="text-danger d-flex justify-content-center h3">:message</div>') !!}
             </div>
         </div>
     </form>

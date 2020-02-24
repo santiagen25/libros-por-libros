@@ -2,7 +2,7 @@
 @include('navUser')
 
 @section('title')
-    Inicio
+    Resultados
 @endsection
 
 @section('header')
@@ -18,48 +18,52 @@
             @endif
 
             @foreach($resultados as $resultado)
-                <div class="row m-4">
-                    <div class="mr-4 col-md-3">
-                        <img src="{{asset('images\takumi.jpg')}}" class="rounded img-fluid fotoMiniLista" alt="Foto de Perfil">
-                    </div>
-    
-                    <div class="col-md-8">
-                        <div class="row mb-4 mt-2">
-                            <div class="col-md-4">
-                                <label class="h4">
-                                    Nombre:
-                                </label>
-                            </div>
-                            <div class="pt-1 col-md-8">
-                                <p>
-                                    {{$resultado->Nombre}}
-                                </p>
-                            </div>
+                <div class="enmarcarNoticia row">
+                    <div class="row m-4">
+                        <div class="mr-4 col-md-3">
+                            <a href="{{ asset('/libro/'.$resultado->IDLibro) }}">
+                                <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid fotoMiniLista" alt="Portada del libro">
+                            </a>
                         </div>
-    
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <label class="h4">
-                                    Autor:
-                                </label>
+        
+                        <div class="col-md-8">
+                            <div class="row mb-4 mt-2">
+                                <div class="col-md-4">
+                                    <label class="h4">
+                                        Nombre:
+                                    </label>
+                                </div>
+                                <div class="pt-1 col-md-8">
+                                    <p>
+                                        {{$resultado->Nombre}}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="pt-1 col-md-8">
-                                <p>
-                                    {{$resultado->Autor}}
-                                </p>
+        
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label class="h4">
+                                        Autor:
+                                    </label>
+                                </div>
+                                <div class="pt-1 col-md-8">
+                                    <p>
+                                        {{$resultado->Autor}}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-    
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <label class="h4">
-                                    ISBN:
-                                </label>
-                            </div>
-                            <div class="pt-1 col-md-8">
-                                <p>
-                                    {{$resultado->ISBN}}
-                                </p>
+        
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label class="h4">
+                                        ISBN:
+                                    </label>
+                                </div>
+                                <div class="pt-1 col-md-8">
+                                    <p>
+                                        {{$resultado->ISBN}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

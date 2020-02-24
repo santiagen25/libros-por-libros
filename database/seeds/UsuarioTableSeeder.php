@@ -19,7 +19,7 @@ class UsuarioTableSeeder extends Seeder
             'esAdmin' => true,
             'Nombre' => 'Nombre Prueba1',
             'Email' => 'prueba1@gmail.com',
-            'Nacimiento' => null,
+            'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
             'Password' => 'prueba1'],
 
@@ -27,7 +27,7 @@ class UsuarioTableSeeder extends Seeder
             'esAdmin' => false,
             'Nombre' => 'Nombre Prueba2',
             'Email' => 'prueba2@gmail.com',
-            'Nacimiento' => null,
+            'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
             'Password' => 'prueba2'],
 
@@ -35,7 +35,7 @@ class UsuarioTableSeeder extends Seeder
             'esAdmin' => false,
             'Nombre' => 'Nombre Prueba3',
             'Email' => 'prueba3@gmail.com',
-            'Nacimiento' => null,
+            'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => true,
             'Password' => 'prueba3'],
 
