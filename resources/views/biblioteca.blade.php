@@ -11,8 +11,8 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-        <div class="enmarcarCuadrado container">
-        <div class="row m-4">
+        <!--div class="enmarcarCuadrado container">
+            <div class="row m-4">
                 <div class="mr-4 col-md-3">
                     <img src="{{asset('images\cumbres_borrascosas_portada.jpg')}}" class="rounded img-fluid fotoMiniLista" alt="Foto de Perfil">
                 </div>
@@ -58,6 +58,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 @endsection

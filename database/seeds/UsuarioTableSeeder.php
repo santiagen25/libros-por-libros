@@ -21,7 +21,8 @@ class UsuarioTableSeeder extends Seeder
             'Email' => 'prueba1@gmail.com',
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
-            'Password' => 'prueba1'],
+            'Password' => 'prueba1',
+            'Imagen' => ''],
 
             ['IDUsuario' => null,
             'esAdmin' => false,
@@ -29,7 +30,8 @@ class UsuarioTableSeeder extends Seeder
             'Email' => 'prueba2@gmail.com',
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
-            'Password' => 'prueba2'],
+            'Password' => 'prueba2',
+            'Imagen' => ''],
 
             ['IDUsuario' => null,
             'esAdmin' => false,
@@ -37,15 +39,17 @@ class UsuarioTableSeeder extends Seeder
             'Email' => 'prueba3@gmail.com',
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => true,
-            'Password' => 'prueba3'],
+            'Password' => 'prueba3',
+            'Imagen' => ''],
 
             ['IDUsuario' => null,
             'esAdmin' => true,
             'Nombre' => 'Santiago Torrabadella Ferrer',
             'Email' => 'santi_torri97@hotmail.com',
-            'Nacimiento' => null,
+            'Nacimiento' => '1997-02-06 0:00:00',
             'Bloqueado' => false,
-            'Password' => 'passSanti']
+            'Password' => 'passSanti',
+            'Imagen' => '']
         ];
             
         foreach ($usuarios as $usuario) {

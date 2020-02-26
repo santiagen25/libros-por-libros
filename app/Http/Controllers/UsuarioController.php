@@ -60,8 +60,33 @@ class UsuarioController extends Controller
     function entrada($id){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(!isset($_SESSION["email"])) return redirect()->route('login');
+
+        if(isset($_POST["publicarValoracion"])){
+            //Vamos a dejar un comentario
+            $errores = [];
+            if($_POST["titulo"]!=""){ if(strlen($_POST["titulo"]) >= 50) $errores["titulo"] = "El titulo de la valoración no puede tener mas de 50 caracteres"; }
+            else $errores["titulo"] = "El titulo no puede estar vacio";
+
+            if($_POST["puntuacion"]!=""){
+                if(ctype_digit($_POST["puntuacion"])){
+                    if(intval($_POST["puntuacion"])>10 || intval($_POST["puntuacion"])<0) $errores["La puntuacion ha de ser del 0 al 10"];
+                } else $errores["puntuacion"] = "La puntuacion ha de ser un numero integer";
+            } else $errores["puntuacion"] = "La puntuacion no puede estar vacia";
+
+            if($_POST["comentario"]!=""){ if(strlen($_POST["comentario"]) >= 10000) $errores["comentario"] = "El comentario de la valoración no puede tener mas de 10.000 caracteres"; }
+            else $errores["comentario"] = "El comentario no puede estar vacio";
+
+            if($errores!=[]) return back()->withErrors($errores);
+            else {
+                //todo ok, insertamos el comentario
+                return "todo ok, insertamos el comentario";
+            }
+        }
+
         $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
-        $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->get();
+        //buscamos el usuario
+        $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+        $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->where('IDUsuarioFK','<>',$usuario->IDUsuario)->get();
         return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones]);
     }
 

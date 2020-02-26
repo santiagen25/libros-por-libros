@@ -14,14 +14,19 @@
         <div class="enmarcarCuadrado container">
             <div class="row m-4">
                 <div class="mr-4 col-md-3">
-                    <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil">
+                    <div class="d-flex justify-content-center">
+                        <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <input class="botonEditar" type="button" value="Editar">
+                    </div>
                 </div>
 
                 <div class="col-md-8">
                     <div class="row mb-4 mt-2">
                         <div class="col-md-5">
                             <label class="h4">
-                                Nombre de usuario:
+                                Nombre:
                             </label>
                         </div>
                         <div class="pt-1 col-md-5">
@@ -65,8 +70,8 @@
                                 @endif
                             </p>
                         </div>
-                        <div class="col-md-2" id="botonEditarPadre">
-                            <input class="botonEditar" id="botonEditar" onclick="modificarNacimiento()" type="button" value="Editar">
+                        <div class="col-md-2">
+                            <input class="botonEditar" id="botonEditar" onclick="editarNacimiento()" type="button" value="Editar">
                         </div>
                     </div>
 

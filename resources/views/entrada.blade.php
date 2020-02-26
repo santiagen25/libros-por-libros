@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="row col-md-12 m-4">
-                    <div class="row">
+                    <div class="row mr-2">
                         <div class="col-md-3">
                             <label class="h4">
                                 Descripcion:
@@ -105,42 +105,55 @@
                 @endphp
 
                 @if(sizeof(DB::table('valoracion')->where('IDUsuarioFK','=',$id)->where('IDLibroFK','=',$libro->IDLibro)->get()) == 0)
-                    <div class="enmarcarNoticia p-4 mb-5">
-                        <div class="mb-3 row">
-                            <div class="col-md-2">
-                                <p class="h5">
-                                    Titulo de tu valoración:
-                                </p>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="inputEstandar" placeholder="Titulo..." type="text">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-2">
-                                <p class="h5">
-                                    Puntuacion del 0 al 10:
-                                </p>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="inputEstandar" placeholder="5" type="text">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-2">
-                                <p class="h5">
-                                    Comentario sobre el libro:
-                                </p>
+                    <form action="{{ asset('/libro/'.$libro->IDLibro) }}" method="POST">
+                        @csrf
+                        <div class="enmarcarNoticia p-4 mb-5">
+                            <div class="mb-3 row">
+                                <div class="col-md-2">
+                                    <p class="h5">
+                                        Titulo de tu valoración:
+                                    </p>
                                 </div>
-                            <div class="col-md-10">
-                                <textarea class="form-control" rows="5" placeholder="Escribe aqui un comentario sobre el libro..."></textarea>
+                                <div class="col-md-4">
+                                    <input class="inputEstandar" name="titulo" placeholder="Titulo..." type="text">
+                                </div>
+                            </div>
+                            {!! $errors->first('titulo','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}
+                            <div class="mb-3 row">
+                                <div class="col-md-2">
+                                    <p class="h5">
+                                        Puntuacion del 0 al 10:
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="inputEstandar" name="puntuacion" placeholder="5" type="text">
+                                </div>
+                            </div>
+                            {!! $errors->first('puntuacion','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}
+                            <div class="mb-3 row">
+                                <div class="col-md-2">
+                                    <p class="h5">
+                                        Comentario sobre el libro:
+                                    </p>
+                                    </div>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" name="comentario" rows="5" placeholder="Escribe aqui un comentario sobre el libro..."></textarea>
+                                </div>
+                            </div>
+                            {!! $errors->first('comentario','<div class="row ml-1"><div class="text-danger">:message</div></div>') !!}
+                            <div class="d-flex justify-content-center">
+                                <input class="botonEstandar form-control col-md-4" type="submit" value="Publicar Valoración" name="publicarValoracion">
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <input class="botonEstandar form-control col-md-4" type="submit" value="Publicar Valoración">
-                        </div>
-                    </div>
+                    </form>
                 @else
+                <!--Tu valoracion existe y puede ser modificada-->
+
+                    @php
+                        $miusuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+                        $mivaloracion = DB::table('valoracion')->where('IDUsuarioFK','=',$miusuario->IDUsuario)->first();
+                    @endphp
+
                     <div class="enmarcarNoticia p-4 mb-5">
                         <div class="mb-3 row">
                             <div class="col-md-2">
@@ -148,10 +161,13 @@
                                     Titulo de tu valoración:
                                 </p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <p>
-
+                                    {{ $mivaloracion->Titulo }}
                                 </p>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="botonEditar" type="button" value="Editar">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -160,10 +176,13 @@
                                     Puntuacion del 0 al 10:
                                 </p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <p>
-                                    
+                                    {{ $mivaloracion->Puntuacion }}
                                 </p>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="botonEditar" type="button" value="Editar">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -172,12 +191,17 @@
                                     Comentario sobre el libro:
                                 </p>
                                 </div>
-                            <div class="col-md-10">
-                                <textarea class="form-control" placeholder="Escribe aqui un comentario sobre el libro..." readonly rows="5"></textarea>
+                            <div class="col-md-8">
+                                <p>
+                                    {{ $mivaloracion->Comentario }}
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="botonEditar" type="button" value="Editar">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar col-md-4" type="submit" value="Editar valoracion">
+                            <input class="botonEditar col-md-4" type="button" value="Eliminar valoracion">
                         </div>
                     </div>
                 @endif
@@ -186,7 +210,7 @@
                     <div class="enmarcarNoticia mt-3 p-4">
                         <div class="row d-flex justify-content-center">
                             <p class="h5">
-                                Parece que aún no hay ninguna valoración de ningún usuario para este libro
+                                Parece que aún no hay valoraciones de otros usuarios para este libro
                             </p>
                         </div>
                     </div>
@@ -215,19 +239,13 @@
                                     Usuario: 
                                 </div>
                                 <div>
-                                    @if(DB::table('usuario')->where('Email','=',$_SESSION["email"])->first()->IDUsuario == $valoracion->IDUsuarioFK)
-                                        <a href="{{ asset('/configuracion') }}">
-                                            {{ DB::table('usuario')->where('IDUsuario','=',$valoracion->IDUsuarioFK)->first()->Nombre}}
-                                        </a>
-                                    @else
-                                        <a href="{{ asset('/usuario/'.$valoracion->IDUsuarioFK) }}">
-                                            {{ DB::table('usuario')->where('IDUsuario','=',$valoracion->IDUsuarioFK)->first()->Nombre}}
-                                        </a>
-                                    @endif
+                                    <a href="{{ asset('/usuario/'.$valoracion->IDUsuarioFK) }}">
+                                        {{ DB::table('usuario')->where('IDUsuario','=',$valoracion->IDUsuarioFK)->first()->Nombre}}
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-2 ml-2">
                             <div>
                                 Comentario: 
                             </div>

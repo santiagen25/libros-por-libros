@@ -21,7 +21,7 @@
                     <div class="row mb-4 mt-2">
                         <div class="col-md-6">
                             <label class="h4">
-                                Nombre de usuario:
+                                Nombre:
                             </label>
                         </div>
                         <div class="pt-1 col-md-6">
