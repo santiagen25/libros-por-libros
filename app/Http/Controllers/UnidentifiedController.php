@@ -56,7 +56,6 @@ class UnidentifiedController extends Controller
 
             if($_POST["nombre"]!="") { if(strlen($_POST["nombre"]) >= 50) $errores["nombre"] = "El nombre es demasiado largo"; }
             else $errores["nombre"] = "Falta introducir el nombre";
-
             if($_POST["password"]!=""){
                 if(strlen($_POST["password"]) < 50){
                     if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] = "Falta añadir una letra mayuscula. ";
@@ -65,9 +64,7 @@ class UnidentifiedController extends Controller
                     if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
                 } else $errores["password"] = "La contraseña es demasiado larga";
             } else $errores["password"] = "Falta introducir la contraseña";
-
             if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
-
             if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
 
             if($errores!=[]) return back()->withErrors($errores);
@@ -78,7 +75,6 @@ class UnidentifiedController extends Controller
                 );
                 $reg["registroBien"] = "¡Te has registrado con éxito!";
                 return back()->withErrors($reg);
-                //return $_POST["nacimiento"];
             }
         }
         return view('registro');

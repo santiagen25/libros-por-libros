@@ -77,3 +77,7 @@ function editarContraseña(){
         document.getElementById("botonEditar").value = "Editar";
     }
 }
+
+function eliminarCuenta(){
+    //alert("cuidado, vas a eliminar la cuenta!");
+}

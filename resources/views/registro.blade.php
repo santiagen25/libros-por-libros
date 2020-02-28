@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('registro') }}" method="POST">
+<form action="{{ asset('registro') }}" method="POST">
     @csrf
         <div class="d-flex justify-content-center">
             <div class="enmarcarBorde col-md-3">

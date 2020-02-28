@@ -90,6 +90,15 @@
                             <input class="botonEditar" type="button" value="Editar">
                         </div>
                     </div>
+
+                    <div class="row d-flex justify-content-center mt-5">
+                        <form class="col-md-2" method="POST" action="{{ asset('/configuracion') }}">
+                            @csrf
+                            <div class="d-flex justify-content-center">
+                                <input class="botonEditar" id="eliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

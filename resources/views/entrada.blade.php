@@ -99,12 +99,7 @@
                     </h2>
                 </div>
 
-                @php
-                    if(session_status() == PHP_SESSION_NONE) session_start();
-                    $id = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first()->IDUsuario;
-                @endphp
-
-                @if(sizeof(DB::table('valoracion')->where('IDUsuarioFK','=',$id)->where('IDLibroFK','=',$libro->IDLibro)->get()) == 0)
+                @if(sizeof(DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->get()) == 0)
                     <form action="{{ asset('/libro/'.$libro->IDLibro) }}" method="POST">
                         @csrf
                         <div class="enmarcarNoticia p-4 mb-5">
@@ -142,16 +137,15 @@
                             </div>
                             {!! $errors->first('comentario','<div class="row ml-1"><div class="text-danger">:message</div></div>') !!}
                             <div class="d-flex justify-content-center">
-                                <input class="botonEstandar form-control col-md-4" type="submit" value="Publicar Valoración" name="publicarValoracion">
+                                <input class="botonEditar form-control col-md-4" type="submit" value="Publicar Valoración" name="publicarValoracion">
                             </div>
                         </div>
                     </form>
                 @else
                 <!--Tu valoracion existe y puede ser modificada-->
-
                     @php
-                        $miusuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-                        $mivaloracion = DB::table('valoracion')->where('IDUsuarioFK','=',$miusuario->IDUsuario)->first();
+                        if(session_status() == PHP_SESSION_NONE) session_start();
+                        $mivaloracion = DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->first();
                     @endphp
 
                     <div class="enmarcarNoticia p-4 mb-5">
@@ -190,7 +184,7 @@
                                 <p class="h5">
                                     Comentario sobre el libro:
                                 </p>
-                                </div>
+                            </div>
                             <div class="col-md-8">
                                 <p>
                                     {{ $mivaloracion->Comentario }}
@@ -200,9 +194,12 @@
                                 <input class="botonEditar" type="button" value="Editar">
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <input class="botonEditar col-md-4" type="button" value="Eliminar valoracion">
-                        </div>
+                        <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}">
+                            @csrf
+                            <div class="d-flex justify-content-center">
+                                <input class="botonEliminar col-md-4" name="eliminarValoracion" type="submit" value="Eliminar valoracion">
+                            </div>
+                        </form>
                     </div>
                 @endif
 

@@ -61,6 +61,9 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(!isset($_SESSION["email"])) return redirect()->route('login');
 
+        $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
+        $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+
         if(isset($_POST["publicarValoracion"])){
             //Vamos a dejar un comentario
             $errores = [];
@@ -69,7 +72,7 @@ class UsuarioController extends Controller
 
             if($_POST["puntuacion"]!=""){
                 if(ctype_digit($_POST["puntuacion"])){
-                    if(intval($_POST["puntuacion"])>10 || intval($_POST["puntuacion"])<0) $errores["La puntuacion ha de ser del 0 al 10"];
+                    if(intval($_POST["puntuacion"])>10 || intval($_POST["puntuacion"])<0) $errores["puntuacion"] = "La puntuacion ha de ser del 0 al 10";
                 } else $errores["puntuacion"] = "La puntuacion ha de ser un numero integer";
             } else $errores["puntuacion"] = "La puntuacion no puede estar vacia";
 
@@ -79,15 +82,22 @@ class UsuarioController extends Controller
             if($errores!=[]) return back()->withErrors($errores);
             else {
                 //todo ok, insertamos el comentario
-                return "todo ok, insertamos el comentario";
+                DB::table('valoracion')->insert(
+                    ['IDValoracion' => null,
+                    'Titulo' => $_POST["titulo"],
+                    'Comentario' => $_POST["comentario"],
+                    'Puntuacion' => $_POST["puntuacion"],
+                    'IDLibroFK' => $libro->IDLibro,
+                    'IDUsuarioFK' => $usuario->IDUsuario]
+                );
+                return back();
             }
         }
 
-        $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
-        //buscamos el usuario
-        $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+        if(isset($_POST["eliminarValoracion"])) DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->delete();
+
         $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->where('IDUsuarioFK','<>',$usuario->IDUsuario)->get();
-        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones]);
+        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones, 'usuario' => $usuario]);
     }
 
     function usuario($id){

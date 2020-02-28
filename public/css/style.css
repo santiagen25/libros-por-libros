@@ -59,6 +59,27 @@
     border-color: #312a1c;
 }
 
+.botonEliminar {
+    border: 1px solid #ffecb3;
+    background-color:#ff3333;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
+.botonEliminar:hover{
+    border: 1px solid #cc9900;
+    background-color:#ff8080;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
+.botonEliminar:focus{
+    border: 1px solid #664d00;
+    background-color:#800000;
+    border-radius: 10px;
+    border-color: #312a1c;
+}
+
 .inputNav {
     border: 1px solid #b3b3b3;
     border-radius: 5px;
