@@ -34,6 +34,11 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
+            if(isset($_POST["eliminarCuenta"])){
+                DB::table('usuario')->where('Email','=',$_SESSION["email"])->delete();
+                session_unset();
+                return redirect()->route('login');
+            }
             return view('/configuracion',['usuario'=>$usuario]);
         }
         return redirect()->route('login');

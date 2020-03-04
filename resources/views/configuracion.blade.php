@@ -29,13 +29,13 @@
                                 Nombre:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
-                            <p>
+                        <div class="pt-1 col-md-5" id="nombrePadre">
+                            <p id="nombre">
                                 {{$usuario->Nombre}}
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="botonEditar" type="button" value="Editar">
+                            <input class="botonEditar" id="botonNombre" onclick="editarNombre()" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -45,13 +45,13 @@
                                 Email:
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
-                            <p>
+                        <div class="pt-1 col-md-5" id="emailPadre">
+                            <p id="email">
                                 {{$usuario->Email}}
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="botonEditar" type="button" value="Editar">
+                            <input class="botonEditar" id="botonEmail" onclick="editarEmail()" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -71,7 +71,7 @@
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="botonEditar" id="botonEditar" onclick="editarNacimiento()" type="button" value="Editar">
+                            <input class="botonEditar" id="botonNacimiento" onclick="editarNacimiento()" type="button" value="Editar">
                         </div>
                     </div>
 
@@ -81,21 +81,21 @@
                                 Contraseña
                             </label>
                         </div>
-                        <div class="pt-1 col-md-5">
-                            <p>
+                        <div class="pt-1 col-md-5" id="passwordPadre">
+                            <p id="password">
                                 ********
                             </p>
                         </div>
                         <div class="col-md-2">
-                            <input class="botonEditar" type="button" value="Editar">
+                            <input class="botonEditar" id="botonPassword" onclick="editarPassword()" type="button" value="Editar">
                         </div>
                     </div>
 
                     <div class="row d-flex justify-content-center mt-5">
                         <form class="col-md-2" method="POST" action="{{ asset('/configuracion') }}">
                             @csrf
-                            <div class="d-flex justify-content-center">
-                                <input class="botonEditar" id="eliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
+                            <div class="d-flex justify-content-center" id="eliminarPadre">
+                                <input class="botonEditar" id="botonEliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
                             </div>
                         </form>
                     </div>
