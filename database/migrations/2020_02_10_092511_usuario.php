@@ -21,7 +21,7 @@ class Usuario extends Migration
             $table->dateTime('Nacimiento');
             $table->boolean('Bloqueado');
             $table->string('Password',50);
-            $table->string('Imagen',100)->nullable();
+            //$table->string('Imagen',100)->nullable()->autoIncrement();
             $table->timestamps();
         });
     }

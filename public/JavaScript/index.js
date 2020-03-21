@@ -1,3 +1,39 @@
+function swalError(t){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: red;">ERROR</h2>'+
+            '<p class="swalText">'+t+'</p>'+
+            '<input class="botonEstandar py-2 px-4" type="button" value="OK" onclick="swal.close();">',
+        background: '#211c12',
+        showConfirmButton: false
+    })
+}
+
+function swalAtencion(t){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: yellow;">ATENCION</h2>'+
+            '<p class="swalText">'+t+'</p>'+
+            '<input class="botonEstandar py-2 px-4" type="button" value="OK" onclick="swal.close();">',
+        background: '#211c12',
+        showConfirmButton: false
+    })
+}
+
+function swalExito(t){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: green;">ÉXITO</h2>'+
+            '<p class="swalText">'+t+'</p>'+
+            '<input class="botonEstandar py-2 px-4" type="button" value="OK" onclick="swal.close();">',
+        background: '#211c12',
+        showConfirmButton: false
+    })
+}
+
 function editarNombre(){
     if(document.getElementById("botonNombre").value=="Editar"){
         //cambiamos el texto por input
@@ -15,6 +51,18 @@ function editarNombre(){
         
         //cambiamos el boton
         document.getElementById("botonNombre").value = "Editar";
+
+        //hacemos ajax para actualizar los cambios
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+        }
+        xmlhttp.open("POST", "editarNombre.php", true);
+        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("q="+document.getElementById('nombre').innerText);
+        swalExito("Has cambiado tu <b>nombre</b> con éxito");
     }
 }
 
@@ -30,11 +78,28 @@ function editarEmail(){
     } else {
         //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputEmail");
-        act.remove();
-        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>")
-        
-        //cambiamos el boton
-        document.getElementById("botonEmail").value = "Editar";
+        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if(exp.test(act.value)){
+            act.remove();
+            document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>")
+            
+            //cambiamos el boton
+            document.getElementById("botonEmail").value = "Editar";
+
+            //hacemos ajax para actualizar los cambios
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            }
+            xmlhttp.open("POST", "editarEmail.php", true);
+            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("q="+document.getElementById("email").innerText);
+            swalExito("Has cambiado tu email. Ahora para entrar en Libros por Libros tendrás que usar el mail que acabas de introducir");
+        } else {
+            swalError("El formato de <b>Email</b> que has introducido no es correcto");
+        }
     }
 }
 
@@ -50,11 +115,28 @@ function editarNacimiento(){
     } else {
         //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputNacimiento");
-        act.remove();
-        document.getElementById("nacimientoPadre").insertAdjacentHTML("beforeend","<p id='nacimiento'>"+act.value+"</p>")
-        
-        //cambiamos el boton
-        document.getElementById("botonNacimiento").value = "Editar";
+        const exp = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/;
+        if(exp.test(act.value)) {
+            act.remove();
+            document.getElementById("nacimientoPadre").insertAdjacentHTML("beforeend","<p id='nacimiento'>"+act.value+"</p>")
+            
+            //cambiamos el boton
+            document.getElementById("botonNacimiento").value = "Editar";
+
+            //hacemos ajax para actualizar los cambios
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            }
+            xmlhttp.open("POST", "editarNacimiento.php", true);
+            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("q="+document.getElementById("nacimiento").innerText);
+            swalExito("Has cambiado tu <b>Fecha de Nacimiento</b> con éxito");
+        } else {
+            swalError("El formato de <b>Fecha de Nacimiento</b> que has introducido no es correcto");
+        }
     }
 }
 
@@ -63,23 +145,89 @@ function editarPassword(){
         //cambiamos el texto por input
         const nac = document.getElementById("password");
         nac.remove();
-        document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputPassword' type='text' value='"+nac.innerText.trim()+"'>")
-        
+        document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='passActual' placeholder='Contraseña actual...' type='password'>");
+        document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='nuevaPass' placeholder='Nueva contraseña...' type='password'>");
+        document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='repitePass' placeholder='Repite la contraseña...' type='password'>");
         //cambiamos el boton
         document.getElementById("botonPassword").value = "Guardar";
     } else {
         //enviamos la info a la base de datos por ajax
-        const act = document.getElementById("inputPassword");
-        act.remove();
-        document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<p id='password'>"+act.value+"</p>")
-        
-        //cambiamos el boton
-        document.getElementById("botonPassword").value = "Editar";
+        const actual = document.getElementById("passActual");
+        const nueva = document.getElementById("nuevaPass");
+        const repetida = document.getElementById("repitePass");
+        const act = actual.value;
+        const nue = nueva.value;
+        const rep = repetida.value;
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+        }
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState==4){
+                const pass = this.responseText;
+                if(act==pass){
+                    if(pass!=nue){
+                        const expA = /[A-Z]/;
+                        if(expA.test(nue)){
+                            const expa = /[a-z]/;
+                            if(expa.test(nue)){
+                                const exp1 = /[0-9]/;
+                                if(exp1.test(nue)){
+                                    if(nue.length<50 && nue.length>5){
+                                        if(nue==rep){
+                                            actual.remove();
+                                            nueva.remove();
+                                            repetida.remove();
+                                            document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<p id='password'>********</p>")
+                                            
+                                            //cambiamos el boton
+                                            document.getElementById("botonPassword").value = "Editar";
+                                            
+                                            //hacemos ajax para actualizar los cambios
+                                            if(window.XMLHttpRequest){
+                                                xmlhttp2 = new XMLHttpRequest(); //nuevos navegadores
+                                            } else {
+                                                xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+                                            }
+                                            xmlhttp2.open("POST", "editarPassword.php", true);
+                                            xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                                            xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                            xmlhttp2.send("q="+nue);
+                                            swalExito("La <b>contraseña</b> ha sido cambiada con éxito");
+                                        } else swalError("La <b>nueva contraseña</b> no encaja con la contraseña repetida");
+                                    } else swalError("La <b>nueva contraseña</b> ha de contener de 5 a 50 caracteres");
+                                } else swalError("La <b>nueva contraseña</b> ha de tener un numero");
+                            } else swalError("La <b>nueva contraseña</b> ha de tener una letra minuscula");
+                        } else swalError("La <b>nueva contraseña</b> ha de tener una letra mayuscula");
+                    } else swalError("La <b>contraseña</b> no puede ser la misma que la anterior");
+                } else swalError("La <b>contraseña</b> introducida no es la actual");
+            }
+        }
+        xmlhttp.open("POST", "getPassword.php", true);
+        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("q=Test");
     }
 }
 
 function eliminarCuenta(){
-    const elim = document.getElementById("botonEliminarCuenta");
-    elim.remove();
-    const pad = document.getElementById("eliminarPadre").insertAdjacentHTML("beforeend","<input class='botonEliminar' type='submit' name='eliminarCuenta' value='Seguro, Eliminar Cuenta'>");
+    document.getElementById("botonEliminarCuenta").remove();
+    document.getElementById("eliminarPadre").insertAdjacentHTML("beforeend","<input class='botonEliminar' id='eliminarCuentaConfirmar' type='submit' name='eliminarCuenta' value='Seguro, Eliminar Cuenta'>");
+    swalAtencion("Estás a un paso de <b>eliminar</b> tu cuenta de Libros por Libros");
+}
+
+function editarImagen(){
+    const btn = document.getElementById("botonImagen");
+    if(btn.value=="Editar"){
+        const img = document.getElementById("fotoPerfil");
+        img.remove();
+        document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<input class='form-control-file' type='file' id='archivoImagen'>");
+        btn.value = "Guardar";
+    } else {
+        const file = document.getElementById("archivoImagen");
+        file.remove();
+        document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<img src='{{asset('images\default-profile.png')}}' class='rounded img-fluid' alt='Foto de Perfil' id='fotoPerfil'>");
+        btn.value = "Editar";
+    }
 }

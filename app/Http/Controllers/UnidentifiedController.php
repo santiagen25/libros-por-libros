@@ -22,6 +22,7 @@ class UnidentifiedController extends Controller
             //vamos a logearnos
             if(isset($_POST["email"]) && $_POST["email"]!="" && isset($_POST["password"]) && $_POST["password"]!=""){
                 $contraseña = DB::table('usuario')->select('password')->where('Email','=',$_POST["email"])->first();
+                if($contraseña=="") return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
                 if($contraseña->password==$_POST["password"]){
                     $block = DB::table('usuario')->select('bloqueado')->where('Email','=',$_POST["email"])->first();
                     if($block->bloqueado == 0){
@@ -58,8 +59,8 @@ class UnidentifiedController extends Controller
             else $errores["nombre"] = "Falta introducir el nombre";
             if($_POST["password"]!=""){
                 if(strlen($_POST["password"]) < 50){
-                    if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] = "Falta añadir una letra mayuscula. ";
-                    if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minuscula. ";
+                    if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] = "Falta añadir una letra mayúscula. ";
+                    if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minúscula. ";
                     if(!preg_match('/[0-9]/', $_POST["password"])) $errores["password"] .= "Falta añadir un numero. ";
                     if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
                 } else $errores["password"] = "La contraseña es demasiado larga";

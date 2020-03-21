@@ -20,3 +20,10 @@ Route::any('/resultados','UsuarioController@resultados');
 Route::any('/libro/{id}','UsuarioController@entrada');
 Route::any('/registro','UnidentifiedController@registro')->name('registro');
 Route::any('/usuario/{id}','UsuarioController@usuario')->name('registro');
+
+//rutas ajax
+Route::any('editarNombre.php', 'AjaxController@ajaxEditarNombre')->name('editarNombre');
+Route::any('editarEmail.php', 'AjaxController@ajaxEditarEmail')->name('editarEmail');
+Route::any('editarNacimiento.php', 'AjaxController@ajaxEditarNacimiento')->name('editarNacimiento');
+Route::any('getPassword.php', 'AjaxController@ajaxGetPassword')->name('getPassword');
+Route::any('editarPassword.php', 'AjaxController@ajaxEditarPassword')->name('editarPassword');

@@ -14,11 +14,11 @@
         <div class="enmarcarCuadrado container">
             <div class="row m-4">
                 <div class="mr-4 col-md-3">
-                    <div class="d-flex justify-content-center">
-                        <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil">
+                    <div class="d-flex justify-content-center" id="imagenPadre">
+                        <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil" id="fotoPerfil">
                     </div>
                     <div class="d-flex justify-content-center mt-3">
-                        <input class="botonEditar" type="button" value="Editar">
+                        <input class="botonEditar" id="botonImagen" onclick="editarImagen()" type="button" value="Editar">
                     </div>
                 </div>
 
@@ -66,7 +66,9 @@
                                 @if($usuario->Nacimiento==null)
                                     N/A
                                 @else
-                                    {{$usuario->Nacimiento}}
+                                    @php
+                                        echo explode(" ", $usuario->Nacimiento)[0]
+                                    @endphp
                                 @endif
                             </p>
                         </div>
@@ -94,8 +96,11 @@
                     <div class="row d-flex justify-content-center mt-5">
                         <form class="col-md-2" method="POST" action="{{ asset('/configuracion') }}">
                             @csrf
-                            <div class="d-flex justify-content-center" id="eliminarPadre">
+                            <div class="d-flex justify-content-center">
                                 <input class="botonEditar" id="botonEliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
+                            </div>
+                            <div class="d-flex justify-content-center" id="eliminarPadre">
+
                             </div>
                         </form>
                     </div>
