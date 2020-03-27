@@ -55,6 +55,7 @@ class LoginController extends Controller
             session_start();
             if(isset($_SESSION["email"])) return "está seteada en el controller";
             $_SESSION["email"] = $email;
+            $_SESSION["admin"] = $contraseña->esAdmin;
             return view('/inicio',['usuario'=>$usuario]);
         }else{
             return back()

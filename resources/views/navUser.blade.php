@@ -17,6 +17,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{asset('biblioteca')}}">Mis Libros</a>
             </li>
+            @php
+                if(session_status() == PHP_SESSION_NONE) session_start();
+                if($_SESSION["admin"]==1) echo "<li class='nav-item'><a class='nav-link' href=".asset('listado').">Listar Usuarios</a></li>";
+            @endphp
         </ul>
         <form action="{{asset('resultados/')}}" class="form-inline my-2 my-lg-0" method="GET">
             <input class="form-control mr-sm-2" name="buscador" type="search" placeholder="Buscar libro..." aria-label="Search">

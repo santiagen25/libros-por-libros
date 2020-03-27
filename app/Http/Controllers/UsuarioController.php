@@ -111,4 +111,16 @@ class UsuarioController extends Controller
         $usuario = DB::table('usuario')->where('IDUsuario','=',$id)->first();
         return view('usuario',['usuario' => $usuario]);
     }
+
+    function listado(){
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"])){
+            $usuarios = DB::table('usuario')->get();
+            //hay que mirar si es admin (está guardado en sessions)
+            $admin = $_SESSION["admin"] == 1 ? 1 : 0;
+            if($admin==1) return view('listado',['usuarios'=>$usuarios,'admin'=>$admin]);
+            return redirect()->route('inicio');
+        }
+        return redirect()->route('login');
+    }
 }

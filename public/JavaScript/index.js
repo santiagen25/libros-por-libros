@@ -46,23 +46,26 @@ function editarNombre(){
     } else {
         //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputNombre");
-        act.remove();
-        document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<p id='nombre'>"+act.value+"</p>")
-        
-        //cambiamos el boton
-        document.getElementById("botonNombre").value = "Editar";
 
-        //hacemos ajax para actualizar los cambios
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-        }
-        xmlhttp.open("POST", "editarNombre.php", true);
-        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("q="+document.getElementById('nombre').innerText);
-        swalExito("Has cambiado tu <b>nombre</b> con éxito");
+        if(act.value != ""){
+            act.remove();
+            document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<p id='nombre'>"+act.value+"</p>")
+            
+            //cambiamos el boton
+            document.getElementById("botonNombre").value = "Editar";
+
+            //hacemos ajax para actualizar los cambios
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            }
+            xmlhttp.open("POST", "editarNombre.php", true);
+            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("q="+document.getElementById('nombre').innerText);
+            swalExito("Has cambiado tu <b>nombre</b> con éxito");
+        } else swalError("El <b>Nombre</b> de Usuario no puede estar vacio");
     }
 }
 
@@ -226,8 +229,130 @@ function editarImagen(){
         btn.value = "Guardar";
     } else {
         const file = document.getElementById("archivoImagen");
+
+        //ajax para guardar la foto
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+        }
+        if(file.files[0].type=="image/jpeg") console.log("tiene el formato correcto");
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4) console.log(this.responseText);
+        }
+        xmlhttp.open("POST", "editarImagen.php", true);
+        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("q="+file.files[0]);
+
         file.remove();
         document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<img src='{{asset('images\default-profile.png')}}' class='rounded img-fluid' alt='Foto de Perfil' id='fotoPerfil'>");
         btn.value = "Editar";
+    }
+}
+
+function editarTitulo(){
+    if(document.getElementById("botonTitulo").value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("titulo");
+        nac.remove();
+        document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputTitulo' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonTitulo").value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputTitulo");
+
+        if(act.value != ""){
+            if(act.value.length < 50){
+                act.remove();
+                document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<p id='titulo'>"+act.value+"</p>")
+                
+                //cambiamos el boton
+                document.getElementById("botonTitulo").value = "Editar";
+                
+                //hacemos ajax para actualizar los cambios
+                const url = document.URL;
+                if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+                else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+                xmlhttp.open("POST", "/editarTitulo.php", true);
+                xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("q="+document.getElementById('titulo').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                swalExito("Has cambiado el <b>Titulo</b> de tu Valoración con éxito");
+            } else swalError("El <b>Titulo</b> de la Valoración no upede tener mas de 50 carácteres");
+        } else swalError("El <b>Titulo</b> de la Valoración no puede estar vacio");
+    }
+}
+
+function editarPuntuacion(){
+    if(document.getElementById("botonPuntuacion").value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("puntuacion");
+        nac.remove();
+        document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputPuntuacion' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonPuntuacion").value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputPuntuacion");
+
+        if(act.value != ""){
+            const exp = /^[0-9]$|^10$/;
+            if(exp.test(act.value)){
+                act.remove();
+                document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<p id='puntuacion'>"+act.value+"</p>")
+                
+                //cambiamos el boton
+                document.getElementById("botonPuntuacion").value = "Editar";
+                
+                //hacemos ajax para actualizar los cambios
+                const url = document.URL;
+                if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+                else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+                xmlhttp.open("POST", "/editarPuntuacion.php", true);
+                xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("q="+document.getElementById('puntuacion').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                swalExito("Has cambiado la <b>Puntuacion</b> de tu Valoración con éxito");
+            } else swalError("La <b>Puntuacion</b> de la Valoración ha de ser un numero integer del 0 al 10");
+        } else swalError("La <b>Puntuacion</b> de la Valoración no puede estar vacio");
+    }
+}
+
+function editarComentario(){
+    if(document.getElementById("botonComentario").value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("comentario");
+        nac.remove();
+        document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputComentario' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonComentario").value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputComentario");
+
+        if(act.value != ""){
+            if(act.value.length < 10000){
+                act.remove();
+                document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<p id='comentario'>"+act.value+"</p>")
+                
+                //cambiamos el boton
+                document.getElementById("botonComentario").value = "Editar";
+                
+                //hacemos ajax para actualizar los cambios
+                const url = document.URL;
+                if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+                else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+                xmlhttp.open("POST", "/editarComentario.php", true);
+                xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("q="+document.getElementById('comentario').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                swalExito("Has cambiado el <b>Comentario</b> de tu Valoración con éxito");
+            } else swalError("El <b>Comentario</b> de la Valoración no upede tener mas de 10000 carácteres");
+        } else swalError("El <b>Comentario</b> de la Valoración no puede estar vacio");
     }
 }

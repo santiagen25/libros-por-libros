@@ -21,14 +21,15 @@ class UnidentifiedController extends Controller
         if(isset($_POST["entrar"])){
             //vamos a logearnos
             if(isset($_POST["email"]) && $_POST["email"]!="" && isset($_POST["password"]) && $_POST["password"]!=""){
-                $contraseña = DB::table('usuario')->select('password')->where('Email','=',$_POST["email"])->first();
+                $contraseña = DB::table('usuario')->where('Email','=',$_POST["email"])->first();
                 if($contraseña=="") return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
-                if($contraseña->password==$_POST["password"]){
+                if($contraseña->Password==$_POST["password"]){
                     $block = DB::table('usuario')->select('bloqueado')->where('Email','=',$_POST["email"])->first();
                     if($block->bloqueado == 0){
                         //todo bien, todo correcto
                         if(session_status() == PHP_SESSION_NONE) session_start();
                         $_SESSION["email"] = $_POST["email"];
+                        $_SESSION["admin"] = $contraseña->esAdmin;
                         return redirect()->route('inicio');
                     } return back()->withErrors(['block' => 'Tu usuario ha sido bloqueado por algún motivo. Por favor, contacta con un administrador.']);
                 }

@@ -155,13 +155,13 @@
                                     Titulo de tu valoración:
                                 </p>
                             </div>
-                            <div class="col-md-8">
-                                <p>
+                            <div class="col-md-8" id="tituloPadre">
+                                <p id="titulo">
                                     {{ $mivaloracion->Titulo }}
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <input class="botonEditar" type="button" value="Editar">
+                                <input class="botonEditar" id="botonTitulo" onclick="editarTitulo()" type="button" value="Editar">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -170,13 +170,13 @@
                                     Puntuacion del 0 al 10:
                                 </p>
                             </div>
-                            <div class="col-md-8">
-                                <p>
+                            <div class="col-md-8" id="puntuacionPadre">
+                                <p id="puntuacion">
                                     {{ $mivaloracion->Puntuacion }}
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <input class="botonEditar" type="button" value="Editar">
+                                <input class="botonEditar" id="botonPuntuacion" onclick="editarPuntuacion()" type="button" value="Editar">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -185,13 +185,13 @@
                                     Comentario sobre el libro:
                                 </p>
                             </div>
-                            <div class="col-md-8">
-                                <p>
+                            <div class="col-md-8" id="comentarioPadre">
+                                <p id="comentario">
                                     {{ $mivaloracion->Comentario }}
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <input class="botonEditar" type="button" value="Editar">
+                                <input class="botonEditar" id="botonComentario" onclick="editarComentario()" type="button" value="Editar">
                             </div>
                         </div>
                         <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}">
