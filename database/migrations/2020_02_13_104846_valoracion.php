@@ -18,6 +18,7 @@ class Valoracion extends Migration
             $table->string('Titulo',50);
             $table->string('Comentario',10000);
             $table->integer('Puntuacion');
+            $table->integer('MeGusta');
             $table->bigInteger('IDLibroFK')->unsigned();
             $table->foreign('IDLibroFK')->references('IDLibro')->on('Libro')->onDelete('cascade');
             $table->bigInteger('IDUsuarioFK')->unsigned();

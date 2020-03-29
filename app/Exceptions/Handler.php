@@ -46,6 +46,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($this->isHttpException($exception)){
+            $code = $exception->getStatusCode();
+            if($code=='404'){
+                return response()->view('404');
+            } /*else {
+                return response()->view('errorTotal');
+            }*/
+        } /*else {
+            return response()->view('errorTotal');
+        }*/
+        //si activamos estos else, cualquier error que haya en la página se notificará
+        //como error del servidor de libros por libros.
+        //Los usuarios nunca veran que error ha tenido el servidor.
+        //Usar esto en presentaciones importantes, ya que es muy radical y priva de ver errores
         return parent::render($request, $exception);
     }
 }

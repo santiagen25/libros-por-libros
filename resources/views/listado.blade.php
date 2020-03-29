@@ -23,23 +23,30 @@
                 <h3 class="d-flex justify-content-center">No hay resultados para esta busqueda que has hecho</h3>
             @endif
 
+            {!! $errors->first('errorImagen','<div class="text-danger d-flex justify-content-center h4">:message</div>') !!}
+            {!! $errors->first('successEliminar','<div class="text-success d-flex justify-content-center h4">:message</div>') !!}
+
             @foreach($usuarios as $usuario)
                 <div class="enmarcarNoticia row">
                     <div class="row m-4 col-md-12">
                         <div class="mr-4 col-md-2">
-                            {{-- <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de perfil"> --}}
-                            <div class="row col-md-12">
-                            @php
-                                if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                                else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                            @endphp
-                            </div>
-                            <div class="row col-md-12 d-flex justify-content-center my-4">
-                                <input class="botonEditar" value="Editar" type="button">
-                            </div>
+                            <form action="/listado" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                {{-- <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de perfil"> --}}
+                                <div class="row col-md-12" id="imagenPadre_{{$usuario->IDUsuario}}">
+                                    @php
+                                        if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                        else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                        else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                        else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                        else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                    @endphp
+                                </div>
+                                <div class="row col-md-12 d-flex justify-content-center my-4" id="botonImagenPadre_{{$usuario->IDUsuario}}">
+                                    <input class="botonEditar" id="botonImagen_{{$usuario->IDUsuario}}" onclick="editarImagenLista({{$usuario->IDUsuario}})" value="Editar" type="button">
+                                </div>
+                                <input type="hidden" name="id" value="{{$usuario->IDUsuario}}">
+                            </form>
                         </div>
 
                         <div class="col-md-9">
@@ -165,9 +172,10 @@
                     </div>
 
                     <div class="row m-4 col-md-12 d-flex justify-content-center">
-                        <form method="POST" action="{{ asset('/listado') }}">
+                        <form method="POST" action="{{ asset('/listado') }}" id="eliminarPadre_{{$usuario->IDUsuario}}">
                             @csrf
-                            <input class="botonEditar" onclick="eliminarCuentaLista({{$usuario->IDUsuario}})" type="button" value="Eliminar Cuenta">
+                            <input class="botonEditar" id="botonEliminarCuenta_{{$usuario->IDUsuario}}" onclick="eliminarCuentaLista({{$usuario->IDUsuario}})" type="button" value="Eliminar Cuenta">
+                            <input type="hidden" name="id" value="{{$usuario->IDUsuario}}">
                         </form>
                     </div>
                 </div>

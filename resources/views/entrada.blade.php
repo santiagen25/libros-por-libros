@@ -215,25 +215,35 @@
                 @foreach($valoraciones as $valoracion)
                     <div class="enmarcarNoticia mt-3 p-4">
                         <div class="row">
-                            <div class="col-md-4 mb-2">
+                            <div class="col-md-3 mb-2">
                                 <div>
-                                    Titulo: 
+                                    <p class="h6">
+                                        Titulo:
+                                    </p> 
                                 </div>
                                 <div>
-                                    {{ $valoracion->Titulo}}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div>
-                                    Puntuacion: 
-                                </div>
-                                <div>
-                                    {{ $valoracion->Puntuacion}}
+                                    <p>
+                                        {{ $valoracion->Titulo}}
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div>
-                                    Usuario: 
+                                    <p class="h6">
+                                        Puntuacion: 
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        {{ $valoracion->Puntuacion}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <p class="h6">
+                                        Usuario:
+                                    </p> 
                                 </div>
                                 <div>
                                     <a href="{{ asset('/usuario/'.$valoracion->IDUsuarioFK) }}">
@@ -241,12 +251,26 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <p class="h6">
+                                        Likes:
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        0
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="row mt-2 ml-2">
-                            <div>
-                                Comentario: 
+                            <div class="col-md-2">
+                                <p class="h6">
+                                    Comentario: 
+                                </p>
                             </div>
-                            <div>
+                            <div class="col-md-10">
                                 {{ $valoracion->Comentario }}
                             </div>
                         </div>

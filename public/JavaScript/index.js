@@ -252,6 +252,7 @@ function editarImagen(){
     document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<input class='form-control-file' name='imagen' type='file' id='imagen'>");
     document.getElementById("botonImagen").remove();
     document.getElementById("botonImagenPadre").insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'>");
+    swalAtencion("Cuando hagas click en el boton <b>Guardar</b> la pagina se refrescará. Asegurate de guardar todos los cambios en otros campos antes de guardar la imagen");
 }
 
 function editarTitulo(){
@@ -494,7 +495,7 @@ function deshacerAdmin(id) {
 
     const p = document.getElementById("isAdmin_"+id);
     p.innerText = "No";
-    swalExito("El usuario con ID "+id+" ya no es Administrador");
+    swalExito("El usuario con ID "+id+" ya no es Administrador. Para que este cambio se haga efectivo el usuario deberá cerrar sesion y volver a iniciarla.");
 }
 
 function hacerAdmin(id) {
@@ -502,7 +503,7 @@ function hacerAdmin(id) {
 
     const p = document.getElementById("isAdmin_"+id);
     p.innerText = "Si";
-    swalExito("El usuario con ID "+id+" ahora es Administrador");
+    swalExito("El usuario con ID "+id+" ahora es Administrador. Para que este cambio se haga efectivo el usuario deberá cerrar sesion y volver a iniciarla.");
 }
 
 function editarBloqueadoLista(id) {
@@ -533,4 +534,18 @@ function peticionAdminYBlock(archivo,valor,id){
     xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("admin="+valor+"&id="+id);
+}
+
+function editarImagenLista(id){
+    document.getElementById("fotoPerfil_"+id).remove();
+    document.getElementById("imagenPadre_"+id).insertAdjacentHTML("beforeend","<input class='form-control-file' name='imagen' type='file' id='imagen'>");
+    document.getElementById("botonImagen_"+id).remove();
+    document.getElementById("botonImagenPadre_"+id).insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'>");
+    swalAtencion("Cuando hagas click en el boton <b>Guardar</b> la pagina se refrescará. Asegurate de guardar todos los cambios en otros campos antes de guardar la imagen");
+}
+
+function eliminarCuentaLista(id){
+    document.getElementById("botonEliminarCuenta_"+id).remove();
+    document.getElementById("eliminarPadre_"+id).insertAdjacentHTML("beforeend","<input class='botonEliminar' id='eliminarCuentaConfirmar' type='submit' name='eliminarCuenta' value='Seguro, Eliminar Cuenta'>");
+    swalAtencion("Estás a un paso de <b>eliminar</b> esta cuenta de Libros por Libros");
 }

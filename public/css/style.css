@@ -189,7 +189,7 @@ footer {
 body{
     /*main color: #a28e5d*/
     background-color: #b6a57c;
-    font-family: Lucida;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 a {

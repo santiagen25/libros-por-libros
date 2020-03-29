@@ -22,7 +22,7 @@ class UnidentifiedController extends Controller
             //vamos a logearnos
             if(isset($_POST["email"]) && $_POST["email"]!="" && isset($_POST["password"]) && $_POST["password"]!=""){
                 $contraseña = DB::table('usuario')->where('Email','=',$_POST["email"])->first();
-                if($contraseña=="") return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
+                if($contraseña=="") return back()->withErrors(['email' => 'Este email no está dado de alta']);
                 if($contraseña->Password==$_POST["password"]){
                     $block = DB::table('usuario')->select('bloqueado')->where('Email','=',$_POST["email"])->first();
                     if($block->bloqueado == 0){
@@ -35,7 +35,7 @@ class UnidentifiedController extends Controller
                     } return back()->withErrors(['block' => 'Tu usuario ha sido bloqueado por algún motivo. Por favor, contacta con un administrador.']);
                 }
             } else if($_POST["email"]=="" || $_POST["password"]=="") return back()->withErrors(['email' => 'Te falta rellenar el campo del email o de la contraseña']);
-            return back()->withErrors(['email' => 'Este email no está dado de alta o la contraseña es incorrecta']);
+            return back()->withErrors(['email' => 'La contraseña es incorrecta']);
             /*if($_POST["password"]!="") return view('/inicio');
             return view('/inicio');*/
         }

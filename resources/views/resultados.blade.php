@@ -18,7 +18,7 @@
 
             @foreach($resultados as $resultado)
                 <div class="enmarcarNoticia row">
-                    <div class="row m-4">
+                    <div class="row m-4 col-md-12">
                         <div class="mr-4 col-md-3">
                             <a href="{{ asset('/libro/'.$resultado->IDLibro) }}">
                                 <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid" alt="Portada del libro">
