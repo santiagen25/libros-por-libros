@@ -1,5 +1,4 @@
 @section('header')
-<script src="{{ asset('js/navUser.js') }}"></script>
 
 <nav class="navbar navbar-expand-lg navegacion">
     <a class="navbar-brand" href="{{asset('inicio')}}">Libros por Libros <img src="{{asset('images\icons\WebTabW.png')}}" alt="mainIcon"></a>
@@ -19,7 +18,7 @@
             </li>
             @php
                 if(session_status() == PHP_SESSION_NONE) session_start();
-                if($_SESSION["admin"]==1) echo "<li class='nav-item'><a class='nav-link' href=".asset('listado').">Listar Usuarios</a></li>";
+                if($_SESSION["admin"]==1) echo "<li class='nav-item'><a class='nav-link' href=".asset('listado').">Listar Usuarios</a></li><li class='nav-item'><a class='nav-link' href=".asset('nuevo-libro').">Subir Libro</a></li>";
             @endphp
         </ul>
         <form action="{{asset('resultados/')}}" class="form-inline my-2 my-lg-0" method="GET">
@@ -28,7 +27,16 @@
         </form>
 
         <div class="btn-group">
-            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown"><img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"></button>
+            <button class="" type="button" style="background-color:transparent; border-color:transparent;" data-toggle="dropdown">
+                {{-- <img src="{{asset('images\default-profile.png')}}" alt="fotoPerfil" class="avatar"> --}}
+                @php
+                    if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".jpg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.jpg')."\" class=\"avatar\" alt=\"fotoPerfil\">";
+                    else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.jpeg')."\" class=\"avatar\" alt=\"fotoPerfil\"";
+                    else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.png')."\" class=\"avatar\" alt=\"fotoPerfil\">";
+                    else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.gif')."\" class=\"avatar\" alt=\"fotoPerfil\">";
+                    else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"avatar\" alt=\"fotoPerfil\">";
+                @endphp
+            </button>
             <div class="dropdown-menu dropdown-menu-right" id="desplegableNabBar">
                 <form action="{{asset('configuracion')}}" method="POST">
                     @csrf

@@ -34,6 +34,21 @@ function swalExito(t){
     })
 }
 
+function swalConfirmacion(t,r){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: Blue;">Confirmación</h2>'+
+            '<p class="swalText">'+t+'</p>'+
+            '<input aria-label class="botonEstandar py-2 px-4" type="button" value="Aceptar" onclick="'+r+';">'+
+            '<input class="botonEstandar py-2 px-4" type="button" value="Cancelar" onclick="swal.close();">',
+        background: '#211c12',
+        showConfirmButton: false
+    }).then((result) => {
+        console.log(result);
+    })
+}
+
 function editarNombre(){
     if(document.getElementById("botonNombre").value=="Editar"){
         //cambiamos el texto por input
@@ -83,23 +98,35 @@ function editarEmail(){
         const act = document.getElementById("inputEmail");
         const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if(exp.test(act.value)){
-            act.remove();
-            document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>")
-            
-            //cambiamos el boton
-            document.getElementById("botonEmail").value = "Editar";
+            if(window.XMLHttpRequest) xmlhttp2 = new XMLHttpRequest();
+            else xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlhttp2.open("POST", "comprobarEmail.php", true);
+            xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp2.send("q="+act.value);
 
-            //hacemos ajax para actualizar los cambios
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            xmlhttp2.onreadystatechange = function(){
+                if(this.readyState==4){
+                    if(this.responseText==0){
+                        act.remove();
+                        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>")
+                        
+                        //cambiamos el boton
+                        document.getElementById("botonEmail").value = "Editar";
+
+                        //hacemos ajax para actualizar los cambios
+                        if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
+                        else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        xmlhttp.open("POST", "editarEmail.php", true);
+                        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xmlhttp.send("q="+document.getElementById("email").innerText);
+                        swalExito("Has cambiado tu email. Ahora para entrar en Libros por Libros tendrás que usar el mail que acabas de introducir");
+                    } else {
+                        swalError("El <b>Email</b> que has introducido ya está registrado en la página web");
+                    }
+                }
             }
-            xmlhttp.open("POST", "editarEmail.php", true);
-            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("q="+document.getElementById("email").innerText);
-            swalExito("Has cambiado tu email. Ahora para entrar en Libros por Libros tendrás que usar el mail que acabas de introducir");
         } else {
             swalError("El formato de <b>Email</b> que has introducido no es correcto");
         }
@@ -221,34 +248,10 @@ function eliminarCuenta(){
 }
 
 function editarImagen(){
-    const btn = document.getElementById("botonImagen");
-    if(btn.value=="Editar"){
-        const img = document.getElementById("fotoPerfil");
-        img.remove();
-        document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<input class='form-control-file' type='file' id='archivoImagen'>");
-        btn.value = "Guardar";
-    } else {
-        const file = document.getElementById("archivoImagen");
-
-        //ajax para guardar la foto
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-        }
-        if(file.files[0].type=="image/jpeg") console.log("tiene el formato correcto");
-        xmlhttp.onreadystatechange = function(){
-            if(this.readyState == 4) console.log(this.responseText);
-        }
-        xmlhttp.open("POST", "editarImagen.php", true);
-        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("q="+file.files[0]);
-
-        file.remove();
-        document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<img src='{{asset('images\default-profile.png')}}' class='rounded img-fluid' alt='Foto de Perfil' id='fotoPerfil'>");
-        btn.value = "Editar";
-    }
+    document.getElementById("fotoPerfil").remove();
+    document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<input class='form-control-file' name='imagen' type='file' id='imagen'>");
+    document.getElementById("botonImagen").remove();
+    document.getElementById("botonImagenPadre").insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'>");
 }
 
 function editarTitulo(){
@@ -355,4 +358,179 @@ function editarComentario(){
             } else swalError("El <b>Comentario</b> de la Valoración no upede tener mas de 10000 carácteres");
         } else swalError("El <b>Comentario</b> de la Valoración no puede estar vacio");
     }
+}
+
+function editarNombreLista(id) {
+    if(document.getElementById("botonNombre_"+id).value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("nombre_"+id);
+        nac.remove();
+        document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputNombre_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonNombre_"+id).value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputNombre_"+id);
+
+        if(act.value != ""){
+            act.remove();
+            document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<p id='nombre_"+id+"'>"+act.value+"</p>")
+            
+            //cambiamos el boton
+            document.getElementById("botonNombre_"+id).value = "Editar";
+
+            //hacemos ajax para actualizar los cambios
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            }
+            xmlhttp.open("POST", "editarNombre.php", true);
+            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("q="+document.getElementById('nombre_'+id).innerText+"&id="+id);
+            swalExito("Has cambiado el <b>nombre</b> del Usuario con ID "+id+" con éxito");
+        } else swalError("El <b>Nombre</b> de Usuario no puede estar vacio");
+    }
+}
+
+function editarEmailLista(id) {
+    if(document.getElementById("botonEmail_"+id).value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("email_"+id);
+        nac.remove();
+        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputEmail_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonEmail_"+id).value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputEmail_"+id);
+        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if(exp.test(act.value)){
+            if(window.XMLHttpRequest) xmlhttp2 = new XMLHttpRequest();
+            else xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlhttp2.open("POST", "comprobarEmail.php", true);
+            xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp2.send("q="+act.value+"&id="+id);
+
+            xmlhttp2.onreadystatechange = function(){
+                if(this.readyState==4){
+                    if(this.responseText==0){
+                        act.remove();
+                        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<p id='email_"+id+"'>"+act.value+"</p>")
+                        
+                        //cambiamos el boton
+                        document.getElementById("botonEmail_"+id).value = "Editar";
+
+                        //hacemos ajax para actualizar los cambios
+                        if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
+                        else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        xmlhttp.open("POST", "editarEmail.php", true);
+                        xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+                        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xmlhttp.send("q="+document.getElementById("email_"+id).innerText+"&id="+id);
+                        swalExito("Has cambiado el email del Usuario con ID "+id+". Ahora para entrar en Libros por Libros este Usuario tendrá que usar el mail que acabas de introducir");
+                    } else {
+                        swalError("El <b>Email</b> que has introducido ya está registrado en la página web");
+                    }
+                }
+            }
+        } else {
+            swalError("El formato de <b>Email</b> que has introducido no es correcto");
+        }
+    }
+}
+
+function editarNacimientoLista(id) {
+    if(document.getElementById("botonNacimiento_"+id).value=="Editar"){
+        //cambiamos el texto por input
+        const nac = document.getElementById("nacimiento_"+id);
+        nac.remove();
+        document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12 mb-2' id='inputNacimiento_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
+        
+        //cambiamos el boton
+        document.getElementById("botonNacimiento_"+id).value = "Guardar";
+    } else {
+        //enviamos la info a la base de datos por ajax
+        const act = document.getElementById("inputNacimiento_"+id);
+        const exp = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/;
+        if(exp.test(act.value)) {
+            act.remove();
+            document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<p id='nacimiento_"+id+"'>"+act.value+"</p>")
+            
+            //cambiamos el boton
+            document.getElementById("botonNacimiento_"+id).value = "Editar";
+
+            //hacemos ajax para actualizar los cambios
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            }
+            xmlhttp.onreadystatechange = function() {
+                console.log(this.responseText);
+            }
+            xmlhttp.open("POST", "editarNacimiento.php", true);
+            xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("q="+document.getElementById("nacimiento_"+id).innerText+"&id="+id);
+            swalExito("Has cambiado tu <b>Fecha de Nacimiento</b> con éxito");
+        } else {
+            swalError("El formato de <b>Fecha de Nacimiento</b> que has introducido no es correcto");
+        }
+    }
+}
+
+function editarAdminLista(id) {
+    if(document.getElementById("isAdmin_"+id).innerText == "Si") swalConfirmacion("¿Estás seguro de que deseas que este Usuario ya no sea Administrador?","deshacerAdmin("+id+")");
+    else swalConfirmacion("¿Estás seguro de que deseas que este Usuario sea Administrador?","hacerAdmin("+id+")");
+}
+
+function deshacerAdmin(id) {
+    peticionAdminYBlock("editarAdmin.php",0,id);
+
+    const p = document.getElementById("isAdmin_"+id);
+    p.innerText = "No";
+    swalExito("El usuario con ID "+id+" ya no es Administrador");
+}
+
+function hacerAdmin(id) {
+    peticionAdminYBlock("editarAdmin.php",1,id);
+
+    const p = document.getElementById("isAdmin_"+id);
+    p.innerText = "Si";
+    swalExito("El usuario con ID "+id+" ahora es Administrador");
+}
+
+function editarBloqueadoLista(id) {
+    if(document.getElementById("isBlock_"+id).innerText == "Si") swalConfirmacion("¿Estás seguro de que deseas que este Usuario ya no este Bloqueado?","deshacerBloqueado("+id+")");
+    else swalConfirmacion("¿Estás seguro de que deseas que este Usuario ya no este Bloqueado?","hacerBloqueado("+id+")");
+}
+
+function deshacerBloqueado(id) {
+    peticionAdminYBlock("editarBlock.php",0,id);
+
+    const p = document.getElementById("isBlock_"+id);
+    p.innerText = "No";
+    swalExito("El usuario con ID "+id+" ya no está Bloqueado");
+}
+
+function hacerBloqueado(id) {
+    peticionAdminYBlock("editarBlock.php",1,id);
+
+    const p = document.getElementById("isBlock_"+id);
+    p.innerText = "Si";
+    swalExito("El usuario con ID "+id+" ahora está Bloqueado");
+}
+
+function peticionAdminYBlock(archivo,valor,id){
+    if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+    xmlhttp.open("POST", archivo, true);
+    xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("admin="+valor+"&id="+id);
 }

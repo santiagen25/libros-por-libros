@@ -21,6 +21,8 @@ Route::any('/libro/{id}','UsuarioController@entrada');
 Route::any('/registro','UnidentifiedController@registro')->name('registro');
 Route::any('/usuario/{id}','UsuarioController@usuario')->name('registro');
 Route::any('/listado','UsuarioController@listado');
+Route::any('/creacion-usuario','UsuarioController@creacionUsuario');
+Route::any('/nuevo-libro','UsuarioController@nuevoLibro');
 
 //rutas ajax
 Route::any('editarNombre.php', 'AjaxController@ajaxEditarNombre')->name('editarNombre');
@@ -32,3 +34,6 @@ Route::any('editarImagen.php', 'AjaxController@ajaxEditarImagen')->name('editarI
 Route::any('editarTitulo.php', 'AjaxController@ajaxEditarTitulo')->name('editarTitulo');
 Route::any('editarPuntuacion.php', 'AjaxController@ajaxEditarPuntuacion')->name('editarPuntuacion');
 Route::any('editarComentario.php', 'AjaxController@ajaxEditarComentario')->name('editarComentario');
+Route::any('comprobarEmail.php', 'AjaxController@ajaxComprobarEmail')->name('comprobarEmail');
+Route::any('editarAdmin.php', 'AjaxController@ajaxEditarAdmin')->name('editarAdmin');
+Route::any('editarBlock.php', 'AjaxController@ajaxEditarBlock')->name('editarBlock');

@@ -14,12 +14,23 @@
         <div class="enmarcarCuadrado container">
             <div class="row m-4">
                 <div class="mr-4 col-md-3">
-                    <div class="d-flex justify-content-center" id="imagenPadre">
-                        <img src="{{asset('images\default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil" id="fotoPerfil">
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        <input class="botonEditar" id="botonImagen" onclick="editarImagen()" type="button" value="Editar">
-                    </div>
+                    <form action="/configuracion" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center row col-md-12">
+                        @csrf
+                        <div class="d-flex justify-content-center" id="imagenPadre">
+                            {{-- <img src="{{asset('images/default-profile.png')}}" class="rounded img-fluid" alt="Foto de Perfil" id="fotoPerfil"> --}}
+                            @php
+                                if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                                else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                                else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                            @endphp
+                        </div>
+                        <div class="d-flex justify-content-center mt-3" id="botonImagenPadre">
+                            <input class="botonEditar" id="botonImagen" onclick="editarImagen()" type="button" value="Editar">
+                        </div>
+                    </form>
+                    {!! $errors->first('errorImagen','<div class="text-danger d-flex justify-content-center h4">:message</div>') !!}
                 </div>
 
                 <div class="col-md-8">
@@ -98,9 +109,6 @@
                             @csrf
                             <div class="d-flex justify-content-center">
                                 <input class="botonEditar" id="botonEliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
-                            </div>
-                            <div class="d-flex justify-content-center" id="eliminarPadre">
-
                             </div>
                         </form>
                     </div>

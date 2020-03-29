@@ -30,6 +30,7 @@ class UnidentifiedController extends Controller
                         if(session_status() == PHP_SESSION_NONE) session_start();
                         $_SESSION["email"] = $_POST["email"];
                         $_SESSION["admin"] = $contraseña->esAdmin;
+                        $_SESSION["id"] = $contraseña->IDUsuario;
                         return redirect()->route('inicio');
                     } return back()->withErrors(['block' => 'Tu usuario ha sido bloqueado por algún motivo. Por favor, contacta con un administrador.']);
                 }
@@ -71,11 +72,10 @@ class UnidentifiedController extends Controller
 
             if($errores!=[]) return back()->withErrors($errores);
             else {
-                //todo ok
                 DB::table('usuario')->insert(
                     ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false]
                 );
-                $reg["registroBien"] = "¡Te has registrado con éxito!";
+                $reg["registroBien"] = "¡El nuevo Usuario se ha registrado con éxito!";
                 return back()->withErrors($reg);
             }
         }

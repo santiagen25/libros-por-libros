@@ -41,4 +41,16 @@ class AjaxController extends Controller
     public function ajaxEditarComentario(){
         include "../public/Ajax/editarComentario.php";
     }
+
+    public function ajaxComprobarEmail(){
+        include "../public/Ajax/comprobarEmail.php";
+    }
+
+    public function ajaxEditarAdmin(){
+        include "../public/Ajax/editarAdmin.php";
+    }
+
+    public function ajaxeditarBlock(){
+        include "../public/Ajax/editarBlock.php";
+    }
 }
