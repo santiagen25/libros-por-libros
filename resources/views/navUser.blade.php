@@ -34,7 +34,7 @@
                     else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.jpeg')."\" class=\"avatar\" alt=\"fotoPerfil\"";
                     else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.png')."\" class=\"avatar\" alt=\"fotoPerfil\">";
                     else if(file_exists('images/imagenesUsuarios/foto_'.$_SESSION["id"].".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$_SESSION["id"].'.gif')."\" class=\"avatar\" alt=\"fotoPerfil\">";
-                    else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"avatar\" alt=\"fotoPerfil\">";
+                    else echo "<img src=\"".asset('images/imagenesUsuarios/default-profile.png')."\" class=\"avatar\" alt=\"fotoPerfil\">";
                 @endphp
             </button>
             <div class="dropdown-menu dropdown-menu-right" id="desplegableNabBar">

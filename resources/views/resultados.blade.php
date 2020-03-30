@@ -21,7 +21,15 @@
                     <div class="row m-4 col-md-12">
                         <div class="mr-4 col-md-3">
                             <a href="{{ asset('/libro/'.$resultado->IDLibro) }}">
-                                <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid" alt="Portada del libro">
+                                {{-- <img src="{{asset('images\libroPortadaDefault.png')}}" class="rounded img-fluid" alt="Portada del libro"> --}}
+                                @php
+                                    if(session_status() == PHP_SESSION_NONE) session_start();
+                                    if(file_exists('images/imagenesLibros/libro_'.$resultado->IDLibro.".jpg")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$resultado->IDLibro.'.jpg')."\" class=\"rounded img-fluid fotoPortadaMini\" alt=\"Foto de Portada\" style=\"height:200px;max-width:500px;width: expression(this.width > 500 ? 500: true);\">";
+                                    else if(file_exists('images/imagenesLibros/libro_'.$resultado->IDLibro.".jpeg")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$resultado->IDLibro.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Portada\">";
+                                    else if(file_exists('images/imagenesLibros/libro_'.$resultado->IDLibro.".png")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$resultado->IDLibro.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Portada\">";
+                                    else if(file_exists('images/imagenesLibros/libro_'.$resultado->IDLibro.".gif")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$resultado->IDLibro.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Poratada\">";
+                                    else echo "<img src=\"".asset('images/imagenesLibros/libroPortadaDefault.png')."\" class=\"rounded img-fluid fotoPortadaMini\" alt=\"Foto de Perfil\">";
+                                @endphp
                             </a>
                         </div>
         

@@ -171,6 +171,12 @@ footer {
     height: 100%;
 }
 
+.fotoPortadaMini {
+    height:200px;
+    max-width:500px;
+    width: expression(this.width > 500 ? 500: true);
+}
+
 /*Codigo para hacer que el boton de menu cambie*/
 
 .container {

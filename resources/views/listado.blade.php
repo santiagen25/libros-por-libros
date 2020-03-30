@@ -39,7 +39,7 @@
                                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
                                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
                                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
-                                        else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
+                                        else echo "<img src=\"".asset('images/imagenesUsuarios/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil_".$usuario->IDUsuario."\">";
                                     @endphp
                                 </div>
                                 <div class="row col-md-12 d-flex justify-content-center my-4" id="botonImagenPadre_{{$usuario->IDUsuario}}">
