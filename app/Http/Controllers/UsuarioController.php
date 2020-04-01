@@ -157,6 +157,7 @@ class UsuarioController extends Controller
                 if(isset($_POST["botonImagen"])){
                     $usuario = DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first();
                     if($usuario!=NULL){
+                        //este if para ver si existe el usuario
                         $target_dir = "../public/images/imagenesUsuarios/";
                         $extension = strtolower(pathinfo(basename($_FILES["imagen"]["name"]),PATHINFO_EXTENSION));
                         $target_file = $target_dir . basename("foto_".$usuario->IDUsuario.".".$extension);
@@ -216,7 +217,7 @@ class UsuarioController extends Controller
             if($admin==1){
                 //es admin y está logueado
                 if(isset($_POST["registrarse"])){
-                    //vamos a registrarnos
+                    //vamos a registrar a alguien
                     $errores = [];
                     if($_POST["email"]!=""){
                         if(strlen($_POST["email"]) < 100) { if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) $errores["email"] = "El email no tiene un formato válido"; }
@@ -261,6 +262,77 @@ class UsuarioController extends Controller
     function nuevoLibro(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"]) && $_SESSION["admin"]==1){
+            if(isset($_POST["crearLibro"])){
+                //vamos a crear el libro
+                $imgExists = false;
+                $errores = [];
+                if($_POST["nombre"]!="") { if(strlen($_POST["nombre"]) >= 100) $errores["nombre"] = "El nombre es demasiado largo"; }
+                else $errores["nombre"] = "Falta introducir el nombre";
+
+                if($_POST["autor"]!="") { if(strlen($_POST["autor"]) >= 50) $errores["autor"] = "El nombre del autor es demasiado largo"; }
+                else $errores["autor"] = "Falta introducir el autor";
+
+                if($_POST["isbn"]!=""){
+                    if(ctype_digit($_POST["isbn"])){
+                        if(strlen($_POST["isbn"]) != 10 && strlen($_POST["isbn"]) != 13) {
+                            $errores["isbn"] = "El ISBN ha de tener 10 o 13 dígitos";
+                        } else {
+                            //comprobamos que no existe un libro con su ISBN
+                            $libro = DB::table('libro')->where('ISBN','=',$_POST["isbn"])->first();
+                            if($libro!=NULL) $errores["isbn"] = "Ya existe un Libro con este ISBN en la base de datos. Ir al Libro: <a class='link2' href='".asset('/libro/'.$libro->IDLibro)."'>".$libro->Nombre."</a>";
+                        }
+                    } else $errores["isbn"] = "El ISBN ha de ser un numero integer";
+                } else $errores["isbn"] = "Falta introducir el ISBN";
+
+                if($_POST["genero"]!="") { if(strlen($_POST["genero"]) >= 20) $errores["genero"] = "El nombre del genero es demasiado largo"; }
+                else $errores["genero"] = "Falta introducir el género";
+
+                if($_FILES["imagen"]["name"] != "") $imgExists = true;
+
+                if($_POST["descripcion"]!="") { if(strlen($_POST["descripcion"]) >= 10000) $errores["descripcion"] = "La descripción es demasiado larga"; }
+                else $errores["descripcion"] = "Falta introducir la descripcion";
+
+                if($errores!=[]) return back()->withErrors($errores);
+                else {
+                    //todo ok
+                    //creamos y luego, si hay imagen, guardamos la imagen con el id del libro nuevo
+                    DB::table('libro')->insert(
+                        ['Autor' => $_POST["autor"], 'Nombre' => $_POST["nombre"], 'ISBN' => $_POST["isbn"], 'Genero' => $_POST["genero"], 'Descripcion' =>$_POST["descripcion"]]
+                    );
+                    $libro = DB::table('libro')->where('ISBN','=',$_POST["isbn"])->first();
+
+                    if($imgExists){
+                        $target_dir = "../public/images/imagenesLibros/";
+                        $extension = strtolower(pathinfo(basename($_FILES["imagen"]["name"]),PATHINFO_EXTENSION));
+                        $target_file = $target_dir . basename("libro_".$libro->IDLibro.".".$extension);
+                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                        if($_FILES["imagen"]["name"] != ""){
+                            $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+                            if($check !== false) {
+                                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+                                    $errores["imagen"] = "Solo se admiten los archivos JPG, JPEG, PNG & GIF";
+                                } else {
+                                    if ($_FILES["imagen"]["size"] > 500000) $errores["imagen"] = "Tu archivo pesa demasiado";
+                                    else {
+                                        //esto borra el archivo de la foto para ese usuario si ya existia
+                                        if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif");
+                                        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) return back(); //todo ok
+                                        else $errores["imagen"] =  "No se ha podido subir tu foto";
+                                    }
+                                }
+                            } else $errores["imagen"] = "El archivo no es una imagen";
+                        } else $errores["imagen"] = "Has de subir algun archivo";
+                    }
+
+                    if(isset($errores["imagen"])) $errores["imagen"] = "Tu libro ha sido creado con éxito, pero ha habido un problema al guardar la foto: ".$errores["imagen"];
+
+                    $errores["bien"] = "¡Has creado un nuevo Libro con éxito!";
+                    return back()->withErrors($errores);
+                }
+            }
             return view('nuevoLibro');
         }
         return redirect()->route('login');

@@ -48,18 +48,15 @@ class Handler extends ExceptionHandler
     {
         if($this->isHttpException($exception)){
             $code = $exception->getStatusCode();
-            if($code=='404'){
-                return response()->view('404');
-            } /*else {
-                return response()->view('errorTotal');
-            }*/
+            if($code==404) return response()->view('error',['error' => $code, 'mensaje' => "No hemos podido encontrar lo que buscabas"]);
+            return response()->view('error',['error' => $code, 'mensaje' => "Ha habido un error"]);
         } /*else {
-            return response()->view('errorTotal');
+            return response()->view('error',['error' => 500, 'mensaje' => "Ha habido un error interno en el servidor. Por favor, si este error persiste contacta con un administrador."]);
         }*/
         //si activamos estos else, cualquier error que haya en la página se notificará
         //como error del servidor de libros por libros.
         //Los usuarios nunca veran que error ha tenido el servidor.
-        //Usar esto en presentaciones importantes, ya que es muy radical y priva de ver errores
+        //Usar esto en presentaciones importantes, ya que es muy radical y priva de hacer testing
         return parent::render($request, $exception);
     }
 }

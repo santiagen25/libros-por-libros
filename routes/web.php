@@ -37,3 +37,4 @@ Route::any('editarComentario.php', 'AjaxController@ajaxEditarComentario')->name(
 Route::any('comprobarEmail.php', 'AjaxController@ajaxComprobarEmail')->name('comprobarEmail');
 Route::any('editarAdmin.php', 'AjaxController@ajaxEditarAdmin')->name('editarAdmin');
 Route::any('editarBlock.php', 'AjaxController@ajaxEditarBlock')->name('editarBlock');
+Route::any('editarMeGusta.php', 'AjaxController@ajaxEditarMeGusta')->name('editarMeGusta');

@@ -172,9 +172,13 @@ footer {
 }
 
 .fotoPortadaMini {
-    height:200px;
-    max-width:500px;
-    width: expression(this.width > 500 ? 500: true);
+    height:175px;
+    max-width:200px;
+}
+
+.fotoPortadaEntrada {
+    height:250px;
+    max-width:250px;
 }
 
 /*Codigo para hacer que el boton de menu cambie*/
@@ -212,6 +216,14 @@ a.link2 {
 
 a.link2:hover {
     color: #201c13;
+}
+
+a.link3 {
+    color: #FFF;
+}
+
+a.link3:hover {
+    color: #ffecb3;
 }
 
 

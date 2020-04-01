@@ -15,7 +15,15 @@
             <div class="enmarcarCuadrado container">
                 <div class="row m-4">
                     <div class="mr-4 col-md-3">
-                        <img src="{{asset('images\libroNoPortada.jpg')}}" class="rounded img-fluid" alt="Foto de Portada">
+                        {{-- <img src="{{asset('images\libroNoPortada.jpg')}}" class="rounded img-fluid" alt="Foto de Portada"> --}}
+                        @php
+                            if(session_status() == PHP_SESSION_NONE) session_start();
+                            if(file_exists('images/imagenesLibros/libro_'.$libro->IDLibro.".jpg")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$libro->IDLibro.'.jpg')."\" class=\"rounded img-fluid fotoPortadaEntrada\" alt=\"Foto de Portada\">";
+                            else if(file_exists('images/imagenesLibros/libro_'.$libro->IDLibro.".jpeg")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$libro->IDLibro.'.jpeg')."\" class=\"rounded img-fluid fotoPortadaEntrada\" alt=\"Foto de Portada\">";
+                            else if(file_exists('images/imagenesLibros/libro_'.$libro->IDLibro.".png")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$libro->IDLibro.'.png')."\" class=\"rounded img-fluid fotoPortadaEntrada\" alt=\"Foto de Portada\">";
+                            else if(file_exists('images/imagenesLibros/libro_'.$libro->IDLibro.".gif")) echo "<img src=\"".asset('images/imagenesLibros/libro_'.$libro->IDLibro.'.gif')."\" class=\"rounded img-fluid fotoPortadaEntrada\" alt=\"Foto de Poratada\">";
+                            else echo "<img src=\"".asset('images/imagenesLibros/libroPortadaDefault.png')."\" class=\"rounded img-fluid fotoPortadaEntrada\" alt=\"Foto de Perfil\">";
+                        @endphp
                     </div>
 
                     <div class="col-md-8">
@@ -74,7 +82,7 @@
                 </div>
 
                 <div class="row col-md-12 m-4">
-                    <div class="row mr-2">
+                    <div class="row mr-2 col-md-12">
                         <div class="col-md-3">
                             <label class="h4">
                                 Descripcion:
@@ -87,6 +95,15 @@
                         </div>
                     </div>
                 </div>
+
+                @php
+                    if(session_status() == PHP_SESSION_NONE) session_start();
+                @endphp
+                @if($_SESSION["admin"]==1)
+                    <div class="d-flex justify-content-center">
+                        <input class="botonEditar col-md-4 my-5 py-2" type="button" value="Editar">
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -258,8 +275,16 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <p>
-                                        0
+                                    <p id="likesTotales_{{$valoracion->IDValoracion}}">
+                                        @php
+                                            if(session_status() == PHP_SESSION_NONE) session_start();
+                                            $likes = DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$valoracion->IDValoracion)->get();
+                                            $num = 0;
+                                            foreach($likes as $like){
+                                                $num = $num + 1;
+                                            }
+                                            echo $num;
+                                        @endphp
                                     </p>
                                 </div>
                             </div>
@@ -275,7 +300,11 @@
                             </div>
                         </div>
                         <div class="row d-flex justify-content-center mt-3">
-                            <input class="botonSec col-md-2" value="¡Me gusta!" type="button">
+                            @if(DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$valoracion->IDValoracion)->where('IDUsuarioFK4','=',$_SESSION["id"])->get()->isEmpty())
+                                <input class="botonSec col-md-2" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="¡Me Gusta!" type="button">
+                            @else
+                                <input class="botonSec col-md-2" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="No Me Gusta" type="button">
+                            @endif
                         </div>
                     </div>
                 @endforeach

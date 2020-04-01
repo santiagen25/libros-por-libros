@@ -53,4 +53,12 @@ class AjaxController extends Controller
     public function ajaxeditarBlock(){
         include "../public/Ajax/editarBlock.php";
     }
+
+    public function ajaxEditarMeGusta(){
+        include "../public/Ajax/editarMeGusta.php";
+    }
+
+    public function ajaxResetPassword(){
+        include "../public/Ajax/resetPassword.php";
+    }
 }

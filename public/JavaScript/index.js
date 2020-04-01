@@ -49,6 +49,18 @@ function swalConfirmacion(t,r){
     })
 }
 
+function swalTitulo(titulo,t,color){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: '+color+';">'+titulo+'</h2>'+
+            '<p class="swalText">'+t+'</p>'+
+            '<input class="botonEstandar py-2 px-4" type="button" value="OK" onclick="swal.close();">',
+        background: '#211c12',
+        showConfirmButton: false
+    })
+}
+
 function editarNombre(){
     if(document.getElementById("botonNombre").value=="Editar"){
         //cambiamos el texto por input
@@ -548,4 +560,37 @@ function eliminarCuentaLista(id){
     document.getElementById("botonEliminarCuenta_"+id).remove();
     document.getElementById("eliminarPadre_"+id).insertAdjacentHTML("beforeend","<input class='botonEliminar' id='eliminarCuentaConfirmar' type='submit' name='eliminarCuenta' value='Seguro, Eliminar Cuenta'>");
     swalAtencion("Estás a un paso de <b>eliminar</b> esta cuenta de Libros por Libros");
+}
+
+function editarPasswordLista(id){
+    alert("vamos a editar la contraseña");
+}
+
+function meGusta(id){
+    const like = document.getElementById("like_"+id);
+    let likesTotales = parseInt(document.getElementById("likesTotales_"+id).innerText);
+    console.log(typeof likesTotales);
+    let gusta;
+    if(like.value=="¡Me Gusta!"){
+        like.value = "No Me Gusta";
+        gusta = 0;
+        document.getElementById("likesTotales_"+id).innerText = likesTotales + 1;
+    } else {
+        like.value = "¡Me Gusta!";
+        gusta = 1;
+        document.getElementById("likesTotales_"+id).innerText = likesTotales - 1;
+    }
+
+    if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+    xmlhttp.open("POST", "/editarMeGusta.php", true);
+    xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("actualMeGusta="+gusta+"&idvaloracion="+id);
+
+    if(gusta==1){
+        swalTitulo("Dislike","Ya no te gusta este comentario","red");
+    } else {
+        swalTitulo("Like!","Te Gusta este comentario","green");
+    }
 }

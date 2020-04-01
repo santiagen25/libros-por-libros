@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<form action="{{ asset('nuevo-libro') }}" method="POST" class="d-flex justify-content-center">
+<form action="{{ asset('nuevo-libro') }}" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center">
     @csrf
     <div class="enmarcarBorde container">
         <div class="container m-4">
@@ -27,7 +27,8 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" placeholder="Nombre del libro..." type="text">
+                    <input class="inputEstandar col-md-10" name="nombre" placeholder="Nombre del libro..." type="text">
+                    {!! $errors->first('nombre','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
 
@@ -38,7 +39,8 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" placeholder="Autor del libro..." type="text">
+                    <input class="inputEstandar col-md-10" name="autor" placeholder="Autor del libro..." type="text">
+                    {!! $errors->first('autor','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
 
@@ -49,7 +51,8 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" placeholder="ISBN..." type="text">
+                    <input class="inputEstandar col-md-10" name="isbn" placeholder="ISBN..." type="text">
+                    {!! $errors->first('isbn','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
 
@@ -60,12 +63,23 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" placeholder="Genero..." type="text">
+                    <input class="inputEstandar col-md-10" name="genero" placeholder="Genero..." type="text">
+                    {!! $errors->first('genero','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
 
             <div class="row mb-4">
-                <input type="file" class="form-control-file" name="imagen">
+                <div class="col-md-3">
+                    <label class="h4">
+                        Imagen:*
+                    </label>
+                </div>
+                <div class="row mb-4 ml-3 col-md-8">
+                    <div class="col-md-12">
+                        <input type="file" class="form-control-file" name="imagen">
+                    </div>
+                    {!! $errors->first('imagen','<div class="text-danger">:message</div>') !!}
+                </div>
             </div>
 
             <div class="row mb-4">
@@ -75,13 +89,20 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <textarea class="col-md-12" placeholder="Introduce aqui una descripción para el libro..." rows="6"></textarea>
+                    <textarea class="col-md-12" name="descripcion" placeholder="Introduce aqui una descripción para el libro..." rows="6"></textarea>
+                    {!! $errors->first('descripcion','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
 
             <div class="d-flex justify-content-center pr-5">
-                <input class="col-md-4 botonEditar py-1" type="submit" value="Crear Libro">
+                <input class="col-md-4 botonEditar py-1" name="crearLibro" type="submit" value="Crear Libro">
             </div>
+            <div class="d-flex flex-row-reverse pr-5">
+                <p>
+                    * No es un campo obligatorio
+                </p>
+            </div>
+            {!! $errors->first('bien','<div class="text-success d-flex justify-content-center h3">:message</div>') !!}
         </div>
     </div>
 </form>

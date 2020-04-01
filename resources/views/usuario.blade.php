@@ -20,7 +20,7 @@
                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".jpeg")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.jpeg')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".png")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
                         else if(file_exists('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.".gif")) echo "<img src=\"".asset('images/imagenesUsuarios/foto_'.$usuario->IDUsuario.'.gif')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
-                        else echo "<img src=\"".asset('images/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
+                        else echo "<img src=\"".asset('images/imagenesUsuarios/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
                     @endphp
                 </div>
 
@@ -59,11 +59,9 @@
                         </div>
                         <div class="pt-1 col-md-6">
                             <p>
-                                @if($usuario->Nacimiento==null)
-                                    N/A
-                                @else
-                                    {{$usuario->Nacimiento}}
-                                @endif
+                                @php
+                                    echo explode(" ", $usuario->Nacimiento)[0]
+                                @endphp
                             </p>
                         </div>
                     </div>
