@@ -61,6 +61,17 @@ function swalTitulo(titulo,t,color){
     })
 }
 
+function swalCargando(){
+    Swal.fire({
+        html:
+            '<style>.swalText{ color: white; }</style>'+
+            '<h2 class="swalText" style="color: white;">Cargando Operacion...</h2>'+
+            '<p class="swalText">Espera un momento</p>',
+        background: '#211c12',
+        showConfirmButton: false
+    })
+}
+
 function editarNombre(){
     if(document.getElementById("botonNombre").value=="Editar"){
         //cambiamos el texto por input
@@ -569,6 +580,14 @@ function editarPasswordLista(id){
 function enviarMail(id){
     if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
     else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState==1){
+            swalCargando();
+        }
+        if(this.readyState==4 && this.responseText=="1"){
+            swalExito("Se le ha enviado un mail con su nueva contraseña al usuario con id "+id+". Si no lo ve en la bandeja de entrada que revise en la carpeta de Spam");
+        }
+    }
     xmlhttp.open("POST", "/resetPassword.php", true);
     xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

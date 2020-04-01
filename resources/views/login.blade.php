@@ -53,6 +53,9 @@
                     <div class="d-flex justify-content-center">
                         <a class="link2" href="{{asset('registro')}}">¿No tienes cuenta?</a>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="link2" href="{{asset('newPassword')}}">¿Has olvidado tu contraseña?</a>
+                    </div>
                 </div>
                 {!! $errors->first('block','<div class="text-danger d-flex justify-content-center h3">:message</div>') !!}
             </div>

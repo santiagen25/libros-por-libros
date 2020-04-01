@@ -13,6 +13,7 @@
 
 Route::any('/','UnidentifiedController@login')->name('login');
 Route::any('/login','UnidentifiedController@login')->name('login');
+Route::any('/newPassword','UnidentifiedController@newPassword')->name('newPassword');
 Route::any('/inicio','UsuarioController@inicio')->name('inicio');
 Route::any('/configuracion','UsuarioController@configuracion');
 Route::any('/biblioteca','UsuarioController@biblioteca');
@@ -39,3 +40,6 @@ Route::any('editarAdmin.php', 'AjaxController@ajaxEditarAdmin')->name('editarAdm
 Route::any('editarBlock.php', 'AjaxController@ajaxEditarBlock')->name('editarBlock');
 Route::any('editarMeGusta.php', 'AjaxController@ajaxEditarMeGusta')->name('editarMeGusta');
 Route::any('resetPassword.php', 'AjaxController@ajaxResetPassword')->name('resetPassword');
+
+// Email related routes
+//Route::any('mail/send', 'MailController@send')->name('sendMail');
