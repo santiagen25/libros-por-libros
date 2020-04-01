@@ -38,3 +38,4 @@ Route::any('comprobarEmail.php', 'AjaxController@ajaxComprobarEmail')->name('com
 Route::any('editarAdmin.php', 'AjaxController@ajaxEditarAdmin')->name('editarAdmin');
 Route::any('editarBlock.php', 'AjaxController@ajaxEditarBlock')->name('editarBlock');
 Route::any('editarMeGusta.php', 'AjaxController@ajaxEditarMeGusta')->name('editarMeGusta');
+Route::any('resetPassword.php', 'AjaxController@ajaxResetPassword')->name('resetPassword');

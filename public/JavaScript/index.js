@@ -563,13 +563,21 @@ function eliminarCuentaLista(id){
 }
 
 function editarPasswordLista(id){
-    alert("vamos a editar la contraseña");
+    swalConfirmacion("Si continuas se le enviará un email a este usuario con su nueva contraseña, generada aleatoriamente.","enviarMail("+id+")");
+}
+
+function enviarMail(id){
+    if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+    else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+    xmlhttp.open("POST", "/resetPassword.php", true);
+    xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("id="+id);
 }
 
 function meGusta(id){
     const like = document.getElementById("like_"+id);
     let likesTotales = parseInt(document.getElementById("likesTotales_"+id).innerText);
-    console.log(typeof likesTotales);
     let gusta;
     if(like.value=="¡Me Gusta!"){
         like.value = "No Me Gusta";
@@ -588,9 +596,6 @@ function meGusta(id){
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("actualMeGusta="+gusta+"&idvaloracion="+id);
 
-    if(gusta==1){
-        swalTitulo("Dislike","Ya no te gusta este comentario","red");
-    } else {
-        swalTitulo("Like!","Te Gusta este comentario","green");
-    }
+    if(gusta==1) swalTitulo("Dislike","Ya no te gusta este comentario","red");
+    else swalTitulo("Like!","Te Gusta este comentario","green");
 }
