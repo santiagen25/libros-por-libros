@@ -22,7 +22,7 @@ class UsuarioTableSeeder extends Seeder
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
             'Password' => 'prueba1',
-            'Imagen' => ''],
+            'created_at' => date('Y-m-d H:i:s')],
 
             ['IDUsuario' => null,
             'esAdmin' => false,
@@ -31,7 +31,7 @@ class UsuarioTableSeeder extends Seeder
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => false,
             'Password' => 'prueba2',
-            'Imagen' => ''],
+            'created_at' => date('Y-m-d H:i:s')],
 
             ['IDUsuario' => null,
             'esAdmin' => false,
@@ -40,7 +40,7 @@ class UsuarioTableSeeder extends Seeder
             'Nacimiento' => '1995-01-01 0:00:00',
             'Bloqueado' => true,
             'Password' => 'prueba3',
-            'Imagen' => ''],
+            'created_at' => date('Y-m-d H:i:s')],
 
             ['IDUsuario' => null,
             'esAdmin' => true,
@@ -49,7 +49,7 @@ class UsuarioTableSeeder extends Seeder
             'Nacimiento' => '1997-02-06 0:00:00',
             'Bloqueado' => false,
             'Password' => 'passSanti',
-            'Imagen' => '']
+            'created_at' => date('Y-m-d H:i:s')]
         ];
             
         foreach ($usuarios as $usuario) {
@@ -60,7 +60,8 @@ class UsuarioTableSeeder extends Seeder
                 'Email' => $usuario['Email'],
                 'Nacimiento' => $usuario['Nacimiento'],
                 'Bloqueado' => $usuario['Bloqueado'],
-                'Password' => $usuario['Password']
+                'Password' => $usuario['Password'],
+                'created_at' => $usuario['created_at']
             ]);
         }
     }

@@ -16,25 +16,25 @@ class ValoracionTableSeeder extends Seeder
             'Titulo' => 'Me ha gustado el libro prueba1',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
             'Puntuacion' => 8,
-            'MeGusta' => 0,
             'IDLibroFK' => 1,
-            'IDUsuarioFK' => 1],
+            'IDUsuarioFK' => 1,
+            'created_at' => date('Y-m-d H:i:s')],
 
             ['IDValoracion' => null,
             'Titulo' => 'Me ha gustado este libro',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
             'Puntuacion' => 10,
-            'MeGusta' => 0,
             'IDLibroFK' => 1,
-            'IDUsuarioFK' => 2],
+            'IDUsuarioFK' => 2,
+            'created_at' => date('Y-m-d H:i:s')],
 
             ['IDValoracion' => null,
             'Titulo' => 'Me ha gustado el libro Las Pruebas',
             'Comentario' => 'Ha sido un libro muy chulo, lo recomiendo a todo el mundo que le guste la ciencia ficcion',
             'Puntuacion' => 6,
-            'MeGusta' => 0,
             'IDLibroFK' => 2,
-            'IDUsuarioFK' => 1]
+            'IDUsuarioFK' => 1,
+            'created_at' => date('Y-m-d H:i:s')]
         ];
             
         foreach ($valoraciones as $valoracion) {
@@ -43,9 +43,9 @@ class ValoracionTableSeeder extends Seeder
                 'Titulo' => $valoracion['Titulo'],
                 'Comentario' => $valoracion['Comentario'],
                 'Puntuacion' => $valoracion['Puntuacion'],
-                'MeGusta' => $valoracion['MeGusta'],
                 'IDLibroFK' => $valoracion['IDLibroFK'],
-                'IDUsuarioFK' => $valoracion['IDUsuarioFK']
+                'IDUsuarioFK' => $valoracion['IDUsuarioFK'],
+                'created_at' => $valoracion['created_at']
             ]);
         }
     }

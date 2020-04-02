@@ -20,10 +20,11 @@ Route::any('/biblioteca','UsuarioController@biblioteca');
 Route::any('/resultados','UsuarioController@resultados');
 Route::any('/libro/{id}','UsuarioController@entrada');
 Route::any('/registro','UnidentifiedController@registro')->name('registro');
-Route::any('/usuario/{id}','UsuarioController@usuario')->name('registro');
+Route::any('/usuario/{id}','UsuarioController@usuario')->name('usuario');
 Route::any('/listado','UsuarioController@listado');
 Route::any('/creacion-usuario','UsuarioController@creacionUsuario');
 Route::any('/nuevo-libro','UsuarioController@nuevoLibro');
+Route::any('/editar-libro/{id}','UsuarioController@editarLibro')->name('editarLibro');
 
 //rutas ajax
 Route::any('editarNombre.php', 'AjaxController@ajaxEditarNombre')->name('editarNombre');

@@ -11,7 +11,8 @@ if(isset($_POST["actualMeGusta"]) && isset($_POST["idvaloracion"])){
     } else {
         //hay que insertarlo, ya que no existe (osea que ha cambiado de opinion y si que le gusta)
         DB::table('Usuario_Valoracion')->insert(
-            ['IDUsuarioFK4' => $_SESSION["id"], 'IDValoracionFK3' => $_POST["idvaloracion"], 'IDMezcla' => $_SESSION["id"]."_".$_POST["idvaloracion"]]
+            ['IDUsuarioFK4' => $_SESSION["id"], 'IDValoracionFK3' => $_POST["idvaloracion"], 'IDMezcla' => $_SESSION["id"]."_".$_POST["idvaloracion"], 
+            'created_at' => date('Y-m-d H:i:s')]
         );
     }
 } else {

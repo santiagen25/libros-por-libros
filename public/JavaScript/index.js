@@ -563,8 +563,8 @@ function editarImagenLista(id){
     document.getElementById("fotoPerfil_"+id).remove();
     document.getElementById("imagenPadre_"+id).insertAdjacentHTML("beforeend","<input class='form-control-file' name='imagen' type='file' id='imagen'>");
     document.getElementById("botonImagen_"+id).remove();
-    document.getElementById("botonImagenPadre_"+id).insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'>");
-    swalAtencion("Cuando hagas click en el boton <b>Guardar</b> la pagina se refrescará. Asegurate de guardar todos los cambios en otros campos antes de guardar la imagen");
+    document.getElementById("botonImagenPadre_"+id).insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'><div class='row col-md-12'><input class=\"col-md-12 botonEditar py-1\" name=\"eliminarImagen\" type=\"submit\" value=\"Eliminar\"></div>");
+    swalAtencion("Cuando hagas click en el boton <b>Guardar</b> la pagina se refrescará. Asegurate de guardar todos los cambios en otros campos antes de guardar la imagen. Y si haces click en Eliminar se eliminará la imagen actual y se introducirá una por defecto");
 }
 
 function eliminarCuentaLista(id){
@@ -583,8 +583,7 @@ function enviarMail(id){
     xmlhttp.onreadystatechange = function(){
         if(this.readyState==1){
             swalCargando();
-        }
-        if(this.readyState==4 && this.responseText=="1"){
+        }else if(this.responseText=="1"){
             swalExito("Se le ha enviado un mail con su nueva contraseña al usuario con id "+id+". Si no lo ve en la bandeja de entrada que revise en la carpeta de Spam");
         }
     }
@@ -617,4 +616,11 @@ function meGusta(id){
 
     if(gusta==1) swalTitulo("Dislike","Ya no te gusta este comentario","red");
     else swalTitulo("Like!","Te Gusta este comentario","green");
+}
+
+function eliminarLibro(){
+    const btn = document.getElementById("eliminarLibro");
+    btn.insertAdjacentHTML('afterend','<input class="col-md-4 botonEditar py-1" name="eliminarLibro" type="submit" value="Eliminar Libro">');
+    btn.remove();
+    swalAtencion("Estás a un paso de <b>eliminar</b> este Libro");
 }

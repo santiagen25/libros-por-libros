@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsuarioTableSeeder::class,
             LibroTableSeeder::class,
-            LikesTableSeeder::class,
-            Usuario_LibroTableSeeder::class,
             ValoracionTableSeeder::class,
-            Usuario_ValoracionTableSeeder::class
+            Usuario_LibroTableSeeder::class,
+            Usuario_ValoracionTableSeeder::class,
+            Usuario_LibroTableSeeder::class
         ]);
     }
 }

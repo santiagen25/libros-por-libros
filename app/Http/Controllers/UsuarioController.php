@@ -21,11 +21,11 @@ class UsuarioController extends Controller
     function inicio(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
-            if(isset($_POST["biblioteca"])){
-                return redirect('biblioteca');
-            }
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-        return view('/inicio',['usuario'=>$usuario]);
+            $valoraciones = DB::table('Valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->get();
+            $likesRecibidos = [];//DB::table('Usuario_Valoracion')->where('IDValoracionFK3','=',$usuario->IDUsuario)->get();
+            $likesDados = [];
+        return view('/inicio',['usuario'=>$usuario,'valoraciones'=>$valoraciones,'likesRecibidos'=>$likesRecibidos,'likesDados'=>$likesDados]);
         }
         return redirect()->route('login');
     }
@@ -97,6 +97,8 @@ class UsuarioController extends Controller
         $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
         $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
 
+        if($libro==NULL) return response()->view('error',['error' => "404", 'mensaje' => "No hemos podido encontrar el Libro que buscabas"]);
+
         if(isset($_POST["publicarValoracion"])){
             //Vamos a dejar un comentario
             $errores = [];
@@ -121,7 +123,8 @@ class UsuarioController extends Controller
                     'Comentario' => $_POST["comentario"],
                     'Puntuacion' => $_POST["puntuacion"],
                     'IDLibroFK' => $libro->IDLibro,
-                    'IDUsuarioFK' => $usuario->IDUsuario]
+                    'IDUsuarioFK' => $usuario->IDUsuario,
+                    'created_at' => date('Y-m-d H:i:s')]
                 );
                 return back();
             }
@@ -137,6 +140,7 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(!isset($_SESSION["email"])) return redirect()->route('login');
         $usuario = DB::table('usuario')->where('IDUsuario','=',$id)->first();
+        if($usuario==NULL) return response()->view('error',['error' => "404", 'mensaje' => "No hemos podido encontrar el Usuario que buscabas"]);
         return view('usuario',['usuario' => $usuario]);
     }
 
@@ -201,6 +205,13 @@ class UsuarioController extends Controller
                     return back()->withErrors($errores);
                 }
 
+                if(isset($_POST["eliminarImagen"])){
+                    if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg");
+                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg");
+                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".png")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".png");
+                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif");
+                }
+
                 return view('listado',['usuarios'=>$usuarios]);
             }
             return redirect()->route('inicio');
@@ -243,15 +254,14 @@ class UsuarioController extends Controller
                     else {
                         //todo ok
                         DB::table('usuario')->insert(
-                            ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false]
+                            ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
+                            'created_at' => date('Y-m-d H:i:s')]
                         );
                         $reg["registroBien"] = "¡Te has registrado con éxito!";
                         return back()->withErrors($reg);
                     }
                 }
-                /*if(isset($_POST[""])){
 
-                }*/
                 return view('crearCuenta');
             }
             return redirect()->route('inicio');
@@ -297,7 +307,8 @@ class UsuarioController extends Controller
                     //todo ok
                     //creamos y luego, si hay imagen, guardamos la imagen con el id del libro nuevo
                     DB::table('libro')->insert(
-                        ['Autor' => $_POST["autor"], 'Nombre' => $_POST["nombre"], 'ISBN' => $_POST["isbn"], 'Genero' => $_POST["genero"], 'Descripcion' =>$_POST["descripcion"]]
+                        ['Autor' => $_POST["autor"], 'Nombre' => $_POST["nombre"], 'ISBN' => $_POST["isbn"], 'Genero' => $_POST["genero"], 'Descripcion' =>$_POST["descripcion"], 
+                        'created_at' => date('Y-m-d H:i:s')]
                     );
                     $libro = DB::table('libro')->where('ISBN','=',$_POST["isbn"])->first();
 
@@ -334,6 +345,106 @@ class UsuarioController extends Controller
                 }
             }
             return view('nuevoLibro');
+        }
+        return redirect()->route('login');
+    }
+
+    function editarLibro($id){
+        if(session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_SESSION["email"]) && $_SESSION["admin"]==1){
+            $libro = DB::table('Libro')->where('IDLibro','=',$id)->first();
+            if($libro==NULL) return response()->view('error',['error' => "404", 'mensaje' => "No hemos podido encontrar el Libro que buscabas"]);
+
+            if(isset($_POST["editarLibro"])){
+                //vamos a crear el libro
+                $imgExists = false;
+                $errores = [];
+                if($_POST["nombre"]!="") { if(strlen($_POST["nombre"]) >= 100) $errores["nombre"] = "El nombre es demasiado largo"; }
+                else $errores["nombre"] = "Falta introducir el nombre";
+
+                if($_POST["autor"]!="") { if(strlen($_POST["autor"]) >= 50) $errores["autor"] = "El nombre del autor es demasiado largo"; }
+                else $errores["autor"] = "Falta introducir el autor";
+
+                if($_POST["isbn"]!=""){
+                    if(ctype_digit($_POST["isbn"])){
+                        if(strlen($_POST["isbn"]) != 10 && strlen($_POST["isbn"]) != 13) {
+                            $errores["isbn"] = "El ISBN ha de tener 10 o 13 dígitos";
+                        } else {
+                            //comprobamos que no existe un libro con su ISBN
+                            //con la doble query esta dejamos que el isbn propio exista, para que no pete al guardar el mismo isbn
+                            $libro = DB::table('libro')->where('IDLibro','=',$id)->first();
+                            $libros = DB::table('libro')->where('ISBN','=',$_POST["isbn"])->where('ISBN','<>',$libro->ISBN)->first();
+                            if($libros!=NULL) $errores["isbn"] = "Ya existe un Libro con este ISBN en la base de datos. Ir al Libro: <a class='link2' href='".asset('/libro/'.$libros->IDLibro)."'>".$libros->Nombre."</a>";
+                        }
+                    } else $errores["isbn"] = "El ISBN ha de ser un numero integer";
+                } else $errores["isbn"] = "Falta introducir el ISBN";
+
+                if($_POST["genero"]!="") { if(strlen($_POST["genero"]) >= 20) $errores["genero"] = "El nombre del genero es demasiado largo"; }
+                else $errores["genero"] = "Falta introducir el género";
+
+                if($_FILES["imagen"]["name"] != "") $imgExists = true;
+
+                if($_POST["descripcion"]!="") { if(strlen($_POST["descripcion"]) >= 10000) $errores["descripcion"] = "La descripción es demasiado larga"; }
+                else $errores["descripcion"] = "Falta introducir la descripcion";
+
+                if($errores!=[]) return back()->withErrors($errores);
+                else {
+                    //todo ok
+                    //creamos y luego, si hay imagen, guardamos la imagen con el id del libro nuevo
+                    DB::table('libro')->where('IDLibro','=',$id)->update(
+                        ['Autor' => $_POST["autor"], 'Nombre' => $_POST["nombre"], 'ISBN' => $_POST["isbn"], 'Genero' => $_POST["genero"], 'Descripcion' =>$_POST["descripcion"]]
+                    );
+                    $libro = DB::table('libro')->where('ISBN','=',$_POST["isbn"])->first();
+
+                    if($imgExists){
+                        $target_dir = "../public/images/imagenesLibros/";
+                        $extension = strtolower(pathinfo(basename($_FILES["imagen"]["name"]),PATHINFO_EXTENSION));
+                        $target_file = $target_dir . basename("libro_".$libro->IDLibro.".".$extension);
+                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                        if($_FILES["imagen"]["name"] != ""){
+                            $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+                            if($check !== false) {
+                                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+                                    $errores["imagen"] = "Solo se admiten los archivos JPG, JPEG, PNG & GIF";
+                                } else {
+                                    if ($_FILES["imagen"]["size"] > 500000) $errores["imagen"] = "Tu archivo pesa demasiado";
+                                    else {
+                                        //esto borra el archivo de la foto para ese libro si ya existia
+                                        if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png");
+                                        else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif");
+                                        if (!move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) $errores["imagen"] = "No se ha podido subir tu foto";
+                                    }
+                                }
+                            } else $errores["imagen"] = "El archivo no es una imagen";
+                        } else $errores["imagen"] = "Has de subir algun archivo";
+                    }
+
+                    if(isset($errores["imagen"])) $errores["imagen"] = "Tu libro ha sido editado con éxito, pero ha habido un problema al guardar la foto: ".$errores["imagen"];
+
+                    $errores["bien"] = "¡Has editado este Libro!";
+                    return back()->withErrors($errores);
+                }
+            } else if(isset($_POST["eliminarImagen"])){
+                if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpg");
+                else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".jpeg");
+                else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".png");
+                else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif");
+                else {
+                    $errores["bien"] = "Este libro no tiene Imagen";
+                    return view('nuevoLibro')->withErrors($errores);
+                }
+                $errores["bien"] = "¡Has eliminado la imagen del Libro con éxito!";
+                return view('nuevoLibro')->withErrors($errores);
+            } else if(isset($_POST["eliminarLibro"])){
+                //eliminamos el libro
+                DB::table('Libro')->where('IDLibro','=',$id)->delete();
+                $errores["bien"] = "¡Has creado un nuevo Libro con éxito!";
+                return view('nuevoLibro')->withErrors($errores);
+            }
+
+            return view('editarLibro',['libro'=>$libro]);
         }
         return redirect()->route('login');
     }

@@ -100,9 +100,9 @@
                     if(session_status() == PHP_SESSION_NONE) session_start();
                 @endphp
                 @if($_SESSION["admin"]==1)
-                    <div class="d-flex justify-content-center">
-                        <input class="botonEditar col-md-4 my-5 py-2" type="button" value="Editar">
-                    </div>
+                    <form class="d-flex justify-content-center" action="{{ asset('/editar-libro/'.$libro->IDLibro) }}" method="GET">
+                        <input class="botonEditar col-md-4 my-5 py-2" type="submit" value="Editar">
+                    </form>
                 @endif
             </div>
         </div>

@@ -18,6 +18,9 @@ class UsuarioLibro extends Migration
             $table->foreign('IDLibroFK2')->references('IDLibro')->on('Libro')->onDelete('cascade');
             $table->bigInteger('IDUsuarioFK3')->unsigned();
             $table->foreign('IDUsuarioFK3')->references('IDUsuario')->on('Usuario')->onDelete('cascade');
+            $table->string('IDMezcla')->unique(); //este ID será el IDUsuario_IDLibro (igual que en Usuario_Valoracion)
+            $table->tinyInteger('Relacion'); //cada campo puede ser de tres formas: si es 1 el libro está pendiente por leer, si es 2 el libro se está leyendo, si es 3 el libro está leido
+            $table->boolean('Favorito');
             $table->timestamps();
         });
     }

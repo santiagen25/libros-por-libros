@@ -73,7 +73,8 @@ class UnidentifiedController extends Controller
             if($errores!=[]) return back()->withErrors($errores);
             else {
                 DB::table('usuario')->insert(
-                    ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false]
+                    ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false,
+                    'created_at' => date('Y-m-d H:i:s')]
                 );
                 $reg["registroBien"] = "¡El nuevo Usuario se ha registrado con éxito!";
                 return back()->withErrors($reg);
