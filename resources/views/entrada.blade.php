@@ -365,7 +365,7 @@
                         </div>
                     </div>
                 @endforeach
-                <input type="hidden" id="id_libro" name="id_libro" value="{{$mivaloracion->IDLibroFK}}">
+                {{-- <input type="hidden" id="id_libro" name="id_libro" value="{{$mivaloracion->IDLibroFK}}"> --}}
             </div>
         </div>
     </div>

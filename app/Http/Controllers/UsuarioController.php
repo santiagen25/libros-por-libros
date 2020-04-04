@@ -25,7 +25,7 @@ class UsuarioController extends Controller
             $valoraciones = DB::table('Valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->orderBy('Valoracion.created_at','desc')->get();
             $likesRecibidos = DB::table('Usuario_Valoracion')->join('Valoracion','Usuario_Valoracion.IDValoracionFK3','=','Valoracion.IDValoracion')->where('Valoracion.IDUsuarioFK','=',$usuario->IDUsuario)->orderBy('Usuario_Valoracion.created_at','desc')->get();
             $likesDados = DB::table('Usuario_Valoracion')->join('Valoracion','Usuario_Valoracion.IDValoracionFK3','=','Valoracion.IDValoracion')->join('Libro','Valoracion.IDLibroFK','=','Libro.IDLibro')->where('Usuario_Valoracion.IDUsuarioFK4','=',$usuario->IDUsuario)->orderBy('Valoracion.created_at','desc')->get();
-            $relaciones = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->get();
+            $relaciones = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->orderBy('Usuario_Libro.created_at','desc')->get();
 
             return view('/inicio',['usuario'=>$usuario,'valoraciones'=>$valoraciones,'likesRecibidos'=>$likesRecibidos,'likesDados'=>$likesDados, 'relaciones'=>$relaciones]);
         }
@@ -82,7 +82,7 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-            $libros = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->get();
+            $libros = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->orderBy('Libro.IDLibro','asc')->get();
 
             return view('/biblioteca',['usuario'=>$usuario,'libros'=>$libros]);
         }
