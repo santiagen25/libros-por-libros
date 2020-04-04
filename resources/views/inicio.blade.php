@@ -87,12 +87,10 @@
                     <div class="enmarcarNoticia row py-3">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-auto">
                             @php
-                                //este doble inner join junta las tablas usuario_valoracion, valoracion y libro para poder encontrar que libro tiene el comentario que le ha gustado a un usuario en concreto (boom)
-                                $libro = DB::table('Usuario_Valoracion')->join('Valoracion','Usuario_Valoracion.IDValoracionFK3','=','Valoracion.IDValoracion')->join('Libro','Valoracion.IDLibroFK','=','Libro.IDLibro')->where('Valoracion.IDUsuarioFK','=',$usuario->IDUsuario)->first();
                                 $usuario = DB::table('Usuario')->where('IDUsuario','=',$like->IDUsuarioFK4)->first();
                                 $like_solo = DB::table('Usuario_Valoracion')->where('IDMezcla','=',$like->IDMezcla)->first();
                             @endphp
-                            <h4>El Usuario <a href="{{asset('/usuario/'.$like->IDUsuarioFK4)}}">{{$usuario->Nombre}}</a> ha dado like a tu comentario en el libro <a href="{{asset('/libro/'.$libro->IDLibroFK)}}">{{$libro->Nombre}}</a></h4>
+                            <h4>El Usuario <a href="{{asset('/usuario/'.$like->IDUsuarioFK4)}}">{{$usuario->Nombre}}</a> ha dado like a tu comentario en el libro <a href="{{asset('/libro/'.$like->IDLibroFK)}}">{{$like->Nombre}}</a></h4>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <div class="row my-auto">
