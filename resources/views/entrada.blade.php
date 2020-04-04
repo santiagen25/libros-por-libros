@@ -353,12 +353,15 @@
                                     <input class="botonSec col-md-4" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="No Me Gusta" type="button">
                                 @endif
                             </div>
-                            <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}" class="col-md-6 d-flex justify-content-center">
-                                @csrf
-                                <div class="d-flex justify-content-center">
-                                    <input class="botonEliminar col-md-12" name="eliminarComentario" type="submit" value="Eliminar comentario">
-                                </div>
-                            </form>
+                            @if($_SESSION["admin"]==1)
+                                <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}" class="col-md-6 d-flex justify-content-center">
+                                    @csrf
+                                    <div class="d-flex justify-content-center">
+                                        <input class="botonEliminar col-md-12" name="eliminarComentario" type="submit" value="Eliminar comentario">
+                                        <input type="hidden" name="id_valoracion" value="{{$valoracion->IDValoracion}}">
+                                    </div>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 @endforeach

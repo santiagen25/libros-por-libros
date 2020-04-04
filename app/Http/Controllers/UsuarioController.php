@@ -153,6 +153,9 @@ class UsuarioController extends Controller
                 if($relacion!=NULL) DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->update(['Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
                 else DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->insert(['IDLibroFK2'=>$id,'IDUsuarioFK3'=>$_SESSION["id"],'IDMezcla'=>$id."_".$_SESSION["id"],'Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
             }
+        } else if (isset($_POST["eliminarComentario"]) && $_SESSION["admin"]=1) {
+            //esto es para admin, por eso preguntamos $_SESSION
+            DB::table('Valoracion')->where('IDValoracion','=',$_POST["id_valoracion"])->delete();
         }
 
         if(isset($_POST["eliminarValoracion"])) DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->delete();
