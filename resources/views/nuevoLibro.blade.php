@@ -27,7 +27,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" name="nombre" placeholder="Nombre del libro..." type="text">
+                    <input class="inputEstandar col-md-10" name="nombre" placeholder="Nombre del libro..." type="text" value="{!! $errors->first('nombreCampo',':message') !!}">
                     {!! $errors->first('nombre','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" name="autor" placeholder="Autor del libro..." type="text">
+                    <input class="inputEstandar col-md-10" name="autor" placeholder="Autor del libro..." type="text" value="{!! $errors->first('autorCampo',':message') !!}">
                     {!! $errors->first('autor','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" name="isbn" placeholder="ISBN..." type="text">
+                    <input class="inputEstandar col-md-10" name="isbn" placeholder="ISBN..." type="text" value="{!! $errors->first('isbnCampo',':message') !!}">
                     {!! $errors->first('isbn','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <input class="inputEstandar col-md-10" name="genero" placeholder="Genero..." type="text">
+                    <input class="inputEstandar col-md-10" name="genero" placeholder="Genero..." type="text" value="{!! $errors->first('generoCampo',':message') !!}">
                     {!! $errors->first('genero','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>
@@ -89,7 +89,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <textarea class="col-md-12" name="descripcion" placeholder="Introduce aqui una descripción para el libro..." rows="6"></textarea>
+                    <textarea class="col-md-12" name="descripcion" placeholder="Introduce aqui una descripción para el libro..." rows="6">{!! $errors->first('descripcionCampo',':message') !!}</textarea>
                     {!! $errors->first('descripcion','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>

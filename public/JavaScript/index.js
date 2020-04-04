@@ -77,7 +77,7 @@ function editarNombre(){
         //cambiamos el texto por input
         const nac = document.getElementById("nombre");
         nac.remove();
-        document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputNombre' type='text' value='"+nac.innerText.trim()+"'>")
+        document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputNombre' type='text' value='"+nac.innerText.trim()+"'>");
         
         //cambiamos el boton
         document.getElementById("botonNombre").value = "Guardar";
@@ -87,17 +87,14 @@ function editarNombre(){
 
         if(act.value != ""){
             act.remove();
-            document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<p id='nombre'>"+act.value+"</p>")
+            document.getElementById("nombrePadre").insertAdjacentHTML("beforeend","<p id='nombre'>"+act.value+"</p>");
             
             //cambiamos el boton
             document.getElementById("botonNombre").value = "Editar";
 
             //hacemos ajax para actualizar los cambios
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-            }
+            if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
             xmlhttp.open("POST", "editarNombre.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -112,14 +109,14 @@ function editarEmail(){
         //cambiamos el texto por input
         const nac = document.getElementById("email");
         nac.remove();
-        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputEmail' type='text' value='"+nac.innerText.trim()+"'>")
+        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputEmail' type='text' value='"+nac.innerText.trim()+"'>");
         
         //cambiamos el boton
         document.getElementById("botonEmail").value = "Guardar";
     } else {
         //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputEmail");
-        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         if(exp.test(act.value)){
             if(window.XMLHttpRequest) xmlhttp2 = new XMLHttpRequest();
             else xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP");
@@ -132,7 +129,7 @@ function editarEmail(){
                 if(this.readyState==4){
                     if(this.responseText==0){
                         act.remove();
-                        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>")
+                        document.getElementById("emailPadre").insertAdjacentHTML("beforeend","<p id='email'>"+act.value+"</p>");
                         
                         //cambiamos el boton
                         document.getElementById("botonEmail").value = "Editar";
@@ -161,7 +158,7 @@ function editarNacimiento(){
         //cambiamos el texto por input
         const nac = document.getElementById("nacimiento");
         nac.remove();
-        document.getElementById("nacimientoPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12 mb-2' id='inputNacimiento' type='text' value='"+nac.innerText.trim()+"'>")
+        document.getElementById("nacimientoPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12 mb-2' id='inputNacimiento' type='text' value='"+nac.innerText.trim()+"'>");
         
         //cambiamos el boton
         document.getElementById("botonNacimiento").value = "Guardar";
@@ -177,11 +174,8 @@ function editarNacimiento(){
             document.getElementById("botonNacimiento").value = "Editar";
 
             //hacemos ajax para actualizar los cambios
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-            }
+            if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
             xmlhttp.open("POST", "editarNacimiento.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -211,11 +205,8 @@ function editarPassword(){
         const act = actual.value;
         const nue = nueva.value;
         const rep = repetida.value;
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-        }
+        if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+        else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
         xmlhttp.onreadystatechange = function(){
             if(this.readyState==4){
                 const pass = this.responseText;
@@ -232,17 +223,11 @@ function editarPassword(){
                                             actual.remove();
                                             nueva.remove();
                                             repetida.remove();
-                                            document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<p id='password'>********</p>")
-                                            
-                                            //cambiamos el boton
+                                            document.getElementById("passwordPadre").insertAdjacentHTML("beforeend","<p id='password'>********</p>");
                                             document.getElementById("botonPassword").value = "Editar";
                                             
-                                            //hacemos ajax para actualizar los cambios
-                                            if(window.XMLHttpRequest){
-                                                xmlhttp2 = new XMLHttpRequest(); //nuevos navegadores
-                                            } else {
-                                                xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-                                            }
+                                            if(window.XMLHttpRequest) xmlhttp2 = new XMLHttpRequest(); //nuevos navegadores
+                                            else xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
                                             xmlhttp2.open("POST", "editarPassword.php", true);
                                             xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                                             xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -274,7 +259,7 @@ function editarImagen(){
     document.getElementById("fotoPerfil").remove();
     document.getElementById("imagenPadre").insertAdjacentHTML("beforeend","<input class='form-control-file' name='imagen' type='file' id='imagen'>");
     document.getElementById("botonImagen").remove();
-    document.getElementById("botonImagenPadre").insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'>");
+    document.getElementById("botonImagenPadre").insertAdjacentHTML("beforeend","<input class='botonEditar' type='submit' name='botonImagen' value='Guardar'><div class='row col-md-12'><input class=\"col-md-12 botonEditar py-1\" name=\"eliminarImagen\" type=\"submit\" value=\"Eliminar\"></div>");
     swalAtencion("Cuando hagas click en el boton <b>Guardar</b> la pagina se refrescará. Asegurate de guardar todos los cambios en otros campos antes de guardar la imagen");
 }
 
@@ -283,7 +268,7 @@ function editarTitulo(){
         //cambiamos el texto por input
         const nac = document.getElementById("titulo");
         nac.remove();
-        document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputTitulo' type='text' value='"+nac.innerText.trim()+"'>")
+        document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputTitulo' type='text' value='"+nac.innerText.trim()+"'>");
         
         //cambiamos el boton
         document.getElementById("botonTitulo").value = "Guardar";
@@ -294,19 +279,16 @@ function editarTitulo(){
         if(act.value != ""){
             if(act.value.length < 50){
                 act.remove();
-                document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<p id='titulo'>"+act.value+"</p>")
-                
-                //cambiamos el boton
+                document.getElementById("tituloPadre").insertAdjacentHTML("beforeend","<p id='titulo'>"+act.value+"</p>");
                 document.getElementById("botonTitulo").value = "Editar";
                 
-                //hacemos ajax para actualizar los cambios
-                const url = document.URL;
+                //ajax
                 if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
                 else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
                 xmlhttp.open("POST", "/editarTitulo.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('titulo').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                xmlhttp.send("q="+document.getElementById('titulo').innerText+"&idLibro="+document.getElementById("id_libro").value);
                 swalExito("Has cambiado el <b>Titulo</b> de tu Valoración con éxito");
             } else swalError("El <b>Titulo</b> de la Valoración no upede tener mas de 50 carácteres");
         } else swalError("El <b>Titulo</b> de la Valoración no puede estar vacio");
@@ -315,12 +297,9 @@ function editarTitulo(){
 
 function editarPuntuacion(){
     if(document.getElementById("botonPuntuacion").value=="Editar"){
-        //cambiamos el texto por input
         const nac = document.getElementById("puntuacion");
         nac.remove();
-        document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputPuntuacion' type='text' value='"+nac.innerText.trim()+"'>")
-        
-        //cambiamos el boton
+        document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputPuntuacion' type='text' value='"+nac.innerText.trim()+"'>");
         document.getElementById("botonPuntuacion").value = "Guardar";
     } else {
         //enviamos la info a la base de datos por ajax
@@ -330,19 +309,17 @@ function editarPuntuacion(){
             const exp = /^[0-9]$|^10$/;
             if(exp.test(act.value)){
                 act.remove();
-                document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<p id='puntuacion'>"+act.value+"</p>")
-                
-                //cambiamos el boton
+                document.getElementById("puntuacionPadre").insertAdjacentHTML("beforeend","<p id='puntuacion'>"+act.value+"</p>");
                 document.getElementById("botonPuntuacion").value = "Editar";
                 
-                //hacemos ajax para actualizar los cambios
+                //ajax
                 const url = document.URL;
                 if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
                 else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
                 xmlhttp.open("POST", "/editarPuntuacion.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('puntuacion').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                xmlhttp.send("q="+document.getElementById('puntuacion').innerText+"&idLibro="+document.getElementById("id_libro").value);
                 swalExito("Has cambiado la <b>Puntuacion</b> de tu Valoración con éxito");
             } else swalError("La <b>Puntuacion</b> de la Valoración ha de ser un numero integer del 0 al 10");
         } else swalError("La <b>Puntuacion</b> de la Valoración no puede estar vacio");
@@ -351,33 +328,27 @@ function editarPuntuacion(){
 
 function editarComentario(){
     if(document.getElementById("botonComentario").value=="Editar"){
-        //cambiamos el texto por input
         const nac = document.getElementById("comentario");
         nac.remove();
-        document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputComentario' type='text' value='"+nac.innerText.trim()+"'>")
-        
-        //cambiamos el boton
+        document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputComentario' type='text' value='"+nac.innerText.trim()+"'>");
         document.getElementById("botonComentario").value = "Guardar";
     } else {
-        //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputComentario");
 
         if(act.value != ""){
             if(act.value.length < 10000){
                 act.remove();
-                document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<p id='comentario'>"+act.value+"</p>")
-                
-                //cambiamos el boton
+                document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<p id='comentario'>"+act.value+"</p>");
                 document.getElementById("botonComentario").value = "Editar";
                 
-                //hacemos ajax para actualizar los cambios
+                //ajax
                 const url = document.URL;
                 if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
                 else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
                 xmlhttp.open("POST", "/editarComentario.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('comentario').innerText+"&idLibro="+url.substring(url.length-1,url.length));
+                xmlhttp.send("q="+document.getElementById('comentario').innerText+"&idLibro="+document.getElementById("id_libro").value);
                 swalExito("Has cambiado el <b>Comentario</b> de tu Valoración con éxito");
             } else swalError("El <b>Comentario</b> de la Valoración no upede tener mas de 10000 carácteres");
         } else swalError("El <b>Comentario</b> de la Valoración no puede estar vacio");
@@ -386,30 +357,21 @@ function editarComentario(){
 
 function editarNombreLista(id) {
     if(document.getElementById("botonNombre_"+id).value=="Editar"){
-        //cambiamos el texto por input
         const nac = document.getElementById("nombre_"+id);
         nac.remove();
-        document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputNombre_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
-        
-        //cambiamos el boton
+        document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputNombre_"+id+"' type='text' value='"+nac.innerText.trim()+"'>");
         document.getElementById("botonNombre_"+id).value = "Guardar";
     } else {
-        //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputNombre_"+id);
 
         if(act.value != ""){
             act.remove();
-            document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<p id='nombre_"+id+"'>"+act.value+"</p>")
-            
-            //cambiamos el boton
+            document.getElementById("nombrePadre_"+id).insertAdjacentHTML("beforeend","<p id='nombre_"+id+"'>"+act.value+"</p>");
             document.getElementById("botonNombre_"+id).value = "Editar";
 
-            //hacemos ajax para actualizar los cambios
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-            }
+            //ajax
+            if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
             xmlhttp.open("POST", "editarNombre.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -421,17 +383,13 @@ function editarNombreLista(id) {
 
 function editarEmailLista(id) {
     if(document.getElementById("botonEmail_"+id).value=="Editar"){
-        //cambiamos el texto por input
         const nac = document.getElementById("email_"+id);
         nac.remove();
-        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputEmail_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
-        
-        //cambiamos el boton
+        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputEmail_"+id+"' type='text' value='"+nac.innerText.trim()+"'>");
         document.getElementById("botonEmail_"+id).value = "Guardar";
     } else {
-        //enviamos la info a la base de datos por ajax
         const act = document.getElementById("inputEmail_"+id);
-        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        const exp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         if(exp.test(act.value)){
             if(window.XMLHttpRequest) xmlhttp2 = new XMLHttpRequest();
             else xmlhttp2 = new ActiveXObject("Microsoft.XMLHTTP");
@@ -444,12 +402,10 @@ function editarEmailLista(id) {
                 if(this.readyState==4){
                     if(this.responseText==0){
                         act.remove();
-                        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<p id='email_"+id+"'>"+act.value+"</p>")
-                        
-                        //cambiamos el boton
+                        document.getElementById("emailPadre_"+id).insertAdjacentHTML("beforeend","<p id='email_"+id+"'>"+act.value+"</p>");
                         document.getElementById("botonEmail_"+id).value = "Editar";
 
-                        //hacemos ajax para actualizar los cambios
+                        //ajax
                         if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest();
                         else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                         xmlhttp.open("POST", "editarEmail.php", true);
@@ -470,12 +426,9 @@ function editarEmailLista(id) {
 
 function editarNacimientoLista(id) {
     if(document.getElementById("botonNacimiento_"+id).value=="Editar"){
-        //cambiamos el texto por input
         const nac = document.getElementById("nacimiento_"+id);
         nac.remove();
-        document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12 mb-2' id='inputNacimiento_"+id+"' type='text' value='"+nac.innerText.trim()+"'>")
-        
-        //cambiamos el boton
+        document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12 mb-2' id='inputNacimiento_"+id+"' type='text' value='"+nac.innerText.trim()+"'>");
         document.getElementById("botonNacimiento_"+id).value = "Guardar";
     } else {
         //enviamos la info a la base de datos por ajax
@@ -483,28 +436,18 @@ function editarNacimientoLista(id) {
         const exp = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/;
         if(exp.test(act.value)) {
             act.remove();
-            document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<p id='nacimiento_"+id+"'>"+act.value+"</p>")
-            
-            //cambiamos el boton
+            document.getElementById("nacimientoPadre_"+id).insertAdjacentHTML("beforeend","<p id='nacimiento_"+id+"'>"+act.value+"</p>");
             document.getElementById("botonNacimiento_"+id).value = "Editar";
 
             //hacemos ajax para actualizar los cambios
-            if(window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest(); //nuevos navegadores
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-            }
-            xmlhttp.onreadystatechange = function() {
-                console.log(this.responseText);
-            }
+            if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
+            else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
             xmlhttp.open("POST", "editarNacimiento.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("q="+document.getElementById("nacimiento_"+id).innerText+"&id="+id);
             swalExito("Has cambiado tu <b>Fecha de Nacimiento</b> con éxito");
-        } else {
-            swalError("El formato de <b>Fecha de Nacimiento</b> que has introducido no es correcto");
-        }
+        } else swalError("El formato de <b>Fecha de Nacimiento</b> que has introducido no es correcto");
     }
 }
 

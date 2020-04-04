@@ -181,6 +181,18 @@ footer {
     max-width:250px;
 }
 
+.select {
+    background-color: #211c12;
+    color: #FFF;
+    border-radius: 20px;
+}
+
+.select-items {
+    background-color: #FFF;
+    border: 1px solid transparent;
+    border-color: #FFF;
+}
+
 /*Codigo para hacer que el boton de menu cambie*/
 
 .container {

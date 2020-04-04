@@ -22,10 +22,12 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-            $valoraciones = DB::table('Valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->get();
-            $likesRecibidos = [];//DB::table('Usuario_Valoracion')->where('IDValoracionFK3','=',$usuario->IDUsuario)->get();
-            $likesDados = [];
-        return view('/inicio',['usuario'=>$usuario,'valoraciones'=>$valoraciones,'likesRecibidos'=>$likesRecibidos,'likesDados'=>$likesDados]);
+            $valoraciones = DB::table('Valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->orderBy('Valoracion.created_at','desc')->get();
+            $likesRecibidos = DB::table('Usuario_Valoracion')->join('Valoracion','Usuario_Valoracion.IDValoracionFK3','=','Valoracion.IDValoracion')->where('Valoracion.IDUsuarioFK','=',$usuario->IDUsuario)->orderBy('Usuario_Valoracion.created_at','desc')->get();
+            $likesDados = DB::table('Usuario_Valoracion')->join('Valoracion','Usuario_Valoracion.IDValoracionFK3','=','Valoracion.IDValoracion')->join('Libro','Valoracion.IDLibroFK','=','Libro.IDLibro')->where('Usuario_Valoracion.IDUsuarioFK4','=',$usuario->IDUsuario)->orderBy('Valoracion.created_at','desc')->get();
+            $relaciones = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->get();
+
+            return view('/inicio',['usuario'=>$usuario,'valoraciones'=>$valoraciones,'likesRecibidos'=>$likesRecibidos,'likesDados'=>$likesDados, 'relaciones'=>$relaciones]);
         }
         return redirect()->route('login');
     }
@@ -61,8 +63,12 @@ class UsuarioController extends Controller
                 } else $errores["errorImagen"] = "Has de subir algun archivo";
 
                 return back()->withErrors($errores);
-            }
-            if(isset($_POST["eliminarCuenta"])){
+            } else if(isset($_POST["eliminarImagen"])){
+                if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif");
+            } else if(isset($_POST["eliminarCuenta"])){
                 DB::table('usuario')->where('Email','=',$_SESSION["email"])->delete();
                 session_unset();
                 return redirect()->route('login');
@@ -76,7 +82,9 @@ class UsuarioController extends Controller
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
             $usuario = DB::table('usuario')->where('Email','=',$_SESSION["email"])->first();
-            return view('/biblioteca',['usuario'=>$usuario]);
+            $libros = DB::table('Libro')->join('Usuario_Libro','Libro.IDLibro','=','Usuario_Libro.IDLibroFK2')->where('IDUsuarioFK3','=',$_SESSION["id"])->get();
+
+            return view('/biblioteca',['usuario'=>$usuario,'libros'=>$libros]);
         }
         return redirect()->route('login');
     }
@@ -128,12 +136,30 @@ class UsuarioController extends Controller
                 );
                 return back();
             }
+        } else if(isset($_POST["botonRelacion"])){
+            //vamos a crer la relacion (o actualizarla). Con esto sabemos si quieren leer un libro, si lo han leido, si esta fav...
+            $relacion = DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->first();
+            $fav=0;
+            if(isset($_POST["favorito"])) $fav=1;
+            if($_POST["relacion"]=="Sin Relacion"){
+                DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->delete();
+            } else if ($_POST["relacion"]=="Quiero Leerlo"){
+                if($relacion!=NULL) DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->update(['Relacion'=>1,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+                else DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->insert(['IDLibroFK2'=>$id,'IDUsuarioFK3'=>$_SESSION["id"],'IDMezcla'=>$id."_".$_SESSION["id"],'Relacion'=>1,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+            } else if($_POST["relacion"]=="Leyendo"){
+                if($relacion!=NULL) DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->update(['Relacion'=>2,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+                else DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->insert(['IDLibroFK2'=>$id,'IDUsuarioFK3'=>$_SESSION["id"],'IDMezcla'=>$id."_".$_SESSION["id"],'Relacion'=>2,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+            } else if($_POST["relacion"]=="Leido"){
+                if($relacion!=NULL) DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->update(['Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+                else DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->insert(['IDLibroFK2'=>$id,'IDUsuarioFK3'=>$_SESSION["id"],'IDMezcla'=>$id."_".$_SESSION["id"],'Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
+            }
         }
 
         if(isset($_POST["eliminarValoracion"])) DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->delete();
 
         $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->where('IDUsuarioFK','<>',$usuario->IDUsuario)->get();
-        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones, 'usuario' => $usuario]);
+        $relacion =  DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->first();
+        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones, 'usuario' => $usuario, 'relacion' => $relacion]);
     }
 
     function usuario($id){
@@ -250,8 +276,12 @@ class UsuarioController extends Controller
                     if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
                     if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
         
-                    if($errores!=[]) return back()->withErrors($errores);
-                    else {
+                    if($errores!=[]) {
+                        $errores["emailCampo"] = $_POST["email"];
+                        $errores["nombreCampo"] = $_POST["nombre"];
+                        $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
+                        return back()->withErrors($errores);
+                    } else {
                         //todo ok
                         DB::table('usuario')->insert(
                             ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
@@ -302,8 +332,14 @@ class UsuarioController extends Controller
                 if($_POST["descripcion"]!="") { if(strlen($_POST["descripcion"]) >= 10000) $errores["descripcion"] = "La descripción es demasiado larga"; }
                 else $errores["descripcion"] = "Falta introducir la descripcion";
 
-                if($errores!=[]) return back()->withErrors($errores);
-                else {
+                if($errores!=[]) {
+                    $errores["nombreCampo"] = $_POST["nombre"];
+                    $errores["autorCampo"] = $_POST["autor"];
+                    $errores["isbnCampo"] = $_POST["isbn"];
+                    $errores["generoCampo"] = $_POST["genero"];
+                    $errores["descripcionCampo"] = $_POST["descripcion"];
+                    return back()->withErrors($errores);
+                } else {
                     //todo ok
                     //creamos y luego, si hay imagen, guardamos la imagen con el id del libro nuevo
                     DB::table('libro')->insert(

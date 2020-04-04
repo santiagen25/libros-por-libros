@@ -23,7 +23,7 @@
                                 <p>Email</p>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{!! $errors->first('emailCampo',':message') !!}">
                             </div>
                             {!! $errors->first('email','<div class="text-danger">:message</div>') !!}
                         </div>

@@ -24,7 +24,7 @@
                                 <p>Email</p>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{{ old('email') }}">
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Email..." name="email" value="{!! $errors->first('emailCampo',':message') !!}">
                             </div>
                             {!! $errors->first('email','<div class="text-danger">:message</div>') !!}
                         </div>
@@ -34,7 +34,7 @@
                                 <p>Nombre Completo</p>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <input class="inputEstandar col-md-12" type="text" placeholder="Nombre Completo..." name="nombre" value="{{ old('nombre') }}">
+                                <input class="inputEstandar col-md-12" type="text" placeholder="Nombre Completo..." name="nombre" value="{!! $errors->first('nombreCampo',':message') !!}">
                             </div>
                             {!! $errors->first('nombre','<div class="text-danger">:message</div>') !!}
                         </div>
@@ -64,7 +64,7 @@
                                 <p>Fecha de nacimiento</p>
                             </div>
                             <div class="d-flex justify-content-center" {{ $errors->has('nacimiento') ? 'has-error' : ''}}>
-                                <input class="inputEstandar col-md-12" type="date" placeholder="Fecha de nacimiento..." name="nacimiento" value="{{ old('nacimiento') }}">
+                                <input class="inputEstandar col-md-12" type="date" placeholder="Fecha de nacimiento..." name="nacimiento" value="{!! $errors->first('nacimientoCampo',':message') !!}">
                             </div>
                             {!! $errors->first('nacimiento','<div class="text-danger">:message</div>') !!}
                         </div>

@@ -35,7 +35,8 @@ class UnidentifiedController extends Controller
                     } return back()->withErrors(['block' => 'Tu usuario ha sido bloqueado por algún motivo. Por favor, contacta con un administrador.']);
                 }
             } else if($_POST["email"]=="" || $_POST["password"]=="") return back()->withErrors(['email' => 'Te falta rellenar el campo del email o de la contraseña']);
-            return back()->withErrors(['email' => 'La contraseña es incorrecta']);
+            
+            return back()->withErrors(['email' => 'La contraseña es incorrecta', 'emailCampo' => $_POST["email"]]);
             /*if($_POST["password"]!="") return view('/inicio');
             return view('/inicio');*/
         }
@@ -69,6 +70,10 @@ class UnidentifiedController extends Controller
             } else $errores["password"] = "Falta introducir la contraseña";
             if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
             if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
+
+            $errores["emailCampo"] = $_POST["email"];
+            $errores["nombreCampo"] = $_POST["nombre"];
+            $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
 
             if($errores!=[]) return back()->withErrors($errores);
             else {

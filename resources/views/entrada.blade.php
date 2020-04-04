@@ -84,9 +84,11 @@
                 <div class="row col-md-12 m-4">
                     <div class="row mr-2 col-md-12">
                         <div class="col-md-3">
-                            <label class="h4">
-                                Descripcion:
-                            </label>
+                            <div class="row col-md-12">
+                                <label class="h4">
+                                    Descripcion:
+                                </label>
+                            </div>
                         </div>
                         <div class="pt-1 col-md-8">
                             <p>
@@ -104,6 +106,50 @@
                         <input class="botonEditar col-md-4 my-5 py-2" type="submit" value="Editar">
                     </form>
                 @endif
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="enmarcarCuadrado container">
+                <div class="row col-md-12 m-4">
+                    <form action="/libro/{{$libro->IDLibro}}" method="POST" class="row col-md-12 mt-5 d-flex justify-content-center">
+                        @csrf
+                        <div class="col-md-3">
+                            <label class="mx-3"><b  class="h4">Relacion</b></label>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="select p-2" id="relacion" name="relacion">
+                                @php
+                                    if($relacion==NULL) echo "<option selected>Sin Relacion</option>";
+                                    else echo "<option>Sin Relacion</option>";
+                                @endphp
+                                @php
+                                    if($relacion!=NULL && $relacion->Relacion==1) echo "<option selected>Quiero Leerlo</option>";
+                                    else echo "<option>Quiero Leerlo</option>";
+                                @endphp
+                                @php
+                                    if($relacion!=NULL && $relacion->Relacion==2) echo "<option selected>Leyendo</option>";
+                                    else echo "<option>Leyendo</option>";
+                                @endphp
+                                @php
+                                    if($relacion!=NULL && $relacion->Relacion==3) echo "<option selected>Leido</option>";
+                                    else echo "<option>Leido</option>";
+                                @endphp
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="mr-3" for="favorito"><b>Favorito</b></label>
+                            @if($relacion!=NULL && $relacion->Favorito==1)
+                                <input id="favorito" name="favorito" type="checkbox" checked>
+                            @else
+                                <input id="favorito" name="favorito" type="checkbox">
+                            @endif
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" name="botonRelacion" class="botonEstandar p-2" value="Guardar">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -299,15 +345,24 @@
                                 {{ $valoracion->Comentario }}
                             </div>
                         </div>
-                        <div class="row d-flex justify-content-center mt-3">
-                            @if(DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$valoracion->IDValoracion)->where('IDUsuarioFK4','=',$_SESSION["id"])->get()->isEmpty())
-                                <input class="botonSec col-md-2" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="¡Me Gusta!" type="button">
-                            @else
-                                <input class="botonSec col-md-2" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="No Me Gusta" type="button">
-                            @endif
+                        <div class="row mt-3">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                @if(DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$valoracion->IDValoracion)->where('IDUsuarioFK4','=',$_SESSION["id"])->get()->isEmpty())
+                                    <input class="botonSec col-md-4" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="¡Me Gusta!" type="button">
+                                @else
+                                    <input class="botonSec col-md-4" id="like_{{$valoracion->IDValoracion}}" onclick="meGusta({{$valoracion->IDValoracion}})" value="No Me Gusta" type="button">
+                                @endif
+                            </div>
+                            <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}" class="col-md-6 d-flex justify-content-center">
+                                @csrf
+                                <div class="d-flex justify-content-center">
+                                    <input class="botonEliminar col-md-12" name="eliminarComentario" type="submit" value="Eliminar comentario">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @endforeach
+                <input type="hidden" id="id_libro" name="id_libro" value="{{$mivaloracion->IDLibroFK}}">
             </div>
         </div>
     </div>

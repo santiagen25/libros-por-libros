@@ -6,7 +6,7 @@ if(isset($_POST["q"]) && isset($_POST["idLibro"])){
     if(session_status() == PHP_SESSION_NONE) session_start();
     $idUsuario = DB::table('usuario')->select("IDUsuario")->where('Email','=',$_SESSION["email"])->first()->IDUsuario;
     DB::table('valoracion')->select("Titulo")->where('IDLibroFK','=',$_POST["idLibro"])->where('IDUsuarioFK','=',$idUsuario)->update(['Comentario' => $_POST['q'], 
-    'updated_at' => date('Y-m-d H:i:s')]);
+    'created_at' => date('Y-m-d H:i:s')]);
 } else {
     header("Location: /configuracion");
     exit;
