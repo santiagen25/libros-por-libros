@@ -291,7 +291,7 @@ class UsuarioController extends Controller
                             ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
                             'created_at' => date('Y-m-d H:i:s')]
                         );
-                        $reg["registroBien"] = "¡Te has registrado con éxito!";
+                        $reg["registroBien"] = "¡Se ha registrado el nuevo usuario con éxito!";
                         return back()->withErrors($reg);
                     }
                 }
