@@ -7,10 +7,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Usuario;
+use Hash;
 
 class UnidentifiedController extends Controller
 {
-    public function login(Request $request){
+    public function login(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_POST["cerrarSesion"])){
             session_unset();
@@ -23,7 +24,7 @@ class UnidentifiedController extends Controller
             if(isset($_POST["email"]) && $_POST["email"]!="" && isset($_POST["password"]) && $_POST["password"]!=""){
                 $contraseña = DB::table('usuario')->where('Email','=',$_POST["email"])->first();
                 if($contraseña=="") return back()->withErrors(['email' => 'Este email no está dado de alta']);
-                if($contraseña->Password==$_POST["password"]){
+                if(Hash::check($_POST["password"],$contraseña->Password)){
                     $block = DB::table('usuario')->select('bloqueado')->where('Email','=',$_POST["email"])->first();
                     if($block->bloqueado == 0){
                         //todo bien, todo correcto
@@ -62,23 +63,26 @@ class UnidentifiedController extends Controller
             else $errores["nombre"] = "Falta introducir el nombre";
             if($_POST["password"]!=""){
                 if(strlen($_POST["password"]) < 50){
+                    $errores["password"] = "";
                     if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] = "Falta añadir una letra mayúscula. ";
                     if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minúscula. ";
                     if(!preg_match('/[0-9]/', $_POST["password"])) $errores["password"] .= "Falta añadir un numero. ";
                     if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
+                    if($errores["password"] == "") unset($errores["password"]);
                 } else $errores["password"] = "La contraseña es demasiado larga";
             } else $errores["password"] = "Falta introducir la contraseña";
             if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
             if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
 
-            $errores["emailCampo"] = $_POST["email"];
-            $errores["nombreCampo"] = $_POST["nombre"];
-            $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
-
-            if($errores!=[]) return back()->withErrors($errores);
-            else {
+            if($errores!=[]) {
+                $errores["emailCampo"] = $_POST["email"];
+                $errores["nombreCampo"] = $_POST["nombre"];
+                $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
+                return back()->withErrors($errores);
+            } else {
+                //todo ok
                 DB::table('usuario')->insert(
-                    ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false,
+                    ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => Hash::make($_POST["password"]), 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false,
                     'created_at' => date('Y-m-d H:i:s')]
                 );
                 $reg["registroBien"] = "¡El nuevo Usuario se ha registrado con éxito!";
@@ -110,7 +114,7 @@ class UnidentifiedController extends Controller
                 $headers = "From: LibrosPorLibros";
                 
                 if (mail($to_email, $subject, $body, $headers)) {
-                    DB::table('usuario')->where('Email','=',$_POST["email"])->update(['Password' => $pswd]);
+                    DB::table('usuario')->where('Email','=',$_POST["email"])->update(['Password' => Hash::make($pswd)]);
                     return back()->withErrors(['bien' => 'Se ha enviado un email a tu cuenta de correo electronico con tu nueva contraseña. Si no ves el mail revisa la carpeta de spam']);
                 } else {
                     return back()->withErrors(['bien' => 'Ha habido un error, no se ha podido cambiar tu contraseña, contacta con un Administrador.']);

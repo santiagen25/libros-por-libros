@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Hash;
 
 if(session_status() == PHP_SESSION_NONE) session_start();
 if(isset($_POST["id"]) && $_SESSION["admin"]==1){
@@ -20,7 +21,7 @@ if(isset($_POST["id"]) && $_SESSION["admin"]==1){
     
     if (mail($to_email, $subject, $body, $headers)) {
         echo 1;
-        DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->update(['Password' => $pswd]);
+        DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->update(['Password' => Hash::make($pswd)]);
     } else {
         echo 0;
     }

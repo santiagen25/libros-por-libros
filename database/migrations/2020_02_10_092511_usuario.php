@@ -20,7 +20,7 @@ class Usuario extends Migration
             $table->string('Email',100)->unique();
             $table->dateTime('Nacimiento');
             $table->boolean('Bloqueado');
-            $table->string('Password',50);
+            $table->string('Password',500); //es necesario que sea un numero alto, ya que cuando se hashea una password te queda un numero enorme
             //$table->string('Imagen',100)->nullable()->autoIncrement();
             $table->timestamps();
         });

@@ -38,14 +38,7 @@
                         </div>
                     </div>
                     <div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <input class="checkboxEstandar form-control mx-2" id="recordarUsuario" type="checkbox">
-                            </div>
-                            <div class="m-2 ml-3">
-                                <label style="cursor:pointer;" for="recordarUsuario">Recordarme</label>
-                            </div>
-                        </div>
+                        
                         <div class="d-flex justify-content-center">
                             <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="entrar" type="submit" value="Entrar">
                         </div>

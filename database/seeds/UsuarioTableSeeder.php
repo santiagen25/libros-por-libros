@@ -60,7 +60,7 @@ class UsuarioTableSeeder extends Seeder
                 'Email' => $usuario['Email'],
                 'Nacimiento' => $usuario['Nacimiento'],
                 'Bloqueado' => $usuario['Bloqueado'],
-                'Password' => $usuario['Password'],
+                'Password' => Hash::make($usuario['Password']),
                 'created_at' => $usuario['created_at']
             ]);
         }

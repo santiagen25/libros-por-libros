@@ -7,6 +7,7 @@ use App\Usuario;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Hash;
 
 class UsuarioController extends Controller
 {
@@ -271,15 +272,18 @@ class UsuarioController extends Controller
                     else $errores["nombre"] = "Falta introducir el nombre";
                     if($_POST["password"]!=""){
                         if(strlen($_POST["password"]) < 50){
-                            if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] = "Falta añadir una letra mayúscula. ";
+                            $errores["password"] = "";
+                            if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra mayúscula. ";
                             if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minúscula. ";
                             if(!preg_match('/[0-9]/', $_POST["password"])) $errores["password"] .= "Falta añadir un numero. ";
                             if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
+                            if($errores["password"] == "") unset($errores["password"]);
                         } else $errores["password"] = "La contraseña es demasiado larga";
                     } else $errores["password"] = "Falta introducir la contraseña";
                     if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
                     if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
         
+                    //return $errores;
                     if($errores!=[]) {
                         $errores["emailCampo"] = $_POST["email"];
                         $errores["nombreCampo"] = $_POST["nombre"];
@@ -288,7 +292,7 @@ class UsuarioController extends Controller
                     } else {
                         //todo ok
                         DB::table('usuario')->insert(
-                            ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => $_POST["password"], 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
+                            ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => Hash::make($_POST["password"]), 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
                             'created_at' => date('Y-m-d H:i:s')]
                         );
                         $reg["registroBien"] = "¡Se ha registrado el nuevo usuario con éxito!";

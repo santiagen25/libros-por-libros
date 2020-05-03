@@ -124,6 +124,7 @@ function editarEmail(){
             xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp2.send("q="+act.value);
+            swalCargando();
 
             xmlhttp2.onreadystatechange = function(){
                 if(this.readyState==4){
@@ -209,9 +210,8 @@ function editarPassword(){
         else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
         xmlhttp.onreadystatechange = function(){
             if(this.readyState==4){
-                const pass = this.responseText;
-                if(act==pass){
-                    if(pass!=nue){
+                if(this.responseText=="1"){
+                    if(act!=nue){
                         const expA = /[A-Z]/;
                         if(expA.test(nue)){
                             const expa = /[a-z]/;
@@ -245,7 +245,8 @@ function editarPassword(){
         xmlhttp.open("POST", "getPassword.php", true);
         xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("q=Test");
+        xmlhttp.send("q="+act);
+        swalCargando();
     }
 }
 
@@ -397,6 +398,7 @@ function editarEmailLista(id) {
             xmlhttp2.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp2.send("q="+act.value+"&id="+id);
+            swalCargando();
 
             xmlhttp2.onreadystatechange = function(){
                 if(this.readyState==4){
