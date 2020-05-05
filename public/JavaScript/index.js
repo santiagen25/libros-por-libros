@@ -93,6 +93,7 @@ function editarNombre(){
             document.getElementById("botonNombre").value = "Editar";
 
             //hacemos ajax para actualizar los cambios
+            //xmlhttp = window.XMLHttpRequest ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
             if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
             else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
             xmlhttp.open("POST", "editarNombre.php", true);

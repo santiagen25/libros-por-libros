@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             ValoracionTableSeeder::class,
             Usuario_LibroTableSeeder::class,
             Usuario_ValoracionTableSeeder::class,
-            Usuario_LibroTableSeeder::class
         ]);
     }
 }
