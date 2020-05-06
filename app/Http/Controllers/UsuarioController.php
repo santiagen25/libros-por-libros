@@ -124,8 +124,12 @@ class UsuarioController extends Controller
             if($_POST["comentario"]!=""){ if(strlen($_POST["comentario"]) >= 10000) $errores["comentario"] = "El comentario de la valoración no puede tener mas de 10.000 caracteres"; }
             else $errores["comentario"] = "El comentario no puede estar vacio";
 
-            if($errores!=[]) return back()->withErrors($errores);
-            else {
+            if($errores!=[]) {
+                $errores["realTitulo"] = $_POST["titulo"];
+                $errores["realPuntuacion"] = $_POST["puntuacion"];
+                $errores["realComentario"] = $_POST["comentario"];
+                return back()->withErrors($errores);
+            } else {
                 //todo ok, insertamos el comentario
                 DB::table('valoracion')->insert(
                     ['IDValoracion' => null,

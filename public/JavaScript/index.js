@@ -560,8 +560,8 @@ function meGusta(id){
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("actualMeGusta="+gusta+"&idvaloracion="+id);
 
-    if(gusta==1) swalTitulo("Dislike","Ya no te gusta este comentario","red");
-    else swalTitulo("Like!","Te Gusta este comentario","green");
+    if(gusta==1) swalTitulo("Dislike","Ya no te gusta esta valoración","red");
+    else swalTitulo("Like!","Te gusta esta valoración","green");
 }
 
 function eliminarLibro(){
