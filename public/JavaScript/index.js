@@ -531,6 +531,8 @@ function enviarMail(id){
             swalCargando();
         }else if(this.responseText=="1"){
             swalExito("Se le ha enviado un mail con su nueva contraseña al usuario con id "+id+". Si no lo ve en la bandeja de entrada que revise en la carpeta de Spam");
+        } else if(this.readyState==4 && this.responseText!="1"){
+            swalError("Ha habido algún tipo de error, vuelve a intentarlo");
         }
     }
     xmlhttp.open("POST", "/resetPassword.php", true);

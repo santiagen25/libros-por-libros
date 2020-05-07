@@ -107,7 +107,7 @@ class UnidentifiedController extends Controller
 
                 $usuario = DB::table('usuario')->where('Email','=',$_POST["email"])->first();
                 if($usuario==NULL) return back()->withErrors(['mal' => 'El email que has introducido no existe']);
-
+                
                 $to_email = $_POST["email"];
                 $subject = "Recuperación de contraseña para Libros por Libros";
                 $body = "Se ha generado una contraseña aleatoriamente para que puedas entrar en tu cuenta.\n\nEsta es tu nueva contraseña: ".$pswd."\n\nTe recomendamos que cambies esta contraseña la proxima vez que entres en tu cuenta.";

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Hash;
 
 if(session_status() == PHP_SESSION_NONE) session_start();
 if(isset($_POST["id"]) && $_SESSION["admin"]==1){
