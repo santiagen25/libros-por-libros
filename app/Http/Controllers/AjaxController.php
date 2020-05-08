@@ -25,10 +25,6 @@ class AjaxController extends Controller
     public function ajaxEditarPassword(){
         include "../public/Ajax/editarPassword.php";
     }
-
-    public function ajaxEditarImagen(){
-        include "../public/Ajax/editarImagen.php";
-    }
     
     public function ajaxEditarTitulo(){
         include "../public/Ajax/editarTitulo.php";

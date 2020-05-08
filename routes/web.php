@@ -32,7 +32,6 @@ Route::any('editarEmail.php', 'AjaxController@ajaxEditarEmail')->name('editarEma
 Route::any('editarNacimiento.php', 'AjaxController@ajaxEditarNacimiento')->name('editarNacimiento');
 Route::any('getPassword.php', 'AjaxController@ajaxGetPassword')->name('getPassword');
 Route::any('editarPassword.php', 'AjaxController@ajaxEditarPassword')->name('editarPassword');
-Route::any('editarImagen.php', 'AjaxController@ajaxEditarImagen')->name('editarImagen');
 Route::any('editarTitulo.php', 'AjaxController@ajaxEditarTitulo')->name('editarTitulo');
 Route::any('editarPuntuacion.php', 'AjaxController@ajaxEditarPuntuacion')->name('editarPuntuacion');
 Route::any('editarComentario.php', 'AjaxController@ajaxEditarComentario')->name('editarComentario');

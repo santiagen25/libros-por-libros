@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\DB;
 
-if(isset($_POST["q"])){
-    if(session_status() == PHP_SESSION_NONE) session_start();
+if(session_status() == PHP_SESSION_NONE) session_start();
+if(isset($_POST["q"]) && isset($_SESSION["email"])){
     if(isset($_POST["id"])){
         DB::table('usuario')->where('Email','=',DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first()->Email)->update(['Email' => $_POST['q']]);
     } else {

@@ -96,6 +96,9 @@ function editarNombre(){
             //xmlhttp = window.XMLHttpRequest ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
             if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
             else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
+            xmlhttp.onreadystatechange = function () {
+                console.log(this.responseText);
+            }
             xmlhttp.open("POST", "editarNombre.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
