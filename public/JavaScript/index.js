@@ -96,9 +96,6 @@ function editarNombre(){
             //xmlhttp = window.XMLHttpRequest ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
             if(window.XMLHttpRequest) xmlhttp = new XMLHttpRequest(); //nuevos navegadores
             else xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); //viejos navegadores
-            xmlhttp.onreadystatechange = function () {
-                console.log(this.responseText);
-            }
             xmlhttp.open("POST", "editarNombre.php", true);
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -452,7 +449,7 @@ function editarNacimientoLista(id) {
             xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("q="+document.getElementById("nacimiento_"+id).innerText+"&id="+id);
-            swalExito("Has cambiado tu <b>Fecha de Nacimiento</b> con éxito");
+            swalExito("Has cambiado la <b>Fecha de Nacimiento</b> del usuario con id "+id+" con éxito");
         } else swalError("El formato de <b>Fecha de Nacimiento</b> que has introducido no es correcto");
     }
 }

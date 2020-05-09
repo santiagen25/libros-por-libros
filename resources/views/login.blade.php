@@ -12,7 +12,7 @@
 <form action="{{ asset('login') }}" method="POST">
     @csrf
         <div class="d-flex justify-content-center">
-            <div class="enmarcarBorde col-md-3">
+            <div class="enmarcarBorde col-md-8 col-lg-6 col-xl-4">
                 <div class="m-5">
                     <div class="d-flex justify-content-center mb-2">
                         <h3>Login</h3>

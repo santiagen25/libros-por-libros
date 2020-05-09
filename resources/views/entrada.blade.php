@@ -209,7 +209,7 @@
                                     </p>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="inputEstandar" name="titulo" placeholder="Titulo..." type="text" value="{!! $errors->first('realTitulo',':message') !!}">
+                                    <input class="inputEstandar col-md-12" name="titulo" placeholder="Titulo..." type="text" value="{!! $errors->first('realTitulo',':message') !!}">
                                 </div>
                             </div>
                             {!! $errors->first('titulo','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}
@@ -220,7 +220,7 @@
                                     </p>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="inputEstandar" name="puntuacion" placeholder="5" type="text" value="{!! $errors->first('realPuntuacion',':message') !!}">
+                                    <input class="inputEstandar col-md-12" name="puntuacion" placeholder="5" type="text" value="{!! $errors->first('realPuntuacion',':message') !!}">
                                 </div>
                             </div>
                             {!! $errors->first('puntuacion','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}

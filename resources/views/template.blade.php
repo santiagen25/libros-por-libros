@@ -22,10 +22,10 @@
             <div class="row mx-4">
                 <div class="col-md-2">
                     <div class="mb-2">
-                        <a href="">Contactanos</a>
+                        {{-- <a href="">Contactanos</a> --}}
                     </div>
                     <div class="">
-                        <a href="">FAQ</a>
+                        {{-- <a href="">FAQ</a> --}}
                     </div>
                 </div>
                 <div class="offset-md-7 col-md-3">

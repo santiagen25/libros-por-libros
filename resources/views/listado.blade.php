@@ -15,7 +15,7 @@
             <h2 class="d-flex justify-content-center">Listado de Usuarios Registrados</h2>
 
             <form action="{{asset('listado')}}" class="form-inline my-2 my-lg-0 d-flex justify-content-center" method="GET">
-                <input class="inputEstandar" name="buscador" type="search" placeholder="Buscar usuario...">
+                <input class="inputEstandar col-xs-12 col-sm-8 col-md-4" name="buscador" type="search" placeholder="Buscar usuario...">
                 <button class="botonEstandar form-control my-2" type="submit">Buscar</button>
             </form>
 

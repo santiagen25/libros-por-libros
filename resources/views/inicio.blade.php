@@ -41,14 +41,14 @@
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $relacion->created_at)[0]
                                     @endphp
                                 </p>
                             </div>
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $relacion->created_at)[1]
                                     @endphp
@@ -67,14 +67,14 @@
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $valoracion->created_at)[0]
                                     @endphp
                                 </p>
                             </div>
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $valoracion->created_at)[1]
                                     @endphp
@@ -94,14 +94,14 @@
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $like_solo->created_at)[0]
                                     @endphp
                                 </p>
                             </div>
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $like_solo->created_at)[1]
                                     @endphp
@@ -122,14 +122,14 @@
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $like_solo->created_at)[0]
                                     @endphp
                                 </p>
                             </div>
                             <div class="row my-auto">
-                                <p>
+                                <p class="px-3">
                                     @php
                                         echo explode(" ", $like_solo->created_at)[1]
                                     @endphp
