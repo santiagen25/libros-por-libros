@@ -293,7 +293,7 @@ function editarTitulo(){
                 xmlhttp.open("POST", "/editarTitulo.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('titulo').innerText+"&idLibro="+document.getElementById("id_libro").value);
+                xmlhttp.send("q="+document.getElementById('titulo').innerText);
                 swalExito("Has cambiado el <b>Titulo</b> de tu Valoración con éxito");
             } else swalError("El <b>Titulo</b> de la Valoración no upede tener mas de 50 carácteres");
         } else swalError("El <b>Titulo</b> de la Valoración no puede estar vacio");
@@ -324,7 +324,7 @@ function editarPuntuacion(){
                 xmlhttp.open("POST", "/editarPuntuacion.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('puntuacion').innerText+"&idLibro="+document.getElementById("id_libro").value);
+                xmlhttp.send("q="+document.getElementById('puntuacion').innerText);
                 swalExito("Has cambiado la <b>Puntuacion</b> de tu Valoración con éxito");
             } else swalError("La <b>Puntuacion</b> de la Valoración ha de ser un numero integer del 0 al 10");
         } else swalError("La <b>Puntuacion</b> de la Valoración no puede estar vacio");
@@ -353,7 +353,7 @@ function editarComentario(){
                 xmlhttp.open("POST", "/editarComentario.php", true);
                 xmlhttp.setRequestHeader("x-csrf-token",$('meta[name="_token"]').attr('content'));
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("q="+document.getElementById('comentario').innerText+"&idLibro="+document.getElementById("id_libro").value);
+                xmlhttp.send("q="+document.getElementById('comentario').innerText);
                 swalExito("Has cambiado el <b>Comentario</b> de tu Valoración con éxito");
             } else swalError("El <b>Comentario</b> de la Valoración no upede tener mas de 10000 carácteres");
         } else swalError("El <b>Comentario</b> de la Valoración no puede estar vacio");

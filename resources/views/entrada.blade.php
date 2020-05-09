@@ -98,6 +98,42 @@
                     </div>
                 </div>
 
+                <!--Puntuacion general del libro-->
+                <div class="row col-md-12 m-4">
+                    <div class="col-md-3">
+                        <label class="h4">
+                            Puntuación General:
+                        </label>
+                    </div>
+                    <div class="col-md-1">
+                        @if($mediaPuntuacion == -1)
+                            <p>
+                                N/A
+                            </p>
+                        @else
+                            <p>
+                                @php
+                                    $mediaPuntuacion = number_format((float)$mediaPuntuacion, 2, ',', '');
+                                @endphp
+                                {{ $mediaPuntuacion }}
+                            </p>
+                        @endif
+                    </div>
+                    <div class="col-md-7">
+                        @for($i = 0; $i < 10; $i++)
+                            @if($i<$mediaPuntuacion)
+                                <span class="material-icons">
+                                    grade
+                                </span>
+                            @else
+                                <span class="material-icons-outlined">
+                                    grade
+                                </span>
+                            @endif
+                        @endfor
+                    </div>
+                </div>
+
                 @php
                     if(session_status() == PHP_SESSION_NONE) session_start();
                 @endphp
@@ -167,7 +203,7 @@
                         @csrf
                         <div class="enmarcarNoticia p-4 mb-5">
                             <div class="mb-3 row">
-                                <div class="col-md-2">
+                                <div class="col-md-2 px-1">
                                     <p class="h5">
                                         Titulo de tu valoración:
                                     </p>
@@ -178,7 +214,7 @@
                             </div>
                             {!! $errors->first('titulo','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}
                             <div class="mb-3 row">
-                                <div class="col-md-2">
+                                <div class="col-md-2 px-1">
                                     <p class="h5">
                                         Puntuacion del 0 al 10:
                                     </p>
@@ -189,7 +225,7 @@
                             </div>
                             {!! $errors->first('puntuacion','<div class="mb-5 row ml-1"><div class="text-danger">:message</div></div>') !!}
                             <div class="mb-3 row">
-                                <div class="col-md-2">
+                                <div class="col-md-2 px-1">
                                     <p class="h5">
                                         Comentario sobre el libro:
                                     </p>
@@ -255,6 +291,21 @@
                             </div>
                             <div class="col-md-2">
                                 <input class="botonEditar" id="botonComentario" onclick="editarComentario()" type="button" value="Editar">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-2">
+                                <p class="h5">
+                                    Likes Recibidos:
+                                </p>
+                            </div>
+                            <div class="col-md-10" id="tituloPadre">
+                                <p id="titulo">
+                                    @php
+                                        $likesRecibidos = DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$mivaloracion->IDValoracion)->count();
+                                    @endphp
+                                    {{ $likesRecibidos }}
+                                </p>
                             </div>
                         </div>
                         <form method="POST" action="{{ asset('/libro/'.$libro->IDLibro) }}">
@@ -365,7 +416,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <input type="hidden" id="id_libro" name="id_libro" value="{{$mivaloracion->IDLibroFK}}"> --}}
             </div>
         </div>
     </div>

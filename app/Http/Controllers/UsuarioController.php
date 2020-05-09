@@ -99,8 +99,11 @@ class UsuarioController extends Controller
     function resultados(){
         if(session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_SESSION["email"])){
-            $resultados = DB::table('libro')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
-            return view('resultados',['resultados'=>$resultados,'busqueda'=>$_GET["buscador"]]);
+            if(isset($_GET["buscador"])){
+                if($_GET["buscador"]!="") $resultados = DB::table('libro')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
+                else $resultados = DB::table('libro')->where('Nombre','LIKE',$_GET["buscador"])->get();
+                return view('resultados',['resultados'=>$resultados,'busqueda'=>$_GET["buscador"]]);
+            } else redirect()->route('inicio');
         }
         return redirect()->route('login');
     }
@@ -164,16 +167,20 @@ class UsuarioController extends Controller
                 if($relacion!=NULL) DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->update(['Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
                 else DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->insert(['IDLibroFK2'=>$id,'IDUsuarioFK3'=>$_SESSION["id"],'IDMezcla'=>$id."_".$_SESSION["id"],'Relacion'=>3,'Favorito'=>$fav,'created_at'=>date('Y-m-d H:i:s')]);
             }
-        } else if (isset($_POST["eliminarComentario"]) && $_SESSION["admin"]=1) {
+        } else if (isset($_POST["eliminarComentario"]) && $_SESSION["admin"]==1) {
             //esto es para admin, por eso preguntamos $_SESSION
             DB::table('Valoracion')->where('IDValoracion','=',$_POST["id_valoracion"])->delete();
-        }
-
-        if(isset($_POST["eliminarValoracion"])) DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->delete();
+        } else if (isset($_POST["eliminarValoracion"]) && isset($_SESSION["email"])) DB::table('valoracion')->where('IDUsuarioFK','=',$usuario->IDUsuario)->where('IDLibroFK','=',$libro->IDLibro)->delete();
 
         $valoraciones = DB::table('valoracion')->where('IDLibroFK','=',$id)->where('IDUsuarioFK','<>',$usuario->IDUsuario)->get();
+        $valoracionesParaMedia = DB::table('valoracion')->where('IDLibroFK','=',$id)->get();
         $relacion =  DB::table('Usuario_Libro')->where('IDUsuarioFK3','=',$_SESSION["id"])->where('IDLibroFK2','=',$id)->first();
-        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones, 'usuario' => $usuario, 'relacion' => $relacion]);
+        if(!$valoracionesParaMedia->isEmpty()){
+            $totalPuntuacion = 0;
+            for($i = 0; $i < sizeof($valoracionesParaMedia); $i++) $totalPuntuacion = $totalPuntuacion + $valoracionesParaMedia[$i]->Puntuacion;
+            $mediaPuntuacion = $totalPuntuacion / $i;
+        } else $mediaPuntuacion = -1;
+        return view('entrada',['libro' => $libro, 'valoraciones' => $valoraciones, 'usuario' => $usuario, 'relacion' => $relacion, 'mediaPuntuacion' => $mediaPuntuacion]);
     }
 
     function usuario($id){
