@@ -18,14 +18,14 @@
             @yield('content')
         </div>
 
-        <footer id="footer">
+        <footer id="footer" class="dynamic-height">
             <div class="row mx-4">
                 <div class="col-md-2">
                     <div class="mb-2">
-                        {{-- <a href="">Contactanos</a> --}}
+                        <a href="mailto:librosporlibros2@gmail.com?subject=Contacto&body=">Contactanos</a>
                     </div>
                     <div class="">
-                        {{-- <a href="">FAQ</a> --}}
+                        <a href="faq">FAQ</a>
                     </div>
                 </div>
                 <div class="offset-md-7 col-md-3">

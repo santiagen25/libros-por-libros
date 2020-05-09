@@ -123,4 +123,8 @@ class UnidentifiedController extends Controller
             return view('newPassword');
         }
     }
+
+    public function faq(){
+        return response()->file('../public/pdf/LibrosPorLibrosFAQ.pdf');
+    }
 }

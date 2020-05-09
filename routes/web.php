@@ -25,6 +25,7 @@ Route::any('/listado','UsuarioController@listado');
 Route::any('/creacion-usuario','UsuarioController@creacionUsuario');
 Route::any('/nuevo-libro','UsuarioController@nuevoLibro');
 Route::any('/editar-libro/{id}','UsuarioController@editarLibro')->name('editarLibro');
+Route::any('/faq','UnidentifiedController@faq');
 
 //rutas ajax
 Route::any('editarNombre.php', 'AjaxController@ajaxEditarNombre')->name('editarNombre');

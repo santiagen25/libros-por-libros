@@ -193,134 +193,124 @@ class UsuarioController extends Controller
 
     function listado(){
         if(session_status() == PHP_SESSION_NONE) session_start();
-        if(isset($_SESSION["email"])){
+        if(isset($_SESSION["email"]) && $_SESSION["admin"] == 1){
+            //es admin y está logueado
             $usuarios = DB::table('usuario')->get();
-            //hay que mirar si es admin (está guardado en sessions)
-            $admin = $_SESSION["admin"] == 1 ? 1 : 0;
-            if($admin==1){
-                //es admin y está logueado
-                if(isset($_GET["buscador"])){
-                    $usuarios = DB::table('usuario')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
-                    return view('listado',['usuarios'=>$usuarios]);
-                }
-                
-                $errores = [];
-                if(isset($_POST["botonImagen"])){
-                    $usuario = DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first();
-                    if($usuario!=NULL){
-                        //este if para ver si existe el usuario
-                        $target_dir = "../public/images/imagenesUsuarios/";
-                        $extension = strtolower(pathinfo(basename($_FILES["imagen"]["name"]),PATHINFO_EXTENSION));
-                        $target_file = $target_dir . basename("foto_".$usuario->IDUsuario.".".$extension);
-                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-                        if($_FILES["imagen"]["name"] != ""){
-                            $check = getimagesize($_FILES["imagen"]["tmp_name"]);
-                            if($check !== false) {
-                                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-                                    $errores["errorImagen"] = "Solo se admiten los archivos JPG, JPEG, PNG & GIF";
-                                } else {
-                                    if ($_FILES["imagen"]["size"] > 500000) $errores["errorImagen"] = "Tu archivo pesa demasiado";
-                                    else {
-                                        //esto borra el archivo de la foto para ese usuario si ya existia
-                                        if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg");
-                                        else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg");
-                                        else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png");
-                                        else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif");
-                                        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) return back(); //todo ok
-                                        else $errores["errorImagen"] =  "Ha habido un error al subir tu foto";
-                                    }
-                                }
-                            } else $errores["errorImagen"] = "El archivo no es una imagen";
-                        } else $errores["errorImagen"] = "Has de subir algun archivo";
-                    } else $errores["errorImagen"] = "Se ha producido un error en el servidor";
-
-                    return back()->withErrors($errores);
-                }
-
-                if(isset($_POST["eliminarCuenta"])){
-                    $usuario = DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first();
-                    if($usuario!=NULL){
-                        DB::table('usuario')->where('IDUsuario','=',$usuario->IDUsuario)->delete();
-                        if($usuario->IDUsuario==$_SESSION["id"]){
-                            session_unset();
-                            return redirect()->route('login');
-                        }
-                        $errores["successEliminar"] = "La cuenta con id ".$usuario->IDUsuario."  se ha eliminado con éxito";
-                        return back()->withErrors($errores);
-                    } else $errores["errorImagen"] = "Se ha producido un error en el servidor"; 
-
-                    return back()->withErrors($errores);
-                }
-
-                if(isset($_POST["eliminarImagen"])){
-                    if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg");
-                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg");
-                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".png")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".png");
-                    else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif");
-                }
-
+            if(isset($_GET["buscador"])){
+                $usuarios = DB::table('usuario')->where('Nombre','LIKE','%'.$_GET["buscador"].'%')->get();
                 return view('listado',['usuarios'=>$usuarios]);
             }
-            return redirect()->route('inicio');
+            
+            $errores = [];
+            if(isset($_POST["botonImagen"])){
+                $usuario = DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first();
+                if($usuario!=NULL){
+                    //este if para ver si existe el usuario
+                    $target_dir = "../public/images/imagenesUsuarios/";
+                    $extension = strtolower(pathinfo(basename($_FILES["imagen"]["name"]),PATHINFO_EXTENSION));
+                    $target_file = $target_dir . basename("foto_".$usuario->IDUsuario.".".$extension);
+                    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                    if($_FILES["imagen"]["name"] != ""){
+                        $check = getimagesize($_FILES["imagen"]["tmp_name"]);
+                        if($check !== false) {
+                            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+                                $errores["errorImagen"] = "Solo se admiten los archivos JPG, JPEG, PNG & GIF";
+                            } else {
+                                if ($_FILES["imagen"]["size"] > 500000) $errores["errorImagen"] = "Tu archivo pesa demasiado";
+                                else {
+                                    //esto borra el archivo de la foto para ese usuario si ya existia
+                                    if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpg");
+                                    else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".jpeg");
+                                    else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".png");
+                                    else if(file_exists("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif")) unlink("../public/images/imagenesusuarios/foto_".$usuario->IDUsuario.".gif");
+                                    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) return back(); //todo ok
+                                    else $errores["errorImagen"] =  "Ha habido un error al subir tu foto";
+                                }
+                            }
+                        } else $errores["errorImagen"] = "El archivo no es una imagen";
+                    } else $errores["errorImagen"] = "Has de subir algun archivo";
+                } else $errores["errorImagen"] = "Se ha producido un error en el servidor";
+
+                return back()->withErrors($errores);
+            }
+
+            if(isset($_POST["eliminarCuenta"])){
+                $usuario = DB::table('usuario')->where('IDUsuario','=',$_POST["id"])->first();
+                if($usuario!=NULL){
+                    DB::table('usuario')->where('IDUsuario','=',$usuario->IDUsuario)->delete();
+                    if($usuario->IDUsuario==$_SESSION["id"]){
+                        session_unset();
+                        return redirect()->route('login');
+                    }
+                    $errores["successEliminar"] = "La cuenta con id ".$usuario->IDUsuario."  se ha eliminado con éxito";
+                    return back()->withErrors($errores);
+                } else $errores["errorImagen"] = "Se ha producido un error en el servidor"; 
+
+                return back()->withErrors($errores);
+            }
+
+            if(isset($_POST["eliminarImagen"])){
+                if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpg");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".jpeg");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".png")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".png");
+                else if(file_exists("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif")) unlink("../public/images/imagenesusuarios/foto_".$_POST["id"].".gif");
+            }
+
+            return view('listado',['usuarios'=>$usuarios]);
         }
-        return redirect()->route('login');
+        return redirect()->route('inicio');
     }
 
     function creacionUsuario(){
         if(session_status() == PHP_SESSION_NONE) session_start();
-        if(isset($_SESSION["email"])){
+        if(isset($_SESSION["email"]) && $_SESSION["admin"] == 1){
             $usuarios = DB::table('usuario')->get();
-            //hay que mirar si es admin (está guardado en sessions)
-            $admin = $_SESSION["admin"] == 1 ? 1 : 0;
-            if($admin==1){
-                //es admin y está logueado
-                if(isset($_POST["registrarse"])){
-                    //vamos a registrar a alguien
-                    $errores = [];
-                    if($_POST["email"]!=""){
-                        if(strlen($_POST["email"]) < 100) { if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) $errores["email"] = "El email no tiene un formato válido"; }
-                        else $errores["email"] = "El email es demasiado largo";
-                    } else $errores["email"] = "Falta introducir el email";
-                    $emails = DB::table('usuario')->select('email')->get();
-                    foreach($emails as $email) if(strtolower($email->email) == strtolower($_POST["email"])) $errores["email"] = "Este email ya está registrado";
-        
-                    if($_POST["nombre"]!="") { if(strlen($_POST["nombre"]) >= 50) $errores["nombre"] = "El nombre es demasiado largo"; }
-                    else $errores["nombre"] = "Falta introducir el nombre";
-                    if($_POST["password"]!=""){
-                        if(strlen($_POST["password"]) < 50){
-                            $errores["password"] = "";
-                            if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra mayúscula. ";
-                            if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minúscula. ";
-                            if(!preg_match('/[0-9]/', $_POST["password"])) $errores["password"] .= "Falta añadir un numero. ";
-                            if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
-                            if($errores["password"] == "") unset($errores["password"]);
-                        } else $errores["password"] = "La contraseña es demasiado larga";
-                    } else $errores["password"] = "Falta introducir la contraseña";
-                    if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
-                    if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
-        
-                    //return $errores;
-                    if($errores!=[]) {
-                        $errores["emailCampo"] = $_POST["email"];
-                        $errores["nombreCampo"] = $_POST["nombre"];
-                        $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
-                        return back()->withErrors($errores);
-                    } else {
-                        //todo ok
-                        DB::table('usuario')->insert(
-                            ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => Hash::make($_POST["password"]), 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
-                            'created_at' => date('Y-m-d H:i:s')]
-                        );
-                        $reg["registroBien"] = "¡Se ha registrado el nuevo usuario con éxito!";
-                        return back()->withErrors($reg);
-                    }
+            //es admin y está logueado
+            if(isset($_POST["registrarse"])){
+                //vamos a registrar a alguien
+                $errores = [];
+                if($_POST["email"]!=""){
+                    if(strlen($_POST["email"]) < 100) { if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) $errores["email"] = "El email no tiene un formato válido"; }
+                    else $errores["email"] = "El email es demasiado largo";
+                } else $errores["email"] = "Falta introducir el email";
+                $emails = DB::table('usuario')->select('email')->get();
+                foreach($emails as $email) if(strtolower($email->email) == strtolower($_POST["email"])) $errores["email"] = "Este email ya está registrado";
+    
+                if($_POST["nombre"]!="") { if(strlen($_POST["nombre"]) >= 50) $errores["nombre"] = "El nombre es demasiado largo"; }
+                else $errores["nombre"] = "Falta introducir el nombre";
+                if($_POST["password"]!=""){
+                    if(strlen($_POST["password"]) < 50){
+                        $errores["password"] = "";
+                        if(!preg_match('/[A-Z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra mayúscula. ";
+                        if(!preg_match('/[a-z]/', $_POST["password"])) $errores["password"] .= "Falta añadir una letra minúscula. ";
+                        if(!preg_match('/[0-9]/', $_POST["password"])) $errores["password"] .= "Falta añadir un numero. ";
+                        if(strlen($_POST["password"])<5) $errores["password"] .= "La contraseña ha de tener minimo 5 caracteres.";
+                        if($errores["password"] == "") unset($errores["password"]);
+                    } else $errores["password"] = "La contraseña es demasiado larga";
+                } else $errores["password"] = "Falta introducir la contraseña";
+                if($_POST["repetirPassword"] != $_POST["password"]) $errores["repetirPassword"] = "La contraseña repetida no encaja con la primera contraseña. ¡Ha de ser la misma!";
+                if(empty($_POST["nacimiento"])) $errores["nacimiento"] = "Falta introducir la fecha de nacimiento";
+    
+                //return $errores;
+                if($errores!=[]) {
+                    $errores["emailCampo"] = $_POST["email"];
+                    $errores["nombreCampo"] = $_POST["nombre"];
+                    $errores["nacimientoCampo"] = date_format(date_create($_POST["nacimiento"]),"Y-m-d");
+                    return back()->withErrors($errores);
+                } else {
+                    //todo ok
+                    DB::table('usuario')->insert(
+                        ['esAdmin' => false, 'email' => $_POST["email"], 'nombre' => $_POST["nombre"], 'password' => Hash::make($_POST["password"]), 'nacimiento' => $_POST["nacimiento"].' 0:00:00', 'bloqueado' => false, 
+                        'created_at' => date('Y-m-d H:i:s')]
+                    );
+                    $reg["registroBien"] = "¡Se ha registrado el nuevo usuario con éxito!";
+                    return back()->withErrors($reg);
                 }
-
-                return view('crearCuenta');
             }
-            return redirect()->route('inicio');
+
+            return view('crearCuenta');
         }
-        return redirect()->route('login');
+        return redirect()->route('inicio');
     }
 
     function nuevoLibro(){
