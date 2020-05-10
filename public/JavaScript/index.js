@@ -332,11 +332,12 @@ function editarComentario(){
     if(document.getElementById("botonComentario").value=="Editar"){
         const nac = document.getElementById("comentario");
         nac.remove();
-        document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputComentario' type='text' value='"+nac.innerText.trim()+"'>");
+        //document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<input class='inputEstandar col-md-12' id='inputComentario' type='text' value='"+nac.innerText.trim()+"'>");
+        document.getElementById("comentarioPadre").insertAdjacentHTML("beforeend","<textarea class='form-control' id='inputComentario' type='text'>"+nac.innerText.trim()+"</textarea>");
         document.getElementById("botonComentario").value = "Guardar";
     } else {
         const act = document.getElementById("inputComentario");
-
+        
         if(act.value != ""){
             if(act.value.length < 10000){
                 act.remove();

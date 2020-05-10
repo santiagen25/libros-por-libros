@@ -89,7 +89,7 @@
                     </label>
                 </div>
                 <div class="pt-1 col-md-9 pr-5">
-                    <textarea class="col-md-12" name="descripcion" placeholder="Introduce aqui una descripción para el libro..." rows="6">{!! $errors->first('descripcionCampo',':message') !!}</textarea>
+                    <textarea class="col-md-12 form-control" name="descripcion" placeholder="Introduce aqui una descripción para el libro..." rows="6">{!! $errors->first('descripcionCampo',':message') !!}</textarea>
                     {!! $errors->first('descripcion','<div class="text-danger">:message</div>') !!}
                 </div>
             </div>

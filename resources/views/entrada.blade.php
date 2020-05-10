@@ -254,7 +254,7 @@
                                     Titulo de tu valoración:
                                 </p>
                             </div>
-                            <div class="col-md-8" id="tituloPadre">
+                            <div class="col-md-8 px-md-5 px-3" id="tituloPadre">
                                 <p id="titulo">
                                     {{ $mivaloracion->Titulo }}
                                 </p>
@@ -269,7 +269,7 @@
                                     Puntuacion del 0 al 10:
                                 </p>
                             </div>
-                            <div class="col-md-8" id="puntuacionPadre">
+                            <div class="col-md-8 px-md-5 px-3" id="puntuacionPadre">
                                 <p id="puntuacion">
                                     {{ $mivaloracion->Puntuacion }}
                                 </p>
@@ -284,7 +284,7 @@
                                     Comentario sobre el libro:
                                 </p>
                             </div>
-                            <div class="col-md-8" id="comentarioPadre">
+                            <div class="col-md-8 px-md-5 px-3" id="comentarioPadre">
                                 <p id="comentario">
                                     {{ $mivaloracion->Comentario }}
                                 </p>
@@ -299,7 +299,7 @@
                                     Likes Recibidos:
                                 </p>
                             </div>
-                            <div class="col-md-10" id="tituloPadre">
+                            <div class="col-md-10 px-md-5 px-3" id="tituloPadre">
                                 <p id="titulo">
                                     @php
                                         $likesRecibidos = DB::table('usuario_valoracion')->where('IDValoracionFK3','=',$mivaloracion->IDValoracion)->count();

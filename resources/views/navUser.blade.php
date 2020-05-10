@@ -22,7 +22,7 @@
             @endphp
         </ul>
         <form action="{{asset('resultados/')}}" class="form-inline my-2 my-lg-0" method="GET">
-            <input class="form-control mr-sm-2" name="buscador" type="search" placeholder="Buscar libro..." aria-label="Search">
+            <input class="form-control mr-sm-0" name="buscador" type="search" placeholder="Buscar libro..." aria-label="Search">
             <button class="botonEstandar form-control my-2 my-sm-0" type="submit">Buscar</button>
         </form>
 

@@ -15,7 +15,7 @@
             <div class="enmarcarCuadrado container py-2 my-5">
                 <div class="enmarcarNoticia row py-3">
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 my-auto">
-                        <h4>Aún no tienes ningún Libro en tu Biblioteca ¡Puedes Empezar Marcando como "Quiero Leer" un libro!</h4>
+                        <h4>Aún no tienes ningún Libro en tu Biblioteca ¡Puedes Empezar Marcando como "Quiero Leerlo" un libro!</h4>
                     </div>
                 </div>
             </div>
@@ -37,20 +37,20 @@
                             </div>
 
                             <div class="col-md-8">
-                                <div class="row mb-4 mt-2">
+                                <div class="row mb-2">
                                     <div class="col-md-4">
                                         <label class="h4">
                                             Nombre:
                                         </label>
                                     </div>
                                     <div class="pt-1 col-md-8">
-                                        <p>
+                                        <a class="link3" href="{{ asset('/libro/'.$libro->IDLibro) }}">
                                             {{$libro->Nombre}}
-                                        </p>
+                                        </a>
                                     </div>
                                 </div>
 
-                                <div class="row mb-4">
+                                <div class="row mb-2">
                                     <div class="col-md-4">
                                         <label class="h4">
                                             Autor:
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-4">
+                                <div class="row mb-2">
                                     <div class="col-md-4">
                                         <label class="h4">
                                             ISBN:
@@ -72,6 +72,26 @@
                                     <div class="pt-1 col-md-8">
                                         <p>
                                             {{$libro->ISBN}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <label class="h4">
+                                            Relacion:
+                                        <label>
+                                    </div>
+                                    <div class="pt-1 col-md-8">
+                                        <p>
+                                            <!--1=quiero leerlo; 2=leyendo; 3=leido-->
+                                            @if($libro->Relacion==1)
+                                                Quiero Leerlo
+                                            @elseif($libro->Relacion==2)
+                                                Leyendo
+                                            @else
+                                                Leido
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
