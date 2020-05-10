@@ -256,22 +256,3 @@ a.link3:hover {
     }
 }
 
-/*.dynamic-height {
-    /*-webkit-transform: translateY(400%); //if your div is 200px, this will move it down by 200px, if it is 100px it will down by 100px etc
-    transform: translateY(400%); //if your div is 200px, this will move it down by 200px, if it is 100px it will down by 100px etc
-    margin-top: 400px;
-    position: relative;
-    margin-top: 100%;
-}*/
-
-/*@media (min-height:700px){
-    #footer{
-        margin-top:400px;
-    }
-}
-
-@media (min-height:900px){
-    #footer{
-        margin-top:500px;
-    }
-}*/

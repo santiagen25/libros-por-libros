@@ -51,7 +51,17 @@ class Handler extends ExceptionHandler
             if($code==404) return response()->view('error',['error' => $code, 'mensaje' => "No hemos podido encontrar lo que buscabas"]);
             return response()->view('error',['error' => $code, 'mensaje' => "Ha habido un error"]);
         } else {
-            return response()->view('error',['error' => 500, 'mensaje' => "Ha habido un error interno en el servidor. Por favor, si este error persiste contacta con un administrador."]);
+            //Si hay un error interno, este se envia por email a la cuenta oficial de libros por libros.
+            //lo dejo comentado, porque lo del mail solo va en mi pc, ya que xampp está configurado para ello, en cambio si se ejecuta en el pc del profesor que lo corrija no le funcionará
+            /*$to_email = "librosporlibros2@gmail.com";
+            $subject = "Error en la pagina";
+            $body = "Se ha generado un error en la pagina. Este es el error:\n\n".parent::render($request, $exception);
+            $headers = "From: LibrosPorLibros";
+            
+            mail($to_email, $subject, $body, $headers);*/
+            
+
+            return response()->view('error',['error' => 500, 'mensaje' => "Ha habido un error interno en el servidor. Un administrador ya ha sido notificado de esto. Si el error persiste escribe a librosporlibros@gmail.com"]);
         }
         //si activamos estos else, cualquier error que haya en la página se notificará
         //como error del servidor de libros por libros.
