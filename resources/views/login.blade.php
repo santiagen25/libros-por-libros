@@ -40,7 +40,7 @@
                     <div>
                         
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="entrar" type="submit" value="Entrar">
+                            <input class="botonEstandar py-1 m-2 col-md-9" name="entrar" type="submit" value="Entrar">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

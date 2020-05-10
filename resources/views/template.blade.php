@@ -25,7 +25,7 @@
                         <a href="mailto:librosporlibros2@gmail.com?subject=Contacto&body=">Contactanos</a>
                     </div>
                     <div class="">
-                        <a href="faq">FAQ</a>
+                        <a href="{{asset('faq')}}">FAQ</a>
                     </div>
                 </div>
                 <div class="offset-md-7 col-md-3">

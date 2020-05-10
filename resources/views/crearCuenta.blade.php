@@ -71,7 +71,7 @@
                     </div>
                     <div>
                         <div class="d-flex justify-content-center">
-                            <input class="botonEstandar py-1 m-2 col-md-9" href="inicio" name="registrarse" type="submit" value="Registrar Usuario">
+                            <input class="botonEstandar py-1 m-2 col-md-9" name="registrarse" type="submit" value="Registrar Usuario">
                         </div>
                     </div>
                 </div>
