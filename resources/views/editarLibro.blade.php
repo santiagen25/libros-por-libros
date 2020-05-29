@@ -103,7 +103,7 @@
             </div>
 
             <div class="d-flex justify-content-center pr-5 pt-3">
-                <input class="col-md-4 botonEditar py-1" id="eliminarLibro" onclick="eliminarLibro()" type="button" value="Eliminar Libro">
+                <input class="col-md-4 botonEditar py-1" id="eliminarLibro" onclick="eliminarLibroA()" type="button" value="Eliminar Libro">
             </div>
 
             {!! $errors->first('bien','<div class="text-success d-flex justify-content-center h3">:message</div>') !!}

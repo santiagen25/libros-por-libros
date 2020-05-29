@@ -483,14 +483,14 @@ class UsuarioController extends Controller
                 else if(file_exists("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif")) unlink("../public/images/imagenesLibros/libro_".$libro->IDLibro.".gif");
                 else {
                     $errores["bien"] = "Este libro no tiene Imagen";
-                    return view('nuevoLibro')->withErrors($errores);
+                    return back()->withErrors($errores);
                 }
                 $errores["bien"] = "¡Has eliminado la imagen del Libro con éxito!";
-                return view('nuevoLibro')->withErrors($errores);
+                return back()->withErrors($errores);
             } else if(isset($_POST["eliminarLibro"])){
                 //eliminamos el libro
                 DB::table('Libro')->where('IDLibro','=',$id)->delete();
-                $errores["bien"] = "¡Has creado un nuevo Libro con éxito!";
+                $errores["bien"] = "¡Eliminado!";
                 return view('nuevoLibro')->withErrors($errores);
             }
 

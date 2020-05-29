@@ -26,7 +26,7 @@
                                 else echo "<img src=\"".asset('images/imagenesUsuarios/default-profile.png')."\" class=\"rounded img-fluid\" alt=\"Foto de Perfil\" id=\"fotoPerfil\">";
                             @endphp
                         </div>
-                        <div class="d-flex justify-content-center mt-3" id="botonImagenPadre">
+                        <div class="d-flex justify-content-center mt-3 col-md-12" id="botonImagenPadre">
                             <input class="botonEditar" id="botonImagen" onclick="editarImagen()" type="button" value="Editar">
                         </div>
                     </form>
@@ -107,7 +107,7 @@
                     <div class="row d-flex justify-content-center mt-5">
                         <form class="col-md-2" method="POST" action="{{ asset('/configuracion') }}">
                             @csrf
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center" id="eliminarPadre">
                                 <input class="botonEditar" id="botonEliminarCuenta" onclick="eliminarCuenta()" type="button" value="Eliminar Cuenta">
                             </div>
                         </form>

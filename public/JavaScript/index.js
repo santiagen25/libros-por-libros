@@ -567,9 +567,9 @@ function meGusta(id){
     else swalTitulo("Like!","Te gusta esta valoración","green");
 }
 
-function eliminarLibro(){
+function eliminarLibroA(){
     const btn = document.getElementById("eliminarLibro");
-    btn.insertAdjacentHTML('afterend','<input class="col-md-4 botonEditar py-1" name="eliminarLibro" type="submit" value="Eliminar Libro">');
+    btn.insertAdjacentHTML('afterend','<input class="col-md-4 botonEliminar py-1" name="eliminarLibro" type="submit" value="Eliminar Libro">');
     btn.remove();
     swalAtencion("Estás a un paso de <b>eliminar</b> este Libro");
 }
